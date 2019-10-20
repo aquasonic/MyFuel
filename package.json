@@ -6,6 +6,8 @@
     "start": "ng serve",
     "start:lambda": "netlify-lambda serve src/functions",
     "build": "ng build",
+    "build:lambda": "netlify-lambda build src/functions",
+    "build:prod": "ng build --prod; npm run build:lambda",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
