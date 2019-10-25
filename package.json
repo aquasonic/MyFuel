@@ -2,6 +2,7 @@
   "name": "my-fuel",
   "version": "0.0.0",
   "scripts": {
+    "bootstrap": "node ./scripts/bootstrap-database.js",
     "ng": "ng",
     "start": "ng serve",
     "start:lambda": "netlify-lambda serve src/functions",
@@ -23,12 +24,13 @@
     "@angular/platform-browser-dynamic": "~8.2.11",
     "@angular/router": "~8.2.11",
     "@clr/angular": "^2.3.0",
+    "@clr/icons": "2.3.0",
+    "@clr/ui": "2.3.0",
+    "@webcomponents/custom-elements": "^1.0.0",
+    "faunadb": "^2.9.3",
     "rxjs": "~6.4.0",
     "tslib": "^1.10.0",
-    "zone.js": "~0.9.1",
-    "@clr/ui": "2.3.0",
-    "@clr/icons": "2.3.0",
-    "@webcomponents/custom-elements": "^1.0.0"
+    "zone.js": "~0.9.1"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.803.12",

@@ -7,6 +7,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class HomeViewComponent implements OnInit {
   message = 'Loading...';
+  numberOfUsers = 'Loading...';
 
   constructor(private http: HttpClient) {}
 
@@ -14,5 +15,12 @@ export class HomeViewComponent implements OnInit {
     this.http
       .get<any>('/.netlify/functions/ping')
       .subscribe(result => (this.message = result.message), error => (this.message = error.message));
+
+    this.http
+      .get<any>('/.netlify/functions/users-count')
+      .subscribe(
+        result => (this.numberOfUsers = 'There are ' + result + ' users available.'),
+        error => (this.numberOfUsers = error.message)
+      );
   }
 }
