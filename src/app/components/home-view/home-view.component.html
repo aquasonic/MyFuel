@@ -1,4 +1,15 @@
-<h1>Hello there</h1>
+<h1>Hi, I'm your fuel tracker</h1>
+
+<form clrForm [formGroup]="form" clrLayout="vertical">
+  <p>Please fill in your user id into the following field and navigate to your car list.</p>
+  <clr-input-container>
+    <input clrInput formControlName="userId" placeholder="e.g. 123456" autocomplete="off" required />
+    <clr-control-error>Field is required</clr-control-error>
+  </clr-input-container>
+  <button class="btn btn-primary btn-block" type="submit" (click)="submit()">Let me in</button>
+</form>
+
+<h2 style="margin-top: 3rem;">Sample lambda functions</h2>
 <p>
   Message from lambda function:<br /><i>{{ message }}</i>
 </p>

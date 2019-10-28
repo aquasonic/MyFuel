@@ -1,15 +1,33 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { FormGroup, Validators, FormControl } from '@angular/forms';
+import { ClrForm } from '@clr/angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'myf-home-view',
-  templateUrl: './home-view.component.html'
+  templateUrl: './home-view.component.html',
+  styleUrls: ['./home-view.component.scss']
 })
 export class HomeViewComponent implements OnInit {
   message = 'Loading...';
   numberOfUsers = 'Loading...';
 
-  constructor(private http: HttpClient) {}
+  @ViewChild(ClrForm, { static: true }) clrForm;
+
+  form = new FormGroup({
+    userId: new FormControl('', Validators.required)
+  });
+
+  constructor(private http: HttpClient, private router: Router) {}
+
+  submit() {
+    if (this.form.invalid) {
+      this.clrForm.markAsTouched();
+    } else {
+      this.router.navigate(['/', this.form.controls.userId.value]);
+    }
+  }
 
   ngOnInit(): void {
     this.http

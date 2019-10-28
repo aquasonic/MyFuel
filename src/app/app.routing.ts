@@ -1,8 +1,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { HomeViewComponent } from './components';
+import { HomeViewComponent, CarDetailViewComponent, CarListViewComponent } from './components';
 
-const routes: Routes = [{ path: '', component: HomeViewComponent }, { path: '**', redirectTo: '/' }];
+const routes: Routes = [
+  { path: ':user/:car', component: CarDetailViewComponent, pathMatch: 'full' },
+  { path: ':user', component: CarListViewComponent, pathMatch: 'full' },
+  { path: '', component: HomeViewComponent, pathMatch: 'full' },
+  { path: '**', redirectTo: '/' }
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
