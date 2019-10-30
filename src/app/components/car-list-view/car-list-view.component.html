@@ -1,22 +1,20 @@
-<h1>My beauties</h1>
+<h1>My cars</h1>
 
 <p>Click on a car in the list to see the statistics and add tank fills. You can also add new cars at any time.</p>
 
-<div class="clr-row">
-  <clr-vertical-nav>
-    <clr-vertical-nav-group>
-      <a clrVerticalNavLink routerLink="./car-1">
-        Audi RS 3
-      </a>
-    </clr-vertical-nav-group>
-    <clr-vertical-nav-group>
-      <a clrVerticalNavLink routerLink="./car-2">
-        Porsche 911 Turbo
-      </a>
-    </clr-vertical-nav-group>
-  </clr-vertical-nav>
-</div>
+<ul class="list-unstyled cars">
+  <li>
+    <a routerLink="./car-1">
+      <span>Audi RS 3</span>
+      <clr-icon shape="caret right"></clr-icon>
+    </a>
+  </li>
+  <li>
+    <a routerLink="./car-2">
+      <span>Porsche 911 Turbo</span>
+      <clr-icon shape="caret right"></clr-icon>
+    </a>
+  </li>
+</ul>
 
-<div class="row add">
-  <button class="btn btn-primary btn-block">Add new car</button>
-</div>
+<button class="btn btn-primary btn-block">Add new car</button>
