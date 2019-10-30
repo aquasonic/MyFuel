@@ -1,0 +1,19 @@
+<button class="btn btn-primary btn-block" (click)="openModal()">Add new car</button>
+
+<clr-modal [(clrModalOpen)]="isModalOpen" [clrModalClosable]="false">
+  <h3 class="modal-title">Add new car</h3>
+  <div class="modal-body">
+    <p>For now the only info we need is the name of your beauty.</p>
+    <form clrForm [formGroup]="form" clrLayout="vertical">
+      <clr-input-container>
+        <label>Name</label>
+        <input clrInput formControlName="name" placeholder="e.g. Porsche 911" autocomplete="off" required />
+        <clr-control-error>Field is required</clr-control-error>
+      </clr-input-container>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline" (click)="closeModal()">Cancel</button>
+    <button type="button" class="btn btn-primary" (click)="submit()">Add</button>
+  </div>
+</clr-modal>
