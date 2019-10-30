@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, EventEmitter, Output } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ClrForm } from '@clr/angular';
 
@@ -9,6 +9,9 @@ import { ClrForm } from '@clr/angular';
 })
 export class AddCarComponent {
   @ViewChild(ClrForm, { static: true }) clrForm;
+
+  @Output()
+  addCar = new EventEmitter<string>();
 
   isModalOpen = false;
 
@@ -29,6 +32,7 @@ export class AddCarComponent {
     if (this.form.invalid) {
       this.clrForm.markAsTouched();
     } else {
+      this.addCar.emit(this.form.controls.name.value);
       this.closeModal();
     }
   }
