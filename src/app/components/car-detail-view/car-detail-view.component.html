@@ -8,7 +8,7 @@
 </p>
 
 <div class="add">
-  <button class="btn btn-primary btn-block">Add new fuel</button>
+  <button class="btn btn-primary btn-block" (click)="addFuel()">Add new fuel</button>
 </div>
 
 <table class="table">
@@ -22,33 +22,12 @@
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <td>10.09.2019</td>
-      <td>134</td>
-      <td>24.33</td>
-      <td>10.33</td>
-      <td>30.35</td>
-    </tr>
-    <tr>
-      <td>10.09.2019</td>
-      <td>134</td>
-      <td>24.33</td>
-      <td>10.3</td>
-      <td>30.35</td>
-    </tr>
-    <tr>
-      <td>10.09.2019</td>
-      <td>134</td>
-      <td>24.33</td>
-      <td>10.3</td>
-      <td>30.35</td>
-    </tr>
-    <tr>
-      <td>10.09.2019</td>
-      <td>134</td>
-      <td>24.33</td>
-      <td>10.3</td>
-      <td>30.35</td>
+    <tr *ngFor="let fuel of fuels">
+      <td>{{ fuel.date | date: 'dd.MM.yyyy' }}</td>
+      <td>{{ fuel.km }}</td>
+      <td>{{ fuel.litres }}</td>
+      <td>{{ fuel.consumption }}</td>
+      <td>{{ fuel.cost }}</td>
     </tr>
   </tbody>
 </table>
