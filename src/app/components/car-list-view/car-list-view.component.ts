@@ -1,4 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { CarDialogComponent } from '../car-dialog/car-dialog.component';
+import { ICar } from 'src/model';
+import { Router, ActivatedRoute } from '@angular/router';
+import { timer } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'myf-car-list-view',
@@ -6,9 +11,17 @@ import { Component } from '@angular/core';
   styleUrls: ['./car-list-view.component.scss']
 })
 export class CarListViewComponent {
+  @ViewChild(CarDialogComponent, { static: false }) addCarDialog: CarDialogComponent;
+
   cars = ['Audi RS 3', 'Porsche 911'];
 
-  onCarAdded(name: string) {
-    this.cars.push(name);
+  constructor(private router: Router, private route: ActivatedRoute) {}
+
+  addCar() {
+    this.addCarDialog.openModal({} as ICar, car => timer(500).pipe(map(_ => car)));
+  }
+
+  onCarAdded(car: ICar) {
+    this.router.navigate([car.name], { relativeTo: this.route });
   }
 }

@@ -3,13 +3,13 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app.routing';
-import { ShellComponent, HomeViewComponent, CarListViewComponent, CarDetailViewComponent, AddCarComponent } from './components';
+import { ShellComponent, HomeViewComponent, CarListViewComponent, CarDetailViewComponent, CarDialogComponent } from './components';
 import { ClarityModule } from '@clr/angular';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [ShellComponent, HomeViewComponent, CarListViewComponent, CarDetailViewComponent, AddCarComponent],
+  declarations: [ShellComponent, HomeViewComponent, CarListViewComponent, CarDetailViewComponent, CarDialogComponent],
   imports: [BrowserModule, AppRoutingModule, ClarityModule, BrowserAnimationsModule, HttpClientModule, ReactiveFormsModule],
   providers: [],
   bootstrap: [ShellComponent]
