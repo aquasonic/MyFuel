@@ -1,3 +1,18 @@
+.action-bar {
+  display: flex;
+  justify-content: space-between;
+
+  clr-dropdown {
+    button {
+      padding: 0;
+    }
+
+    clr-dropdown-menu clr-icon {
+      margin-right: 5px;
+    }
+  }
+}
+
 .add {
   margin-top: 1rem;
 }

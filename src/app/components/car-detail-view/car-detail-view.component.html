@@ -1,4 +1,15 @@
-<a routerLink="../"><clr-icon shape="arrow left"></clr-icon> Back to my cars</a>
+<div class="action-bar">
+  <a routerLink="../"><clr-icon shape="arrow left"></clr-icon> Back to my cars</a>
+  <clr-dropdown [clrCloseMenuOnItemClick]="false">
+    <button clrDropdownTrigger>
+      <clr-icon shape="ellipsis-vertical" size="24"></clr-icon>
+    </button>
+    <clr-dropdown-menu clrPosition="bottom-right" *clrIfOpen>
+      <div clrDropdownItem (click)="updateCar()"><clr-icon shape="pencil"></clr-icon> Update</div>
+      <div clrDropdownItem (click)="deleteCar()"><clr-icon shape="trash" class="is-error"></clr-icon> Delete</div>
+    </clr-dropdown-menu>
+  </clr-dropdown>
+</div>
 
 <h1>{{ name }}</h1>
 
@@ -31,3 +42,5 @@
     </tr>
   </tbody>
 </table>
+
+<myf-car-dialog (sucess)="onCarUpdated($event)"></myf-car-dialog>
