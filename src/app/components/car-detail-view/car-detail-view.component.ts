@@ -11,7 +11,7 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./car-detail-view.component.scss']
 })
 export class CarDetailViewComponent {
-  @ViewChild(CarDialogComponent, { static: false }) addCarDialog: CarDialogComponent;
+  @ViewChild(CarDialogComponent, { static: false }) carDialog: CarDialogComponent;
 
   name: string;
 
@@ -31,7 +31,7 @@ export class CarDetailViewComponent {
   }
 
   updateCar() {
-    this.addCarDialog.openModal({ id: 'id', name: this.name } as ICar, car => timer(500).pipe(map(_ => car)));
+    this.carDialog.openModal({ id: 'id', name: this.name } as ICar, car => timer(500).pipe(map(_ => car)));
   }
 
   deleteCar() {

@@ -11,14 +11,14 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./car-list-view.component.scss']
 })
 export class CarListViewComponent {
-  @ViewChild(CarDialogComponent, { static: false }) addCarDialog: CarDialogComponent;
+  @ViewChild(CarDialogComponent, { static: false }) carDialog: CarDialogComponent;
 
   cars = ['Audi RS 3', 'Porsche 911'];
 
   constructor(private router: Router, private route: ActivatedRoute) {}
 
   addCar() {
-    this.addCarDialog.openModal({} as ICar, car => timer(500).pipe(map(_ => car)));
+    this.carDialog.openModal({} as ICar, car => timer(500).pipe(map(_ => car)));
   }
 
   onCarAdded(car: ICar) {
