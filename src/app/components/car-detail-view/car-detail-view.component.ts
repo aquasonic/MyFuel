@@ -1,9 +1,15 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, EventEmitter } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CarDialogComponent } from '../car-dialog/car-dialog.component';
 import { ICar } from 'src/model';
 import { timer } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { ConfirmDialogComponent, IConfirmDialogParameters } from '../confirm-dialog/confirm-dialog.component';
+
+enum ConfirmationType {
+  DeleteCar = 1,
+  DeleteFuel = 2
+}
 
 @Component({
   selector: 'myf-car-detail-view',
@@ -12,6 +18,7 @@ import { map } from 'rxjs/operators';
 })
 export class CarDetailViewComponent {
   @ViewChild(CarDialogComponent, { static: false }) carDialog: CarDialogComponent;
+  @ViewChild(ConfirmDialogComponent, { static: false }) confirmDialog: ConfirmDialogComponent;
 
   name: string;
 
@@ -35,10 +42,23 @@ export class CarDetailViewComponent {
   }
 
   deleteCar() {
-    this.router.navigate(['../'], { relativeTo: this.route });
+    this.confirmDialog.openModal(
+      'Delete car?',
+      'Are you sure you want to delete this car with all the fuel data? This can not be undone.',
+      { type: ConfirmationType.DeleteCar, id: 'id' },
+      params => timer(500)
+    );
   }
 
   onCarUpdated(car: ICar) {
     this.name = car.name;
+  }
+
+  onConfirmSucess(params: IConfirmDialogParameters) {
+    switch (params.type) {
+      case ConfirmationType.DeleteCar:
+        this.router.navigate(['../'], { relativeTo: this.route });
+        break;
+    }
   }
 }
