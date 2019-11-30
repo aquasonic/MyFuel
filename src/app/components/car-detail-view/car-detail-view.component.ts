@@ -21,6 +21,7 @@ export class CarDetailViewComponent {
   @ViewChild(ConfirmDialogComponent, { static: false }) confirmDialog: ConfirmDialogComponent;
 
   name: string;
+  selectedFuelId: string;
 
   fuels: IFuel[] = [
     { id: '1', date: new Date(), km: 134, litres: 24.33, consumption: 10.33, cost: 10.35 },
@@ -34,7 +35,14 @@ export class CarDetailViewComponent {
   }
 
   addFuel() {
-    this.fuels.push({ id: '5', date: new Date(), km: 134, litres: 24.33, consumption: 10.33, cost: 50.35 });
+    this.fuels.push({
+      id: Math.floor(Math.random() * Math.floor(1000)).toString(),
+      date: new Date(),
+      km: 134,
+      litres: 24.33,
+      consumption: 10.33,
+      cost: 50.35
+    });
   }
 
   updateCar() {
@@ -50,6 +58,22 @@ export class CarDetailViewComponent {
     );
   }
 
+  deleteFuel() {
+    if (this.selectedFuelId) {
+      this.confirmDialog.openModal(
+        'Delete fuel?',
+        'Are you sure you want to delete this fuel? You could easily add it again later.',
+        { type: ConfirmationType.DeleteFuel, id: this.selectedFuelId },
+        params =>
+          timer(500).pipe(result => {
+            this.fuels.splice(this.fuels.findIndex(fuel => fuel.id === params.id), 1);
+            this.selectedFuelId = undefined;
+            return result;
+          })
+      );
+    }
+  }
+
   onCarUpdated(car: ICar) {
     this.name = car.name;
   }
@@ -59,6 +83,14 @@ export class CarDetailViewComponent {
       case ConfirmationType.DeleteCar:
         this.router.navigate(['../'], { relativeTo: this.route });
         break;
+    }
+  }
+
+  selectRow(fuel: IFuel) {
+    if (this.selectedFuelId === fuel.id) {
+      this.selectedFuelId = undefined;
+    } else {
+      this.selectedFuelId = fuel.id;
     }
   }
 

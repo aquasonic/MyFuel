@@ -5,8 +5,8 @@
       <clr-icon shape="ellipsis-vertical" size="24"></clr-icon>
     </button>
     <clr-dropdown-menu clrPosition="bottom-right" *clrIfOpen>
-      <div clrDropdownItem (click)="updateCar()"><clr-icon shape="pencil"></clr-icon> Update</div>
-      <div clrDropdownItem (click)="deleteCar()"><clr-icon shape="trash" class="is-error"></clr-icon> Delete</div>
+      <div clrDropdownItem (click)="updateCar()"><clr-icon shape="pencil"></clr-icon> Update car</div>
+      <div clrDropdownItem (click)="deleteCar()"><clr-icon shape="trash" class="is-error"></clr-icon> Delete car</div>
     </clr-dropdown-menu>
   </clr-dropdown>
 </div>
@@ -15,14 +15,14 @@
 
 <p>
   The list shows all tank fillings with the driven kilometers, costs as well as the consumption per 100 km. Always add a new entry when you
-  go to the gas station.
+  go to the gas station. Click on a table row to update or delete the fuel.
 </p>
 
 <div class="add">
   <button class="btn btn-primary btn-block" (click)="addFuel()">Add new fuel</button>
 </div>
 
-<table class="table">
+<table class="table" [ngClass]="{ 'fuel-selected': selectedFuelId }">
   <thead>
     <tr>
       <th>Date</th>
@@ -33,7 +33,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let fuel of fuels; trackBy: trackById">
+    <tr *ngFor="let fuel of fuels; trackBy: trackById" (click)="selectRow(fuel)" [ngClass]="{ active: selectedFuelId === fuel.id }">
       <td>{{ fuel.date | date: 'dd.MM.yyyy' }}</td>
       <td>{{ fuel.km }}</td>
       <td>{{ fuel.litres }}</td>
@@ -42,6 +42,13 @@
     </tr>
   </tbody>
 </table>
+
+<div class="footer-bar" *ngIf="selectedFuelId">
+  <div>
+    <button class="btn btn-outline"><clr-icon shape="pencil"></clr-icon> Update fuel</button>
+    <button class="btn btn-danger-outline" (click)="deleteFuel()"><clr-icon shape="trash"></clr-icon> Delete fuel</button>
+  </div>
+</div>
 
 <myf-car-dialog (sucess)="onCarUpdated($event)"></myf-car-dialog>
 <myf-confirm-dialog (sucess)="onConfirmSucess($event)"></myf-confirm-dialog>
