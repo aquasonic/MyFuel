@@ -13,7 +13,7 @@ import { map } from 'rxjs/operators';
 export class CarListViewComponent {
   @ViewChild(CarDialogComponent, { static: false }) carDialog: CarDialogComponent;
 
-  cars = ['Audi RS 3', 'Porsche 911'];
+  cars: ICar[] = [{ id: 'audi', name: 'Audi RS 3' }, { id: 'porsche', name: 'Porsche 911' }];
 
   constructor(private router: Router, private route: ActivatedRoute) {}
 
@@ -23,5 +23,9 @@ export class CarListViewComponent {
 
   onCarAdded(car: ICar) {
     this.router.navigate([car.name], { relativeTo: this.route });
+  }
+
+  trackById(index: number, car: ICar) {
+    return car.id;
   }
 }

@@ -1,7 +1,7 @@
 import { Component, ViewChild, EventEmitter } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CarDialogComponent } from '../car-dialog/car-dialog.component';
-import { ICar } from 'src/model';
+import { ICar, IFuel } from 'src/model';
 import { timer } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ConfirmDialogComponent, IConfirmDialogParameters } from '../confirm-dialog/confirm-dialog.component';
@@ -22,11 +22,11 @@ export class CarDetailViewComponent {
 
   name: string;
 
-  fuels = [
-    { date: new Date(), km: 134, litres: 24.33, consumption: 10.33, cost: 10.35 },
-    { date: new Date(), km: 134, litres: 24.33, consumption: 10.33, cost: 20.35 },
-    { date: new Date(), km: 134, litres: 24.33, consumption: 10.33, cost: 30.35 },
-    { date: new Date(), km: 134, litres: 24.33, consumption: 10.33, cost: 40.35 }
+  fuels: IFuel[] = [
+    { id: '1', date: new Date(), km: 134, litres: 24.33, consumption: 10.33, cost: 10.35 },
+    { id: '2', date: new Date(), km: 134, litres: 24.33, consumption: 10.33, cost: 20.35 },
+    { id: '3', date: new Date(), km: 134, litres: 24.33, consumption: 10.33, cost: 30.35 },
+    { id: '4', date: new Date(), km: 134, litres: 24.33, consumption: 10.33, cost: 40.35 }
   ];
 
   constructor(private router: Router, private route: ActivatedRoute) {
@@ -34,7 +34,7 @@ export class CarDetailViewComponent {
   }
 
   addFuel() {
-    this.fuels.push({ date: new Date(), km: 134, litres: 24.33, consumption: 10.33, cost: 50.35 });
+    this.fuels.push({ id: '5', date: new Date(), km: 134, litres: 24.33, consumption: 10.33, cost: 50.35 });
   }
 
   updateCar() {
@@ -60,5 +60,9 @@ export class CarDetailViewComponent {
         this.router.navigate(['../'], { relativeTo: this.route });
         break;
     }
+  }
+
+  trackById(index: number, fuel: IFuel) {
+    return fuel.id;
   }
 }
