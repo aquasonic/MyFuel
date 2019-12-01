@@ -26,10 +26,10 @@ export class CarDetailViewComponent {
   selectedFuelId: string;
 
   fuels: IFuel[] = [
-    { id: '1', date: new Date().toLocaleDateString(), km: 634, litres: 47.44, cost: 10.35 },
-    { id: '2', date: new Date(2019, 2, 4).toLocaleDateString(), km: 673, litres: 47.45, cost: 20.3 },
-    { id: '3', date: new Date().toLocaleDateString(), km: 705, litres: 50.34, cost: 30 },
-    { id: '4', date: new Date().toLocaleDateString(), km: 634, litres: 47.44, cost: 40.35 }
+    { id: '1', date: '05/02/2019', km: 634, litres: 47.44, cost: 10.35 },
+    { id: '2', date: '05/24/2019', km: 673, litres: 47.45, cost: 20.3 },
+    { id: '3', date: '11/14/2019', km: 705, litres: 50.34, cost: 30 },
+    { id: '4', date: '12/08/2019', km: 634, litres: 47.44, cost: 40.35 }
   ];
 
   constructor(private router: Router, private route: ActivatedRoute) {
@@ -85,6 +85,8 @@ export class CarDetailViewComponent {
       fuel.id = Math.floor(Math.random() * Math.floor(1000)).toString();
       this.fuels.push(fuel);
     }
+
+    this.selectedFuelId = undefined;
   }
 
   onConfirmSucess(params: IConfirmDialogParameters) {
