@@ -2,7 +2,7 @@
   <h3 class="modal-title">{{ isNew ? 'Add new fuel' : 'Update fuel' }}</h3>
   <div class="modal-body">
     <p>Please provide the details of your fuel in the following form.</p>
-    <form clrForm [formGroup]="form" clrLayout="vertical">
+    <form clrForm [formGroup]="form">
       <clr-date-container>
         <label>Date</label>
         <input clrDate type="date" formControlName="date" placeholder="e.g. 11/24/2019" autocomplete="off" required />

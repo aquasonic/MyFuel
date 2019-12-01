@@ -2,7 +2,7 @@
   <h3 class="modal-title">{{ isNew ? 'Add new car' : 'Update car' }}</h3>
   <div class="modal-body">
     <p>Please provide the details of your car in the following form.</p>
-    <form clrForm [formGroup]="form" clrLayout="vertical">
+    <form clrForm [formGroup]="form">
       <clr-input-container>
         <label>Name</label>
         <input clrInput formControlName="name" placeholder="e.g. Porsche 911" autocomplete="off" required />
