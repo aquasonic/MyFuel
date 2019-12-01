@@ -5,9 +5,8 @@ export interface ICar {
 
 export interface IFuel {
   id: string;
-  date: Date;
+  date: string;
   km: number;
   litres: number;
-  consumption: number;
   cost: number;
 }

@@ -34,21 +34,22 @@
   </thead>
   <tbody>
     <tr *ngFor="let fuel of fuels; trackBy: trackById" (click)="selectRow(fuel)" [ngClass]="{ active: selectedFuelId === fuel.id }">
-      <td>{{ fuel.date | date: 'dd.MM.yyyy' }}</td>
-      <td>{{ fuel.km }}</td>
-      <td>{{ fuel.litres }}</td>
-      <td>{{ fuel.consumption }}</td>
-      <td>{{ fuel.cost }}</td>
+      <td>{{ fuel.date | date: 'shortDate' }}</td>
+      <td>{{ fuel.km | number: '1.0-0' }}</td>
+      <td>{{ fuel.litres | number: '1.2-2' }}</td>
+      <td>{{ (fuel.litres / fuel.km) * 100 | number: '1.2-2' }}</td>
+      <td>{{ fuel.cost | number: '1.2-2' }}</td>
     </tr>
   </tbody>
 </table>
 
 <div class="footer-bar" *ngIf="selectedFuelId">
   <div>
-    <button class="btn btn-outline"><clr-icon shape="pencil"></clr-icon> Update fuel</button>
+    <button class="btn btn-outline" (click)="updateFuel()"><clr-icon shape="pencil"></clr-icon> Update fuel</button>
     <button class="btn btn-danger-outline" (click)="deleteFuel()"><clr-icon shape="trash"></clr-icon> Delete fuel</button>
   </div>
 </div>
 
 <myf-car-dialog (sucess)="onCarUpdated($event)"></myf-car-dialog>
+<myf-fuel-dialog (sucess)="onFuelAddedOrUpdated($event)"></myf-fuel-dialog>
 <myf-confirm-dialog (sucess)="onConfirmSucess($event)"></myf-confirm-dialog>

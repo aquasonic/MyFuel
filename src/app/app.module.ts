@@ -9,7 +9,8 @@ import {
   CarListViewComponent,
   CarDetailViewComponent,
   CarDialogComponent,
-  ConfirmDialogComponent
+  ConfirmDialogComponent,
+  FuelDialogComponent
 } from './components';
 import { ClarityModule } from '@clr/angular';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -22,7 +23,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     CarListViewComponent,
     CarDetailViewComponent,
     CarDialogComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    FuelDialogComponent
   ],
   imports: [BrowserModule, AppRoutingModule, ClarityModule, BrowserAnimationsModule, HttpClientModule, ReactiveFormsModule],
   providers: [],

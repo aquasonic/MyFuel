@@ -5,6 +5,7 @@ import { ICar, IFuel } from 'src/model';
 import { timer } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ConfirmDialogComponent, IConfirmDialogParameters } from '../confirm-dialog/confirm-dialog.component';
+import { FuelDialogComponent } from '../fuel-dialog/fuel-dialog.component';
 
 enum ConfirmationType {
   DeleteCar = 1,
@@ -18,31 +19,21 @@ enum ConfirmationType {
 })
 export class CarDetailViewComponent {
   @ViewChild(CarDialogComponent, { static: false }) carDialog: CarDialogComponent;
+  @ViewChild(FuelDialogComponent, { static: false }) fuelDialog: FuelDialogComponent;
   @ViewChild(ConfirmDialogComponent, { static: false }) confirmDialog: ConfirmDialogComponent;
 
   name: string;
   selectedFuelId: string;
 
   fuels: IFuel[] = [
-    { id: '1', date: new Date(), km: 134, litres: 24.33, consumption: 10.33, cost: 10.35 },
-    { id: '2', date: new Date(), km: 134, litres: 24.33, consumption: 10.33, cost: 20.35 },
-    { id: '3', date: new Date(), km: 134, litres: 24.33, consumption: 10.33, cost: 30.35 },
-    { id: '4', date: new Date(), km: 134, litres: 24.33, consumption: 10.33, cost: 40.35 }
+    { id: '1', date: new Date().toLocaleDateString(), km: 634, litres: 47.44, cost: 10.35 },
+    { id: '2', date: new Date(2019, 2, 4).toLocaleDateString(), km: 673, litres: 47.45, cost: 20.3 },
+    { id: '3', date: new Date().toLocaleDateString(), km: 705, litres: 50.34, cost: 30 },
+    { id: '4', date: new Date().toLocaleDateString(), km: 634, litres: 47.44, cost: 40.35 }
   ];
 
   constructor(private router: Router, private route: ActivatedRoute) {
     this.name = this.route.snapshot.params.car;
-  }
-
-  addFuel() {
-    this.fuels.push({
-      id: Math.floor(Math.random() * Math.floor(1000)).toString(),
-      date: new Date(),
-      km: 134,
-      litres: 24.33,
-      consumption: 10.33,
-      cost: 50.35
-    });
   }
 
   updateCar() {
@@ -56,6 +47,14 @@ export class CarDetailViewComponent {
       { type: ConfirmationType.DeleteCar, id: 'id' },
       params => timer(500)
     );
+  }
+
+  addFuel() {
+    this.fuelDialog.openModal({} as IFuel, fuel => timer(500).pipe(map(_ => fuel)));
+  }
+
+  updateFuel() {
+    this.fuelDialog.openModal(this.fuels[this.fuels.findIndex(f => f.id === this.selectedFuelId)], fuel => timer(500).pipe(map(_ => fuel)));
   }
 
   deleteFuel() {
@@ -76,6 +75,16 @@ export class CarDetailViewComponent {
 
   onCarUpdated(car: ICar) {
     this.name = car.name;
+  }
+
+  onFuelAddedOrUpdated(fuel: IFuel) {
+    if (fuel.id) {
+      const index = this.fuels.findIndex(f => f.id === fuel.id);
+      this.fuels[index] = fuel;
+    } else {
+      fuel.id = Math.floor(Math.random() * Math.floor(1000)).toString();
+      this.fuels.push(fuel);
+    }
   }
 
   onConfirmSucess(params: IConfirmDialogParameters) {
