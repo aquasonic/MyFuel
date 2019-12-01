@@ -1,6 +1,14 @@
 .cars {
   margin: 1rem 0;
 
+  li {
+    border-bottom: 1px solid #ccc;
+
+    &:first-child {
+      border-top: 1px solid #ccc;
+    }
+  }
+
   a {
     display: flex;
     justify-content: space-between;

@@ -22,7 +22,7 @@
   <button class="btn btn-primary btn-block" (click)="addFuel()">Add new fuel</button>
 </div>
 
-<table class="table" [ngClass]="{ 'fuel-selected': selectedFuelId }">
+<table class="table" *ngIf="fuels && fuels.length > 0" [ngClass]="{ 'fuel-selected': selectedFuelId }">
   <thead>
     <tr>
       <th>Date</th>

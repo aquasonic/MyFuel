@@ -2,7 +2,7 @@
 
 <p>Click on a car in the list to see the statistics and add tank fills. You can also add new cars at any time.</p>
 
-<ul class="list-unstyled cars">
+<ul class="list-unstyled cars" *ngIf="cars && cars.length > 0">
   <li *ngFor="let car of cars; trackBy: trackById">
     <a [routerLink]="['./' + car.name]">
       <span>{{ car.name }}</span>
