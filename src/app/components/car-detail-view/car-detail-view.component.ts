@@ -26,10 +26,10 @@ export class CarDetailViewComponent {
   selectedFuelId: string;
 
   fuels: IFuel[] = [
-    { id: '1', date: new Date(2019, 4, 2).toLocaleDateString(), km: 634, litres: 47.44, cost: 10.35 },
-    { id: '2', date: new Date(2019, 4, 24).toLocaleDateString(), km: 673, litres: 47.45, cost: 20.3 },
-    { id: '3', date: new Date(2019, 10, 14).toLocaleDateString(), km: 705, litres: 50.34, cost: 30 },
-    { id: '4', date: new Date(2019, 11, 8).toLocaleDateString(), km: 634, litres: 47.44, cost: 40.35 }
+    { id: '1', date: '2019-04-02', km: 634, litres: 47.44, cost: 10.35 },
+    { id: '2', date: '2019-04-24', km: 673, litres: 47.45, cost: 20.3 },
+    { id: '3', date: '2019-10-14', km: 705, litres: 50.34, cost: 30 },
+    { id: '4', date: '2019-11-08', km: 634, litres: 47.44, cost: 40.35 }
   ];
 
   constructor(private router: Router, private route: ActivatedRoute) {
@@ -50,7 +50,7 @@ export class CarDetailViewComponent {
   }
 
   addFuel() {
-    this.fuelDialog.openModal({ date: new Date().toLocaleDateString() } as IFuel, fuel => timer(500).pipe(map(_ => fuel)));
+    this.fuelDialog.openModal({ date: new Date().toISOString().slice(0, 10) } as IFuel, fuel => timer(500).pipe(map(_ => fuel)));
   }
 
   updateFuel() {

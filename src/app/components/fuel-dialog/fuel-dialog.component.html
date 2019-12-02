@@ -3,11 +3,11 @@
   <div class="modal-body">
     <p>Please provide the details of your fuel in the following form.</p>
     <form clrForm [formGroup]="form">
-      <clr-date-container>
+      <clr-input-container>
         <label>Date</label>
-        <input clrDate type="date" formControlName="date" placeholder="e.g. 11/24/2019" autocomplete="off" required />
+        <input clrInput type="date" formControlName="date" placeholder="e.g. 24.11.2019" autocomplete="off" required />
         <clr-control-error>Field is required</clr-control-error>
-      </clr-date-container>
+      </clr-input-container>
       <clr-input-container>
         <label>Kilometers</label>
         <input clrInput type="number" step="1" formControlName="km" placeholder="e.g. 634" autocomplete="off" required />

@@ -34,7 +34,7 @@
   </thead>
   <tbody>
     <tr *ngFor="let fuel of fuels; trackBy: trackById" (click)="selectRow(fuel)" [ngClass]="{ active: selectedFuelId === fuel.id }">
-      <td>{{ fuel.date | date: 'shortDate' }}</td>
+      <td>{{ fuel.date | date: 'dd.MM.yy' }}</td>
       <td>{{ fuel.km | number: '1.0-0' }}</td>
       <td>{{ fuel.litres | number: '1.2-2' }}</td>
       <td>{{ (fuel.litres / fuel.km) * 100 | number: '1.2-2' }}</td>

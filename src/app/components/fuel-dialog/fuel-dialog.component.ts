@@ -15,7 +15,7 @@ export class FuelDialogComponent {
   @Output() sucess = new EventEmitter<IFuel>();
 
   private saveHandler: (fuel: IFuel) => ObservableInput<IFuel>;
-  private fuel: IFuel;
+  private id: string;
 
   isModalOpen = false;
   isNew = false;
@@ -33,7 +33,7 @@ export class FuelDialogComponent {
     this.isModalOpen = true;
     this.isNew = fuel.id === undefined;
     this.saveHandler = saveHandler;
-    this.fuel = fuel;
+    this.id = fuel.id;
     this.form.patchValue(fuel);
   }
 
@@ -46,10 +46,12 @@ export class FuelDialogComponent {
     if (this.form.invalid) {
       this.clrForm.markAsTouched();
     } else {
-      this.fuel = Object.assign(this.fuel, this.form.value);
+      const fuel = Object.assign({}, this.form.value) as IFuel;
+      fuel.id = this.id;
+
       this.submitButtonState = ClrLoadingState.LOADING;
 
-      from(this.saveHandler(this.fuel)).subscribe(
+      from(this.saveHandler(fuel)).subscribe(
         result => {
           this.submitButtonState = ClrLoadingState.SUCCESS;
           this.sucess.emit(result);
