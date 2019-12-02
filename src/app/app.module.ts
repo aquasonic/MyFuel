@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, LOCALE_ID } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app.routing';
@@ -27,7 +27,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     FuelDialogComponent
   ],
   imports: [BrowserModule, AppRoutingModule, ClarityModule, BrowserAnimationsModule, HttpClientModule, ReactiveFormsModule],
-  providers: [{ provide: LOCALE_ID, useValue: 'en-US' }],
+  providers: [],
   bootstrap: [ShellComponent]
 })
 export class AppModule {}
