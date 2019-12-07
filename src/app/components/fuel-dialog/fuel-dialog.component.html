@@ -3,29 +3,33 @@
   <div class="modal-body">
     <p>Please provide the details of your fuel in the following form.</p>
     <form clrForm [formGroup]="form" clrLayout="vertical" class="full-width">
-      <clr-input-container>
-        <label>Date</label>
-        <input clrInput type="date" formControlName="date" placeholder="e.g. 24.11.2019" autocomplete="off" required />
-        <clr-control-error>Field is required</clr-control-error>
-      </clr-input-container>
-      <clr-input-container>
-        <label>Kilometers</label>
-        <input clrInput type="number" step="1" formControlName="km" placeholder="e.g. 634" autocomplete="off" required />
-        <clr-control-error *clrIfError="'required'">Field is required</clr-control-error>
-        <clr-control-error *clrIfError="'pattern'">Only integer values are allowed</clr-control-error>
-      </clr-input-container>
-      <clr-input-container>
-        <label>Litres</label>
-        <input clrInput type="number" step="0.01" formControlName="litres" placeholder="e.g. 47.77" autocomplete="off" required />
-        <clr-control-error *clrIfError="'required'">Field is required</clr-control-error>
-        <clr-control-error *clrIfError="'pattern'">Only two decimal places are allowed</clr-control-error>
-      </clr-input-container>
-      <clr-input-container>
-        <label>Costs</label>
-        <input clrInput type="number" step="0.01" formControlName="cost" placeholder="e.g. 74.05" autocomplete="off" required />
-        <clr-control-error *clrIfError="'required'">Field is required</clr-control-error>
-        <clr-control-error *clrIfError="'pattern'">Only two decimal places are allowed</clr-control-error>
-      </clr-input-container>
+      <div class="clr-row">
+        <clr-input-container class="clr-col-6">
+          <label>Date</label>
+          <input clrInput type="date" formControlName="date" placeholder="e.g. 24.11.2019" autocomplete="off" required />
+          <clr-control-error>Field is required</clr-control-error>
+        </clr-input-container>
+        <clr-input-container class="clr-col-6">
+          <label>Kilometers</label>
+          <input clrInput type="number" step="1" formControlName="km" placeholder="e.g. 634" autocomplete="off" required />
+          <clr-control-error *clrIfError="'required'">Field is required</clr-control-error>
+          <clr-control-error *clrIfError="'pattern'">Only integer values are allowed</clr-control-error>
+        </clr-input-container>
+      </div>
+      <div class="clr-row">
+        <clr-input-container class="clr-col-6">
+          <label>Litres</label>
+          <input clrInput type="number" step="0.01" formControlName="litres" placeholder="e.g. 47.77" autocomplete="off" required />
+          <clr-control-error *clrIfError="'required'">Field is required</clr-control-error>
+          <clr-control-error *clrIfError="'pattern'">Only two decimal places are allowed</clr-control-error>
+        </clr-input-container>
+        <clr-input-container class="clr-col-6">
+          <label>Costs</label>
+          <input clrInput type="number" step="0.01" formControlName="cost" placeholder="e.g. 74.05" autocomplete="off" required />
+          <clr-control-error *clrIfError="'required'">Field is required</clr-control-error>
+          <clr-control-error *clrIfError="'pattern'">Only two decimal places are allowed</clr-control-error>
+        </clr-input-container>
+      </div>
     </form>
   </div>
   <div class="modal-footer">
