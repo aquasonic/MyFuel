@@ -1,7 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { timer } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
+import { CarService } from 'src/app/services';
 import { Car } from 'src/model';
 
 import { CarDialogComponent } from '../car-dialog/car-dialog.component';
@@ -14,12 +15,9 @@ import { CarDialogComponent } from '../car-dialog/car-dialog.component';
 export class CarListViewComponent {
   @ViewChild(CarDialogComponent, { static: false }) carDialog: CarDialogComponent;
 
-  cars: Car[] = [
-    { id: 'audi', name: 'Audi RS 3' },
-    { id: 'porsche', name: 'Porsche 911' }
-  ];
+  readonly cars$ = this.route.params.pipe(switchMap(params => this.carService.getCars(params.user)));
 
-  constructor(private router: Router, private route: ActivatedRoute) {}
+  constructor(private carService: CarService, private router: Router, private route: ActivatedRoute) {}
 
   addCar() {
     this.carDialog.openModal({} as Car, car => timer(500).pipe(map(_ => car)));
