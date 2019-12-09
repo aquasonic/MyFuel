@@ -13,6 +13,7 @@ import {
   ConfirmDialogComponent,
   FuelDialogComponent,
   HomeViewComponent,
+  LoadingComponent,
   ShellComponent,
 } from './components';
 
@@ -24,7 +25,8 @@ import {
     CarDetailViewComponent,
     CarDialogComponent,
     ConfirmDialogComponent,
-    FuelDialogComponent
+    FuelDialogComponent,
+    LoadingComponent
   ],
   imports: [BrowserModule, AppRoutingModule, ClarityModule, BrowserAnimationsModule, HttpClientModule, ReactiveFormsModule],
   providers: [],
