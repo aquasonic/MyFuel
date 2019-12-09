@@ -1,9 +1,9 @@
-export interface ICar {
+export interface Car {
   id: string;
   name: string;
 }
 
-export interface IFuel {
+export interface Fuel {
   id: string;
   date: string;
   km: number;

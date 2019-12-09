@@ -2,7 +2,7 @@ import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ClrForm, ClrLoadingState } from '@clr/angular';
 import { from, ObservableInput } from 'rxjs';
-import { ICar } from 'src/model';
+import { Car } from 'src/model';
 
 @Component({
   selector: 'myf-car-dialog',
@@ -12,9 +12,9 @@ import { ICar } from 'src/model';
 export class CarDialogComponent {
   @ViewChild(ClrForm, { static: true }) clrForm;
 
-  @Output() sucess = new EventEmitter<ICar>();
+  @Output() sucess = new EventEmitter<Car>();
 
-  private saveHandler: (car: ICar) => ObservableInput<ICar>;
+  private saveHandler: (car: Car) => ObservableInput<Car>;
 
   isModalOpen = false;
   isNew = false;
@@ -25,7 +25,7 @@ export class CarDialogComponent {
     name: new FormControl('', Validators.required)
   });
 
-  openModal(car: ICar, saveHandler: (car: ICar) => ObservableInput<ICar>) {
+  openModal(car: Car, saveHandler: (car: Car) => ObservableInput<Car>) {
     this.isModalOpen = true;
     this.isNew = car.id === undefined;
     this.saveHandler = saveHandler;

@@ -2,7 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { timer } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { ICar } from 'src/model';
+import { Car } from 'src/model';
 
 import { CarDialogComponent } from '../car-dialog/car-dialog.component';
 
@@ -14,7 +14,7 @@ import { CarDialogComponent } from '../car-dialog/car-dialog.component';
 export class CarListViewComponent {
   @ViewChild(CarDialogComponent, { static: false }) carDialog: CarDialogComponent;
 
-  cars: ICar[] = [
+  cars: Car[] = [
     { id: 'audi', name: 'Audi RS 3' },
     { id: 'porsche', name: 'Porsche 911' }
   ];
@@ -22,14 +22,14 @@ export class CarListViewComponent {
   constructor(private router: Router, private route: ActivatedRoute) {}
 
   addCar() {
-    this.carDialog.openModal({} as ICar, car => timer(500).pipe(map(_ => car)));
+    this.carDialog.openModal({} as Car, car => timer(500).pipe(map(_ => car)));
   }
 
-  onCarAdded(car: ICar) {
+  onCarAdded(car: Car) {
     this.router.navigate([car.name], { relativeTo: this.route });
   }
 
-  trackById(index: number, car: ICar) {
+  trackById(index: number, car: Car) {
     return car.id;
   }
 }

@@ -2,7 +2,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { ClrLoadingState } from '@clr/angular';
 import { from, ObservableInput } from 'rxjs';
 
-export interface IConfirmDialogParameters {
+export interface ConfirmDialogParameters {
   type: number;
   id: string;
 }
@@ -15,8 +15,8 @@ export interface IConfirmDialogParameters {
 export class ConfirmDialogComponent {
   @Output() sucess = new EventEmitter<any>();
 
-  private params: IConfirmDialogParameters;
-  private saveHandler: (params: IConfirmDialogParameters) => ObservableInput<void>;
+  private params: ConfirmDialogParameters;
+  private saveHandler: (params: ConfirmDialogParameters) => ObservableInput<void>;
 
   isModalOpen = false;
   title: string;
@@ -27,8 +27,8 @@ export class ConfirmDialogComponent {
   openModal(
     title: string,
     message: string,
-    params: IConfirmDialogParameters,
-    saveHandler: (params: IConfirmDialogParameters) => ObservableInput<void>
+    params: ConfirmDialogParameters,
+    saveHandler: (params: ConfirmDialogParameters) => ObservableInput<void>
   ) {
     this.isModalOpen = true;
     this.title = title;

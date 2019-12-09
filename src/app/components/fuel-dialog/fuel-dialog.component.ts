@@ -2,7 +2,7 @@ import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ClrForm, ClrLoadingState } from '@clr/angular';
 import { from, ObservableInput } from 'rxjs';
-import { IFuel } from 'src/model';
+import { Fuel } from 'src/model';
 
 @Component({
   selector: 'myf-fuel-dialog',
@@ -12,9 +12,9 @@ import { IFuel } from 'src/model';
 export class FuelDialogComponent {
   @ViewChild(ClrForm, { static: true }) clrForm;
 
-  @Output() sucess = new EventEmitter<IFuel>();
+  @Output() sucess = new EventEmitter<Fuel>();
 
-  private saveHandler: (fuel: IFuel) => ObservableInput<IFuel>;
+  private saveHandler: (fuel: Fuel) => ObservableInput<Fuel>;
   private id: string;
 
   isModalOpen = false;
@@ -29,7 +29,7 @@ export class FuelDialogComponent {
     cost: new FormControl('', [Validators.required, Validators.pattern(/^\d*\.?\d{0,2}$/)])
   });
 
-  openModal(fuel: IFuel, saveHandler: (fuel: IFuel) => ObservableInput<IFuel>) {
+  openModal(fuel: Fuel, saveHandler: (fuel: Fuel) => ObservableInput<Fuel>) {
     this.isModalOpen = true;
     this.isNew = fuel.id === undefined;
     this.saveHandler = saveHandler;
@@ -46,7 +46,7 @@ export class FuelDialogComponent {
     if (this.form.invalid) {
       this.clrForm.markAsTouched();
     } else {
-      const fuel = Object.assign({}, this.form.value) as IFuel;
+      const fuel = Object.assign({}, this.form.value) as Fuel;
       fuel.id = this.id;
 
       this.submitButtonState = ClrLoadingState.LOADING;

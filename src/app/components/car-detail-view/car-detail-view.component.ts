@@ -2,10 +2,10 @@ import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { timer } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { ICar, IFuel } from 'src/model';
+import { Car, Fuel } from 'src/model';
 
 import { CarDialogComponent } from '../car-dialog/car-dialog.component';
-import { ConfirmDialogComponent, IConfirmDialogParameters } from '../confirm-dialog/confirm-dialog.component';
+import { ConfirmDialogComponent, ConfirmDialogParameters } from '../confirm-dialog/confirm-dialog.component';
 import { FuelDialogComponent } from '../fuel-dialog/fuel-dialog.component';
 
 enum ConfirmationType {
@@ -26,7 +26,7 @@ export class CarDetailViewComponent {
   name: string;
   selectedFuelId: string;
 
-  fuels: IFuel[] = [
+  fuels: Fuel[] = [
     { id: '1', date: '2019-04-02', km: 634, litres: 47.44, cost: 10.35 },
     { id: '2', date: '2019-04-24', km: 673, litres: 47.45, cost: 20.3 },
     { id: '3', date: '2019-10-14', km: 705, litres: 50.34, cost: 30 },
@@ -38,7 +38,7 @@ export class CarDetailViewComponent {
   }
 
   updateCar() {
-    this.carDialog.openModal({ id: 'id', name: this.name } as ICar, car => timer(500).pipe(map(_ => car)));
+    this.carDialog.openModal({ id: 'id', name: this.name } as Car, car => timer(500).pipe(map(_ => car)));
   }
 
   deleteCar() {
@@ -51,7 +51,7 @@ export class CarDetailViewComponent {
   }
 
   addFuel() {
-    this.fuelDialog.openModal({ date: new Date().toISOString().slice(0, 10) } as IFuel, fuel => timer(500).pipe(map(_ => fuel)));
+    this.fuelDialog.openModal({ date: new Date().toISOString().slice(0, 10) } as Fuel, fuel => timer(500).pipe(map(_ => fuel)));
   }
 
   updateFuel() {
@@ -77,11 +77,11 @@ export class CarDetailViewComponent {
     }
   }
 
-  onCarUpdated(car: ICar) {
+  onCarUpdated(car: Car) {
     this.name = car.name;
   }
 
-  onFuelAddedOrUpdated(fuel: IFuel) {
+  onFuelAddedOrUpdated(fuel: Fuel) {
     if (fuel.id) {
       const index = this.fuels.findIndex(f => f.id === fuel.id);
       this.fuels[index] = fuel;
@@ -93,7 +93,7 @@ export class CarDetailViewComponent {
     this.selectedFuelId = undefined;
   }
 
-  onConfirmSucess(params: IConfirmDialogParameters) {
+  onConfirmSucess(params: ConfirmDialogParameters) {
     switch (params.type) {
       case ConfirmationType.DeleteCar:
         this.router.navigate(['../'], { relativeTo: this.route });
@@ -101,7 +101,7 @@ export class CarDetailViewComponent {
     }
   }
 
-  selectRow(fuel: IFuel) {
+  selectRow(fuel: Fuel) {
     if (this.selectedFuelId === fuel.id) {
       this.selectedFuelId = undefined;
     } else {
@@ -109,7 +109,7 @@ export class CarDetailViewComponent {
     }
   }
 
-  trackById(index: number, fuel: IFuel) {
+  trackById(index: number, fuel: Fuel) {
     return fuel.id;
   }
 }
