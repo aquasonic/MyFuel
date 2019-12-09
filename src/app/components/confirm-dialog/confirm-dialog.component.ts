@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { ClrLoadingState } from '@clr/angular';
-import { ObservableInput, from } from 'rxjs';
+import { from, ObservableInput } from 'rxjs';
 
 export interface IConfirmDialogParameters {
   type: number;

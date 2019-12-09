@@ -1,9 +1,10 @@
-import { Component, ViewChild, EventEmitter } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CarDialogComponent } from '../car-dialog/car-dialog.component';
-import { ICar, IFuel } from 'src/model';
 import { timer } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { ICar, IFuel } from 'src/model';
+
+import { CarDialogComponent } from '../car-dialog/car-dialog.component';
 import { ConfirmDialogComponent, IConfirmDialogParameters } from '../confirm-dialog/confirm-dialog.component';
 import { FuelDialogComponent } from '../fuel-dialog/fuel-dialog.component';
 
@@ -65,7 +66,10 @@ export class CarDetailViewComponent {
         { type: ConfirmationType.DeleteFuel, id: this.selectedFuelId },
         params =>
           timer(500).pipe(result => {
-            this.fuels.splice(this.fuels.findIndex(fuel => fuel.id === params.id), 1);
+            this.fuels.splice(
+              this.fuels.findIndex(fuel => fuel.id === params.id),
+              1
+            );
             this.selectedFuelId = undefined;
             return result;
           })

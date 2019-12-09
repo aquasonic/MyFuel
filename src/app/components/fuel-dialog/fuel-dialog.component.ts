@@ -1,8 +1,8 @@
-import { Component, ViewChild, EventEmitter, Output } from '@angular/core';
-import { ObservableInput, from } from 'rxjs';
-import { IFuel } from 'src/model';
+import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ClrForm, ClrLoadingState } from '@clr/angular';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { from, ObservableInput } from 'rxjs';
+import { IFuel } from 'src/model';
 
 @Component({
   selector: 'myf-fuel-dialog',

@@ -1,8 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { FormGroup, Validators, FormControl } from '@angular/forms';
-import { ClrForm } from '@clr/angular';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ClrForm } from '@clr/angular';
 
 @Component({
   selector: 'myf-home-view',
@@ -30,15 +30,14 @@ export class HomeViewComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.http
-      .get<any>('/.netlify/functions/ping')
-      .subscribe(result => (this.message = result.message), error => (this.message = error.message));
+    this.http.get<any>('/.netlify/functions/ping').subscribe(
+      result => (this.message = result.message),
+      error => (this.message = error.message)
+    );
 
-    this.http
-      .get<any>('/.netlify/functions/users-count')
-      .subscribe(
-        result => (this.numberOfUsers = 'There are ' + result + ' users available.'),
-        error => (this.numberOfUsers = error.message)
-      );
+    this.http.get<any>('/.netlify/functions/users-count').subscribe(
+      result => (this.numberOfUsers = 'There are ' + result + ' users available.'),
+      error => (this.numberOfUsers = error.message)
+    );
   }
 }

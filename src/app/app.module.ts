@@ -1,20 +1,20 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
+import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ClarityModule } from '@clr/angular';
 
 import { AppRoutingModule } from './app.routing';
 import {
-  ShellComponent,
-  HomeViewComponent,
-  CarListViewComponent,
   CarDetailViewComponent,
   CarDialogComponent,
+  CarListViewComponent,
   ConfirmDialogComponent,
-  FuelDialogComponent
+  FuelDialogComponent,
+  HomeViewComponent,
+  ShellComponent,
 } from './components';
-import { ClarityModule } from '@clr/angular';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [

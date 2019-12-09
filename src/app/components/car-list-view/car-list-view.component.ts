@@ -1,9 +1,10 @@
 import { Component, ViewChild } from '@angular/core';
-import { CarDialogComponent } from '../car-dialog/car-dialog.component';
-import { ICar } from 'src/model';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { timer } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { ICar } from 'src/model';
+
+import { CarDialogComponent } from '../car-dialog/car-dialog.component';
 
 @Component({
   selector: 'myf-car-list-view',
@@ -13,7 +14,10 @@ import { map } from 'rxjs/operators';
 export class CarListViewComponent {
   @ViewChild(CarDialogComponent, { static: false }) carDialog: CarDialogComponent;
 
-  cars: ICar[] = [{ id: 'audi', name: 'Audi RS 3' }, { id: 'porsche', name: 'Porsche 911' }];
+  cars: ICar[] = [
+    { id: 'audi', name: 'Audi RS 3' },
+    { id: 'porsche', name: 'Porsche 911' }
+  ];
 
   constructor(private router: Router, private route: ActivatedRoute) {}
 
