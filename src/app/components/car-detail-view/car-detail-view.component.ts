@@ -2,7 +2,8 @@ import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { timer } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Car, Fuel } from 'src/model';
+import { Car } from 'src/app/models/car.model';
+import { Fuel } from 'src/app/models/fuel.model';
 
 import { CarDialogComponent } from '../car-dialog/car-dialog.component';
 import { ConfirmDialogComponent, ConfirmDialogParameters } from '../confirm-dialog/confirm-dialog.component';
@@ -24,13 +25,13 @@ export class CarDetailViewComponent {
   @ViewChild(ConfirmDialogComponent, { static: false }) confirmDialog: ConfirmDialogComponent;
 
   name: string;
-  selectedFuelId: string;
+  selectedFuelId?: number;
 
   fuels: Fuel[] = [
-    { id: '1', date: '2019-04-02', km: 634, litres: 47.44, cost: 10.35 },
-    { id: '2', date: '2019-04-24', km: 673, litres: 47.45, cost: 20.3 },
-    { id: '3', date: '2019-10-14', km: 705, litres: 50.34, cost: 30 },
-    { id: '4', date: '2019-11-08', km: 634, litres: 47.44, cost: 40.35 }
+    { id: 1, date: '2019-04-02', km: 634, litres: 47.44, cost: 10.35 },
+    { id: 2, date: '2019-04-24', km: 673, litres: 47.45, cost: 20.3 },
+    { id: 3, date: '2019-10-14', km: 705, litres: 50.34, cost: 30 },
+    { id: 4, date: '2019-11-08', km: 634, litres: 47.44, cost: 40.35 }
   ];
 
   constructor(private router: Router, private route: ActivatedRoute) {
@@ -38,14 +39,14 @@ export class CarDetailViewComponent {
   }
 
   updateCar() {
-    this.carDialog.openModal({ id: 'id', name: this.name } as Car, car => timer(500).pipe(map(_ => car)));
+    this.carDialog.openModal({ id: 1, name: this.name } as Car, car => timer(500).pipe(map(_ => car)));
   }
 
   deleteCar() {
     this.confirmDialog.openModal(
       'Delete car?',
       'Are you sure you want to delete this car with all the fuel data? This can not be undone.',
-      { type: ConfirmationType.DeleteCar, id: 'id' },
+      { type: ConfirmationType.DeleteCar, id: 1 },
       params => timer(500)
     );
   }
@@ -86,7 +87,7 @@ export class CarDetailViewComponent {
       const index = this.fuels.findIndex(f => f.id === fuel.id);
       this.fuels[index] = fuel;
     } else {
-      fuel.id = Math.floor(Math.random() * Math.floor(1000)).toString();
+      fuel.id = Math.floor(Math.random() * Math.floor(1000));
       this.fuels.push(fuel);
     }
 

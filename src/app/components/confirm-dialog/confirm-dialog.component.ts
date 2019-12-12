@@ -4,7 +4,7 @@ import { from, ObservableInput } from 'rxjs';
 
 export interface ConfirmDialogParameters {
   type: number;
-  id: string;
+  id: number;
 }
 
 @Component({

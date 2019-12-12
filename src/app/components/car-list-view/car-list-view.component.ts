@@ -1,9 +1,8 @@
-import { Component, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { timer } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
-import { CarService } from 'src/app/services';
-import { Car } from 'src/model';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Car } from 'src/app/models/car.model';
+import { CarService } from 'src/app/services/car.service';
+import { UserService } from 'src/app/services/user.service';
 
 import { CarDialogComponent } from '../car-dialog/car-dialog.component';
 
@@ -12,19 +11,21 @@ import { CarDialogComponent } from '../car-dialog/car-dialog.component';
   templateUrl: './car-list-view.component.html',
   styleUrls: ['./car-list-view.component.scss']
 })
-export class CarListViewComponent {
-  @ViewChild(CarDialogComponent, { static: false }) carDialog: CarDialogComponent;
+export class CarListViewComponent implements OnInit {
+  @ViewChild(CarDialogComponent, { static: false }) private carDialog: CarDialogComponent;
 
-  readonly cars$ = this.route.params.pipe(switchMap(params => this.carService.getCars(params.user)));
+  private initialized = false;
 
-  constructor(private carService: CarService, private router: Router, private route: ActivatedRoute) {}
+  readonly cars$ = this.carService.cars$;
 
-  addCar() {
-    this.carDialog.openModal({} as Car, car => timer(500).pipe(map(_ => car)));
+  constructor(private userService: UserService, private carService: CarService, private route: ActivatedRoute) {}
+
+  ngOnInit() {
+    this.userService.fetchData(parseInt(this.route.snapshot.params.user, 10)).subscribe(_ => (this.initialized = true));
   }
 
-  onCarAdded(car: Car) {
-    this.router.navigate([car.name], { relativeTo: this.route });
+  addCar() {
+    this.carDialog.openModal({} as Car, car => this.carService.addCar(car));
   }
 
   trackById(index: number, car: Car) {

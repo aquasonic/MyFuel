@@ -2,7 +2,7 @@ import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ClrForm, ClrLoadingState } from '@clr/angular';
 import { from, ObservableInput } from 'rxjs';
-import { Car } from 'src/model';
+import { Car } from 'src/app/models/car.model';
 
 @Component({
   selector: 'myf-car-dialog',

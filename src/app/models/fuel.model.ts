@@ -1,10 +1,5 @@
-export interface Car {
-  id: string;
-  name: string;
-}
-
 export interface Fuel {
-  id: string;
+  id?: number;
   date: string;
   km: number;
   litres: number;

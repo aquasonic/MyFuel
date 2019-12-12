@@ -1,4 +1,4 @@
-<div *ngIf="cars$ | async as cars; else loading">
+<div *ngIf="initialized && cars$ | async as cars; else loading">
   <h1>My cars</h1>
 
   <p>Click on a car in the list to see the statistics and add tank fills. You can also add new cars at any time.</p>
@@ -17,7 +17,7 @@
   >
 
   <button class="btn btn-primary btn-block" (click)="addCar()">Add new car</button>
-  <myf-car-dialog (sucess)="onCarAdded($event)"></myf-car-dialog>
+  <myf-car-dialog></myf-car-dialog>
 </div>
 
 <ng-template #loading><myf-loading></myf-loading></ng-template>

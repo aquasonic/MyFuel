@@ -2,7 +2,7 @@ import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ClrForm, ClrLoadingState } from '@clr/angular';
 import { from, ObservableInput } from 'rxjs';
-import { Fuel } from 'src/model';
+import { Fuel } from 'src/app/models/fuel.model';
 
 @Component({
   selector: 'myf-fuel-dialog',
@@ -15,7 +15,7 @@ export class FuelDialogComponent {
   @Output() sucess = new EventEmitter<Fuel>();
 
   private saveHandler: (fuel: Fuel) => ObservableInput<Fuel>;
-  private id: string;
+  private id?: number;
 
   isModalOpen = false;
   isNew = false;
