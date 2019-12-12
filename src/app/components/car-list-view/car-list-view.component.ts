@@ -14,7 +14,7 @@ import { CarDialogComponent } from '../car-dialog/car-dialog.component';
 export class CarListViewComponent implements OnInit {
   @ViewChild(CarDialogComponent, { static: false }) private carDialog: CarDialogComponent;
 
-  private initialized = false;
+  initialized = false;
 
   readonly cars$ = this.carService.cars$;
 
