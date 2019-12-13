@@ -1,4 +1,4 @@
-import { Action, Selector, State, StateContext } from '@ngxs/store';
+import { Action, State, StateContext } from '@ngxs/store';
 
 import { Car } from '../models/car.model';
 import { AddCar, DeleteCar, UpdateCar } from './car.actions';
@@ -17,16 +17,6 @@ export interface AppStateModel {
   }
 })
 export class AppState {
-  @Selector()
-  static getUserId(state: AppStateModel) {
-    return state.userId;
-  }
-
-  @Selector()
-  static getCars(state: AppStateModel) {
-    return state.cars.sort((a, b) => a.name.localeCompare(b.name));
-  }
-
   @Action(InitializeUser)
   private initializeUser(context: StateContext<AppStateModel>, { user }: InitializeUser) {
     context.setState({ userId: user.id, cars: user.cars });

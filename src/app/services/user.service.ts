@@ -1,22 +1,19 @@
 import { Injectable } from '@angular/core';
-import { Select, Store } from '@ngxs/store';
-import { Observable, of } from 'rxjs';
+import { Store } from '@ngxs/store';
+import { of } from 'rxjs';
 import { delay, switchMap } from 'rxjs/operators';
 
 import { USER_MOCK } from '../models/user.mock';
-import { AppState } from '../state/app.state';
 import { InitializeUser } from '../state/user.actions';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  @Select(AppState.getUserId) public userId$: Observable<number>;
-
   constructor(private store: Store) {}
 
   fetchData(userId: number) {
-    const currentUserId = this.store.selectSnapshot(AppState.getUserId);
+    const currentUserId = this.store.selectSnapshot(state => state.app.userId);
     if (userId === currentUserId) {
       return of(true);
     }
