@@ -1,4 +1,4 @@
-<clr-modal [(clrModalOpen)]="isModalOpen" [clrModalClosable]="false">
+<clr-modal [(clrModalOpen)]="isOpen" [clrModalClosable]="false">
   <h3 class="modal-title">{{ isNew ? 'Add new car' : 'Update car' }}</h3>
   <div class="modal-body">
     <p>Please provide the details of your car in the following form.</p>
@@ -11,8 +11,8 @@
     </form>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline" (click)="closeModal()">Cancel</button>
-    <button type="button" class="btn btn-primary" (click)="submitForm()" [clrLoading]="submitButtonState">
+    <button type="button" class="btn btn-outline" (click)="close()">Cancel</button>
+    <button type="button" class="btn btn-primary" (click)="submit()" [clrLoading]="submitButtonState">
       {{ isNew ? 'Add' : 'Save' }}
     </button>
   </div>

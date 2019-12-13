@@ -1,11 +1,7 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component } from '@angular/core';
 import { ClrLoadingState } from '@clr/angular';
-import { from, ObservableInput } from 'rxjs';
-
-export interface ConfirmDialogParameters {
-  type: number;
-  id: number;
-}
+import { Observable } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'myf-confirm-dialog',
@@ -13,47 +9,37 @@ export interface ConfirmDialogParameters {
   styleUrls: ['./confirm-dialog.component.scss']
 })
 export class ConfirmDialogComponent {
-  @Output() sucess = new EventEmitter<any>();
-
-  private params: ConfirmDialogParameters;
-  private saveHandler: (params: ConfirmDialogParameters) => ObservableInput<void>;
-
-  isModalOpen = false;
+  isOpen = false;
   title: string;
   message: string;
 
   confirmButtonState = ClrLoadingState.DEFAULT;
 
-  openModal(
-    title: string,
-    message: string,
-    params: ConfirmDialogParameters,
-    saveHandler: (params: ConfirmDialogParameters) => ObservableInput<void>
-  ) {
-    this.isModalOpen = true;
+  private params: any;
+  private confirmHandler: (params: any) => Observable<void>;
+  private callback: () => void;
+
+  open(title: string, message: string, params: any, confirmHandler: (params: any) => Observable<void>, callback: () => void) {
+    this.isOpen = true;
     this.title = title;
     this.message = message;
 
     this.params = params;
-    this.saveHandler = saveHandler;
+    this.confirmHandler = confirmHandler;
+    this.callback = callback;
   }
 
-  closeModal() {
-    this.isModalOpen = false;
+  close() {
+    this.isOpen = false;
   }
 
   confirm() {
     this.confirmButtonState = ClrLoadingState.LOADING;
-
-    from(this.saveHandler(this.params)).subscribe(
-      result => {
-        this.confirmButtonState = ClrLoadingState.SUCCESS;
-        this.sucess.emit(this.params);
-        this.closeModal();
-      },
-      error => {
-        this.confirmButtonState = ClrLoadingState.ERROR;
-      }
-    );
+    this.confirmHandler(this.params)
+      .pipe(finalize(() => (this.confirmButtonState = ClrLoadingState.DEFAULT)))
+      .subscribe(_ => {
+        this.isOpen = false;
+        this.callback();
+      });
   }
 }

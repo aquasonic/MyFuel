@@ -16,7 +16,7 @@ export class CarListViewComponent implements OnInit {
 
   initialized = false;
 
-  readonly cars$ = this.carService.cars$;
+  cars$ = this.carService.getAllCars();
 
   constructor(private userService: UserService, private carService: CarService, private route: ActivatedRoute) {}
 
@@ -25,7 +25,7 @@ export class CarListViewComponent implements OnInit {
   }
 
   addCar() {
-    this.carDialog.openModal({} as Car, car => this.carService.addCar(car));
+    this.carDialog.open({} as Car, car => this.carService.addCar(car));
   }
 
   trackById(index: number, car: Car) {

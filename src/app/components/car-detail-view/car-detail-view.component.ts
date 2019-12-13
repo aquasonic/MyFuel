@@ -1,30 +1,30 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { timer } from 'rxjs';
+import { EMPTY, Observable, timer } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Car } from 'src/app/models/car.model';
 import { Fuel } from 'src/app/models/fuel.model';
+import { CarService } from 'src/app/services/car.service';
+import { UserService } from 'src/app/services/user.service';
 
 import { CarDialogComponent } from '../car-dialog/car-dialog.component';
-import { ConfirmDialogComponent, ConfirmDialogParameters } from '../confirm-dialog/confirm-dialog.component';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { FuelDialogComponent } from '../fuel-dialog/fuel-dialog.component';
-
-enum ConfirmationType {
-  DeleteCar = 1,
-  DeleteFuel = 2
-}
 
 @Component({
   selector: 'myf-car-detail-view',
   templateUrl: './car-detail-view.component.html',
   styleUrls: ['./car-detail-view.component.scss']
 })
-export class CarDetailViewComponent {
+export class CarDetailViewComponent implements OnInit {
   @ViewChild(CarDialogComponent, { static: false }) carDialog: CarDialogComponent;
   @ViewChild(FuelDialogComponent, { static: false }) fuelDialog: FuelDialogComponent;
   @ViewChild(ConfirmDialogComponent, { static: false }) confirmDialog: ConfirmDialogComponent;
 
-  name: string;
+  initialized = false;
+
+  car$: Observable<Car>;
+
   selectedFuelId?: number;
 
   fuels: Fuel[] = [
@@ -34,20 +34,24 @@ export class CarDetailViewComponent {
     { id: 4, date: '2019-11-08', km: 634, litres: 47.44, cost: 40.35 }
   ];
 
-  constructor(private router: Router, private route: ActivatedRoute) {
-    this.name = this.route.snapshot.params.car;
+  constructor(private userService: UserService, private carService: CarService, private router: Router, private route: ActivatedRoute) {}
+
+  ngOnInit() {
+    this.userService.fetchData(parseInt(this.route.snapshot.params.user, 10)).subscribe(_ => (this.initialized = true));
+    this.car$ = this.carService.getCarById(parseInt(this.route.snapshot.params.car, 10));
   }
 
-  updateCar() {
-    this.carDialog.openModal({ id: 1, name: this.name } as Car, car => timer(500).pipe(map(_ => car)));
+  updateCar(car: Car) {
+    this.carDialog.open(car, c => this.carService.updateCar(c));
   }
 
-  deleteCar() {
-    this.confirmDialog.openModal(
+  deleteCar(id: number) {
+    this.confirmDialog.open(
       'Delete car?',
       'Are you sure you want to delete this car with all the fuel data? This can not be undone.',
-      { type: ConfirmationType.DeleteCar, id: 1 },
-      params => timer(500)
+      id,
+      params => this.carService.deleteCar(params),
+      () => this.router.navigate(['../'], { relativeTo: this.route })
     );
   }
 
@@ -61,25 +65,22 @@ export class CarDetailViewComponent {
 
   deleteFuel() {
     if (this.selectedFuelId) {
-      this.confirmDialog.openModal(
+      this.confirmDialog.open(
         'Delete fuel?',
         'Are you sure you want to delete this fuel? You could easily add it again later.',
-        { type: ConfirmationType.DeleteFuel, id: this.selectedFuelId },
-        params =>
-          timer(500).pipe(result => {
-            this.fuels.splice(
-              this.fuels.findIndex(fuel => fuel.id === params.id),
-              1
-            );
-            this.selectedFuelId = undefined;
-            return result;
-          })
+        this.selectedFuelId,
+        params => {
+          this.fuels.splice(
+            this.fuels.findIndex(fuel => fuel.id === params.id),
+            1
+          );
+
+          this.selectedFuelId = undefined;
+          return EMPTY;
+        },
+        () => {}
       );
     }
-  }
-
-  onCarUpdated(car: Car) {
-    this.name = car.name;
   }
 
   onFuelAddedOrUpdated(fuel: Fuel) {
@@ -92,14 +93,6 @@ export class CarDetailViewComponent {
     }
 
     this.selectedFuelId = undefined;
-  }
-
-  onConfirmSucess(params: ConfirmDialogParameters) {
-    switch (params.type) {
-      case ConfirmationType.DeleteCar:
-        this.router.navigate(['../'], { relativeTo: this.route });
-        break;
-    }
   }
 
   selectRow(fuel: Fuel) {

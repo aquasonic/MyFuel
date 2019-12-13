@@ -13,7 +13,7 @@ export class UserService {
   constructor(private store: Store) {}
 
   fetchData(userId: number) {
-    const currentUserId = this.store.selectSnapshot(state => state.app.userId);
+    const currentUserId = this.store.selectSnapshot<number>(state => state.app.userId);
     if (userId === currentUserId) {
       return of(true);
     }

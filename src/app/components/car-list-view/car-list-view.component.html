@@ -5,7 +5,7 @@
 
   <ul class="list-unstyled cars" *ngIf="cars.length > 0; else noItems">
     <li *ngFor="let car of cars; trackBy: trackById">
-      <a [routerLink]="['./' + car.name]">
+      <a [routerLink]="['./' + car.id]">
         <span>{{ car.name }}</span>
         <clr-icon shape="caret right"></clr-icon>
       </a>
