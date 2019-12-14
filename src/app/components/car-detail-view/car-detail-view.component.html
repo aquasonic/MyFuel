@@ -20,39 +20,43 @@
   </p>
 
   <div class="add">
-    <button class="btn btn-primary btn-block" (click)="addFuel()">Add new fuel</button>
+    <button class="btn btn-primary btn-block" (click)="addFuel(car.id)">Add new fuel</button>
   </div>
 
-  <table class="table" *ngIf="car.fuels.length > 0" [ngClass]="{ 'fuel-selected': selectedFuelId }">
-    <thead>
-      <tr>
-        <th>Date</th>
-        <th>Km</th>
-        <th>Litres</th>
-        <th>Cons.</th>
-        <th>Cost</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let fuel of car.fuels; trackBy: trackById" (click)="selectRow(fuel)" [ngClass]="{ active: selectedFuelId === fuel.id }">
-        <td>{{ fuel.date | date: 'dd.MM.yy' }}</td>
-        <td>{{ fuel.km | number: '1.0-0' }}</td>
-        <td>{{ fuel.litres | number: '1.2-2' }}</td>
-        <td>{{ (fuel.litres / fuel.km) * 100 | number: '1.2-2' }}</td>
-        <td>{{ fuel.cost | number: '1.2-2' }}</td>
-      </tr>
-    </tbody>
-  </table>
+  <ng-container *ngIf="fuels$ | async as fuels">
+    <table class="table" *ngIf="fuels.length > 0" [ngClass]="{ 'fuel-selected': selectedFuel }">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Km</th>
+          <th>Litres</th>
+          <th>Cons.</th>
+          <th>Cost</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let fuel of fuels; trackBy: trackById" (click)="selectFuel(fuel)" [ngClass]="{ active: selectedFuel?.id === fuel.id }">
+          <td>{{ fuel.date | date: 'dd.MM.yy' }}</td>
+          <td>{{ fuel.km | number: '1.0-0' }}</td>
+          <td>{{ fuel.litres | number: '1.2-2' }}</td>
+          <td>{{ (fuel.litres / fuel.km) * 100 | number: '1.2-2' }}</td>
+          <td>{{ fuel.cost | number: '1.2-2' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </ng-container>
 
-  <div class="footer-bar" *ngIf="selectedFuelId">
+  <div class="footer-bar" *ngIf="selectedFuel">
     <div>
-      <button class="btn btn-outline" (click)="updateFuel()"><clr-icon shape="pencil"></clr-icon> Update fuel</button>
-      <button class="btn btn-danger-outline" (click)="deleteFuel()"><clr-icon shape="trash"></clr-icon> Delete fuel</button>
+      <button class="btn btn-outline" (click)="updateFuel(car.id, selectedFuel)"><clr-icon shape="pencil"></clr-icon> Update fuel</button>
+      <button class="btn btn-danger-outline" (click)="deleteFuel(car.id, selectedFuel.id)">
+        <clr-icon shape="trash"></clr-icon> Delete fuel
+      </button>
     </div>
   </div>
 
   <myf-car-dialog></myf-car-dialog>
-  <myf-fuel-dialog (sucess)="onFuelAddedOrUpdated($event)"></myf-fuel-dialog>
+  <myf-fuel-dialog></myf-fuel-dialog>
   <myf-confirm-dialog></myf-confirm-dialog>
 </div>
 

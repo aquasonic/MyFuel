@@ -10,6 +10,7 @@ import { InitializeUser } from '../state/user.actions';
   providedIn: 'root'
 })
 export class UserService {
+  // TODO: Attach to function api to store information in fauna db
   constructor(private store: Store) {}
 
   fetchData(userId: number) {

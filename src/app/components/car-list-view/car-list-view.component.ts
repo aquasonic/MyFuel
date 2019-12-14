@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
 import { Car } from 'src/app/models/car.model';
 import { CarService } from 'src/app/services/car.service';
 import { UserService } from 'src/app/services/user.service';
@@ -16,12 +17,15 @@ export class CarListViewComponent implements OnInit {
 
   initialized = false;
 
-  cars$ = this.carService.getAllCars();
+  cars$: Observable<Car[]>;
 
   constructor(private userService: UserService, private carService: CarService, private route: ActivatedRoute) {}
 
   ngOnInit() {
-    this.userService.fetchData(parseInt(this.route.snapshot.params.user, 10)).subscribe(_ => (this.initialized = true));
+    const userId = parseInt(this.route.snapshot.params.user, 10);
+
+    this.userService.fetchData(userId).subscribe(_ => (this.initialized = true));
+    this.cars$ = this.carService.getAllCars();
   }
 
   addCar() {

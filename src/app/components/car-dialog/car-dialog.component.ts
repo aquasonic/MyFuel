@@ -19,7 +19,7 @@ export class CarDialogComponent {
   submitButtonState = ClrLoadingState.DEFAULT;
 
   form = new FormGroup({
-    id: new FormControl(0, Validators.required),
+    id: new FormControl(),
     name: new FormControl(null, Validators.required)
   });
 
@@ -29,11 +29,10 @@ export class CarDialogComponent {
     this.isNew = car.id === undefined;
     this.submitHandler = submitHandler;
 
-    if (!this.isNew) {
-      this.form.patchValue(car);
-    }
-
     this.isOpen = true;
+
+    this.form.reset();
+    this.form.patchValue(car);
   }
 
   close() {

@@ -1,7 +1,8 @@
-import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ClrForm, ClrLoadingState } from '@clr/angular';
-import { from, ObservableInput } from 'rxjs';
+import { Observable } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 import { Fuel } from 'src/app/models/fuel.model';
 
 @Component({
@@ -12,55 +13,50 @@ import { Fuel } from 'src/app/models/fuel.model';
 export class FuelDialogComponent {
   @ViewChild(ClrForm, { static: true }) clrForm;
 
-  @Output() sucess = new EventEmitter<Fuel>();
-
-  private saveHandler: (fuel: Fuel) => ObservableInput<Fuel>;
-  private id?: number;
-
-  isModalOpen = false;
+  isOpen = false;
   isNew = false;
 
   submitButtonState = ClrLoadingState.DEFAULT;
 
   form = new FormGroup({
-    date: new FormControl('', Validators.required),
-    km: new FormControl('', [Validators.required, Validators.pattern(/^\d*$/)]),
-    litres: new FormControl('', [Validators.required, Validators.pattern(/^\d*\.?\d{0,2}$/)]),
-    cost: new FormControl('', [Validators.required, Validators.pattern(/^\d*\.?\d{0,2}$/)])
+    id: new FormControl(),
+    date: new FormControl(null, Validators.required),
+    km: new FormControl(null, [Validators.required, Validators.pattern(/^\d*$/)]),
+    litres: new FormControl(null, [Validators.required, Validators.pattern(/^\d*\.?\d{0,2}$/)]),
+    cost: new FormControl(null, [Validators.required, Validators.pattern(/^\d*\.?\d{0,2}$/)])
   });
 
-  openModal(fuel: Fuel, saveHandler: (fuel: Fuel) => ObservableInput<Fuel>) {
-    this.isModalOpen = true;
+  private submitHandler: (fuel: Fuel) => Observable<void>;
+  private callback: (fuel: Fuel) => void;
+
+  open(fuel: Fuel, submitHandler: (fuel: Fuel) => Observable<void>, callback: (fuel: Fuel) => void) {
     this.isNew = fuel.id === undefined;
-    this.saveHandler = saveHandler;
-    this.id = fuel.id;
+    this.submitHandler = submitHandler;
+    this.callback = callback;
+
+    this.isOpen = true;
+
+    this.form.reset();
     this.form.patchValue(fuel);
   }
 
-  closeModal() {
+  close() {
     this.form.reset();
-    this.isModalOpen = false;
+    this.isOpen = false;
   }
 
-  submitForm() {
+  submit() {
     if (this.form.invalid) {
       this.clrForm.markAsTouched();
     } else {
-      const fuel = Object.assign({}, this.form.value) as Fuel;
-      fuel.id = this.id;
-
       this.submitButtonState = ClrLoadingState.LOADING;
-
-      from(this.saveHandler(fuel)).subscribe(
-        result => {
-          this.submitButtonState = ClrLoadingState.SUCCESS;
-          this.sucess.emit(result);
-          this.closeModal();
-        },
-        error => {
-          this.submitButtonState = ClrLoadingState.ERROR;
-        }
-      );
+      const fuel = { ...this.form.value };
+      this.submitHandler(fuel)
+        .pipe(finalize(() => (this.submitButtonState = ClrLoadingState.DEFAULT)))
+        .subscribe(_ => {
+          this.isOpen = false;
+          this.callback(fuel);
+        });
     }
   }
 }

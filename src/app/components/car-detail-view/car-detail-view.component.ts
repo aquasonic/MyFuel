@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { EMPTY, Observable, timer } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 import { Car } from 'src/app/models/car.model';
 import { Fuel } from 'src/app/models/fuel.model';
 import { CarService } from 'src/app/services/car.service';
+import { FuelService } from 'src/app/services/fuel.service';
 import { UserService } from 'src/app/services/user.service';
 
 import { CarDialogComponent } from '../car-dialog/car-dialog.component';
@@ -17,28 +17,31 @@ import { FuelDialogComponent } from '../fuel-dialog/fuel-dialog.component';
   styleUrls: ['./car-detail-view.component.scss']
 })
 export class CarDetailViewComponent implements OnInit {
-  @ViewChild(CarDialogComponent, { static: false }) carDialog: CarDialogComponent;
-  @ViewChild(FuelDialogComponent, { static: false }) fuelDialog: FuelDialogComponent;
-  @ViewChild(ConfirmDialogComponent, { static: false }) confirmDialog: ConfirmDialogComponent;
+  @ViewChild(CarDialogComponent, { static: false }) private carDialog: CarDialogComponent;
+  @ViewChild(FuelDialogComponent, { static: false }) private fuelDialog: FuelDialogComponent;
+  @ViewChild(ConfirmDialogComponent, { static: false }) private confirmDialog: ConfirmDialogComponent;
 
   initialized = false;
+  selectedFuel: Fuel;
 
   car$: Observable<Car>;
+  fuels$: Observable<Fuel[]>;
 
-  selectedFuelId?: number;
-
-  fuels: Fuel[] = [
-    { id: 1, date: '2019-04-02', km: 634, litres: 47.44, cost: 10.35 },
-    { id: 2, date: '2019-04-24', km: 673, litres: 47.45, cost: 20.3 },
-    { id: 3, date: '2019-10-14', km: 705, litres: 50.34, cost: 30 },
-    { id: 4, date: '2019-11-08', km: 634, litres: 47.44, cost: 40.35 }
-  ];
-
-  constructor(private userService: UserService, private carService: CarService, private router: Router, private route: ActivatedRoute) {}
+  constructor(
+    private userService: UserService,
+    private carService: CarService,
+    private fuelService: FuelService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit() {
-    this.userService.fetchData(parseInt(this.route.snapshot.params.user, 10)).subscribe(_ => (this.initialized = true));
-    this.car$ = this.carService.getCarById(parseInt(this.route.snapshot.params.car, 10));
+    const userId = parseInt(this.route.snapshot.params.user, 10);
+    const carId = parseInt(this.route.snapshot.params.car, 10);
+
+    this.userService.fetchData(userId).subscribe(_ => (this.initialized = true));
+    this.car$ = this.carService.getCarById(carId);
+    this.fuels$ = this.fuelService.getAllFuelsByCarId(carId);
   }
 
   updateCar(car: Car) {
@@ -55,51 +58,38 @@ export class CarDetailViewComponent implements OnInit {
     );
   }
 
-  addFuel() {
-    this.fuelDialog.openModal({ date: new Date().toISOString().slice(0, 10) } as Fuel, fuel => timer(500).pipe(map(_ => fuel)));
+  addFuel(carId: number) {
+    const fuel = { date: new Date().toISOString().slice(0, 10) } as Fuel;
+    this.fuelDialog.open(
+      fuel,
+      f => this.fuelService.addFuel(carId, f),
+      f => (this.selectedFuel = f)
+    );
   }
 
-  updateFuel() {
-    this.fuelDialog.openModal(this.fuels[this.fuels.findIndex(f => f.id === this.selectedFuelId)], fuel => timer(500).pipe(map(_ => fuel)));
+  updateFuel(carId: number, fuel: Fuel) {
+    this.fuelDialog.open(
+      fuel,
+      f => this.fuelService.updateFuel(carId, f),
+      f => (this.selectedFuel = f)
+    );
   }
 
-  deleteFuel() {
-    if (this.selectedFuelId) {
-      this.confirmDialog.open(
-        'Delete fuel?',
-        'Are you sure you want to delete this fuel? You could easily add it again later.',
-        this.selectedFuelId,
-        params => {
-          this.fuels.splice(
-            this.fuels.findIndex(fuel => fuel.id === params.id),
-            1
-          );
-
-          this.selectedFuelId = undefined;
-          return EMPTY;
-        },
-        () => {}
-      );
-    }
+  deleteFuel(carId: number, fuelId: number) {
+    this.confirmDialog.open(
+      'Delete fuel?',
+      'Are you sure you want to delete this fuel? You could easily add it again later.',
+      { carId, fuelId },
+      params => this.fuelService.deleteFuel(params.carId, params.fuelId),
+      () => (this.selectedFuel = undefined)
+    );
   }
 
-  onFuelAddedOrUpdated(fuel: Fuel) {
-    if (fuel.id) {
-      const index = this.fuels.findIndex(f => f.id === fuel.id);
-      this.fuels[index] = fuel;
+  selectFuel(fuel: Fuel) {
+    if (this.selectedFuel !== undefined && this.selectedFuel.id === fuel.id) {
+      this.selectedFuel = undefined;
     } else {
-      fuel.id = Math.floor(Math.random() * Math.floor(1000));
-      this.fuels.push(fuel);
-    }
-
-    this.selectedFuelId = undefined;
-  }
-
-  selectRow(fuel: Fuel) {
-    if (this.selectedFuelId === fuel.id) {
-      this.selectedFuelId = undefined;
-    } else {
-      this.selectedFuelId = fuel.id;
+      this.selectedFuel = fuel;
     }
   }
 
