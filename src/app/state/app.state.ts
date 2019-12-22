@@ -7,6 +7,7 @@ import { InitializeUser } from './user.actions';
 
 export interface AppStateModel {
   userId?: number;
+  userName: string;
   cars: Car[];
 }
 
@@ -14,13 +15,14 @@ export interface AppStateModel {
   name: 'app',
   defaults: {
     userId: undefined,
+    userName: undefined,
     cars: []
   }
 })
 export class AppState {
   @Action(InitializeUser)
   private initializeUser(context: StateContext<AppStateModel>, { user }: InitializeUser) {
-    context.setState({ userId: user.id, cars: user.cars });
+    context.setState({ userId: user.id, userName: user.name, cars: user.cars });
   }
 
   @Action(AddCar)

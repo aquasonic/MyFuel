@@ -3,6 +3,7 @@ import { User } from './user.model';
 // TODO: Remove as soon as we have db connetion
 export const USER_MOCK: User = {
   id: 1,
+  name: 'Kevin',
   cars: [
     {
       id: 1,

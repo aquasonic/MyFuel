@@ -13,6 +13,10 @@ export class UserService {
   // TODO: Attach to function api to store information in fauna db
   constructor(private store: Store) {}
 
+  getCurrentUserName() {
+    return this.store.select<string>(state => state.app.userName);
+  }
+
   fetchData(userId: number) {
     const currentUserId = this.store.selectSnapshot<number>(state => state.app.userId);
     if (userId === currentUserId) {
@@ -28,6 +32,6 @@ export class UserService {
       );
     }
 
-    return this.store.dispatch(new InitializeUser({ id: userId, cars: [] }));
+    return this.store.dispatch(new InitializeUser({ id: userId, name: 'Unknown User', cars: [] }));
   }
 }

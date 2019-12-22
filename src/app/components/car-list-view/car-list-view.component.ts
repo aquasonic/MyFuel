@@ -18,6 +18,7 @@ export class CarListViewComponent implements OnInit {
   initialized = false;
 
   cars$: Observable<Car[]>;
+  userName$: Observable<string>;
 
   constructor(private userService: UserService, private carService: CarService, private route: ActivatedRoute) {}
 
@@ -25,6 +26,7 @@ export class CarListViewComponent implements OnInit {
     const userId = parseInt(this.route.snapshot.params.user, 10);
 
     this.userService.fetchData(userId).subscribe(_ => (this.initialized = true));
+    this.userName$ = this.userService.getCurrentUserName();
     this.cars$ = this.carService.getAllCars();
   }
 

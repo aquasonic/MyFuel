@@ -1,5 +1,5 @@
 <div *ngIf="initialized && cars$ | async as cars; else loading">
-  <h1>My cars</h1>
+  <h1>Hi, {{ userName$ | async }}</h1>
 
   <p>Click on a car in the list to see the statistics and add tank fills. You can also add new cars at any time.</p>
 
