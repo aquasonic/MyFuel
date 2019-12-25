@@ -1,3 +1,5 @@
 export const environment = {
-  production: true
+  production: true,
+  dbSecret: 'fnADgOcLOyACAEdmtSHCdVDkCgoIdw4Psqkp02iY',
+  dbServer: 'https://graphql.fauna.com/graphql'
 };
