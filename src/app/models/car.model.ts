@@ -1,7 +1,7 @@
 import { Fuel } from './fuel.model';
 
 export interface Car {
-  id?: number;
+  id: string;
   name: string;
   fuels: Fuel[];
 }

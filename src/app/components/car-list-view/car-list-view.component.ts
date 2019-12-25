@@ -23,7 +23,7 @@ export class CarListViewComponent implements OnInit {
   constructor(private userService: UserService, private carService: CarService, private route: ActivatedRoute) {}
 
   ngOnInit() {
-    const userId = parseInt(this.route.snapshot.params.user, 10);
+    const userId = this.route.snapshot.params.user;
 
     this.userService.fetchData(userId).subscribe(_ => (this.initialized = true));
     this.userName$ = this.userService.getCurrentUserName();

@@ -6,7 +6,7 @@ import { AddFuel, DeleteFuel, UpdateFuel } from './fuel.actions';
 import { InitializeUser } from './user.actions';
 
 export interface AppStateModel {
-  userId?: number;
+  userId: string;
   userName: string;
   cars: Car[];
 }

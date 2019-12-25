@@ -1,5 +1,5 @@
 export interface Fuel {
-  id?: number;
+  id: string;
   date: string;
   km: number;
   litres: number;

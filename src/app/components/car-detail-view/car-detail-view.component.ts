@@ -36,8 +36,8 @@ export class CarDetailViewComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    const userId = parseInt(this.route.snapshot.params.user, 10);
-    const carId = parseInt(this.route.snapshot.params.car, 10);
+    const userId = this.route.snapshot.params.user;
+    const carId = this.route.snapshot.params.car;
 
     this.userService.fetchData(userId).subscribe(_ => (this.initialized = true));
     this.car$ = this.carService.getCarById(carId);
@@ -48,7 +48,7 @@ export class CarDetailViewComponent implements OnInit {
     this.carDialog.open(car, c => this.carService.updateCar(c));
   }
 
-  deleteCar(id: number) {
+  deleteCar(id: string) {
     this.confirmDialog.open(
       'Delete car?',
       'Are you sure you want to delete this car with all the fuel data? This can not be undone.',
@@ -58,7 +58,7 @@ export class CarDetailViewComponent implements OnInit {
     );
   }
 
-  addFuel(carId: number) {
+  addFuel(carId: string) {
     const fuel = { date: new Date().toISOString().slice(0, 10) } as Fuel;
     this.fuelDialog.open(
       fuel,
@@ -67,7 +67,7 @@ export class CarDetailViewComponent implements OnInit {
     );
   }
 
-  updateFuel(carId: number, fuel: Fuel) {
+  updateFuel(carId: string, fuel: Fuel) {
     this.fuelDialog.open(
       fuel,
       f => this.fuelService.updateFuel(carId, f),
@@ -75,7 +75,7 @@ export class CarDetailViewComponent implements OnInit {
     );
   }
 
-  deleteFuel(carId: number, fuelId: number) {
+  deleteFuel(carId: string, fuelId: string) {
     this.confirmDialog.open(
       'Delete fuel?',
       'Are you sure you want to delete this fuel? You could easily add it again later.',

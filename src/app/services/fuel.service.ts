@@ -14,30 +14,30 @@ export class FuelService {
   // TODO: Attach to function api to store information in fauna db
   constructor(private store: Store) {}
 
-  getAllFuelsByCarId(id: number) {
+  getAllFuelsByCarId(id: string) {
     return this.store
       .select<Car>(state => state.app.cars.filter((c: Car) => c.id === id)[0])
       .pipe(map(c => c.fuels.sort((a: Fuel, b: Fuel) => new Date(b.date).getTime() - new Date(a.date).getTime())));
   }
 
-  addFuel(carId: number, fuel: Fuel) {
+  addFuel(carId: string, fuel: Fuel) {
     return of(true).pipe(
       delay(1000),
       switchMap(_ => {
-        fuel.id = Math.floor(Math.random() * Math.floor(1000));
+        fuel.id = Math.floor(Math.random() * Math.floor(1000)).toString();
         return this.store.dispatch(new AddFuel(carId, fuel));
       })
     );
   }
 
-  updateFuel(carId: number, fuel: Fuel) {
+  updateFuel(carId: string, fuel: Fuel) {
     return of(true).pipe(
       delay(1000),
       switchMap(_ => this.store.dispatch(new UpdateFuel(carId, fuel)))
     );
   }
 
-  deleteFuel(carId: number, fuelId: number) {
+  deleteFuel(carId: string, fuelId: string) {
     return of(true).pipe(
       delay(1000),
       switchMap(_ => this.store.dispatch(new DeleteFuel(carId, fuelId)))

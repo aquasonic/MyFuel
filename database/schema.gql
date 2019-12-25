@@ -1,0 +1,18 @@
+type User {
+    name: String!
+    cars: [Car] @relation
+}
+
+type Car {
+    user: User!
+    name: String!
+    fuels: [Fuel] @relation
+}
+
+type Fuel {
+    car: Car!
+    date: String!
+    km: Int!
+    litres: Float!
+    cost: Float!
+}

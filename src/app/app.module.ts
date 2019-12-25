@@ -5,6 +5,12 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ClarityModule } from '@clr/angular';
 import { NgxsModule } from '@ngxs/store';
+import { APOLLO_OPTIONS, ApolloModule } from 'apollo-angular';
+import { HttpLink, HttpLinkModule } from 'apollo-angular-link-http';
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import { ApolloLink } from 'apollo-link';
+import { setContext } from 'apollo-link-context';
+import { environment } from 'src/environments/environment';
 
 import { AppRoutingModule } from './app.routing';
 import { CarDetailViewComponent } from './components/car-detail-view/car-detail-view.component';
@@ -16,6 +22,20 @@ import { HomeViewComponent } from './components/home-view/home-view.component';
 import { LoadingComponent } from './components/loading/loading.component';
 import { ShellComponent } from './components/shell/shell.component';
 import { AppState } from './state/app.state';
+
+export function createApolloOptions(httpLink: HttpLink) {
+  return {
+    cache: new InMemoryCache(),
+    link: ApolloLink.from([
+      setContext(_ => ({
+        headers: {
+          Authorization: `Bearer ${environment.dbSecret}`
+        }
+      })),
+      httpLink.create({ uri: environment.dbServer })
+    ])
+  };
+}
 
 @NgModule({
   declarations: [
@@ -32,12 +52,20 @@ import { AppState } from './state/app.state';
     BrowserModule,
     AppRoutingModule,
     ClarityModule,
+    ApolloModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    HttpLinkModule,
     ReactiveFormsModule,
     NgxsModule.forRoot([AppState])
   ],
-  providers: [],
+  providers: [
+    {
+      provide: APOLLO_OPTIONS,
+      useFactory: createApolloOptions,
+      deps: [HttpLink]
+    }
+  ],
   bootstrap: [ShellComponent]
 })
 export class AppModule {}

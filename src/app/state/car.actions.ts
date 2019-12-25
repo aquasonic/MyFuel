@@ -12,5 +12,5 @@ export class UpdateCar {
 
 export class DeleteCar {
   static readonly type = '[Car] Delete';
-  constructor(public id: number) {}
+  constructor(public id: string) {}
 }

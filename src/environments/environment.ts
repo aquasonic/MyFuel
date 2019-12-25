@@ -3,7 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  dbSecret: 'fnADgOcLOyACAEdmtSHCdVDkCgoIdw4Psqkp02iY',
+  dbServer: 'https://graphql.fauna.com/graphql'
 };
 
 /*

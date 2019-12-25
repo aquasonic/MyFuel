@@ -17,7 +17,7 @@ export class CarService {
     return this.store.select<Car[]>(state => state.app.cars.sort((a: Car, b: Car) => a.name.localeCompare(b.name)));
   }
 
-  getCarById(id: number) {
+  getCarById(id: string) {
     return this.store.select<Car>(state => state.app.cars.filter((c: Car) => c.id === id)[0]);
   }
 
@@ -25,7 +25,7 @@ export class CarService {
     return of(true).pipe(
       delay(1000),
       switchMap(_ => {
-        car.id = Math.floor(Math.random() * Math.floor(1000));
+        car.id = Math.floor(Math.random() * Math.floor(1000)).toString();
         car.fuels = [];
         return this.store.dispatch(new AddCar(car));
       })
@@ -39,7 +39,7 @@ export class CarService {
     );
   }
 
-  deleteCar(id: number) {
+  deleteCar(id: string) {
     return of(true).pipe(
       delay(1000),
       switchMap(_ => this.store.dispatch(new DeleteCar(id)))
