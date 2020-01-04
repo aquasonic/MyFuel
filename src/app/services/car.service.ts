@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
-import { map } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 
 import { Car } from '../models/car.model';
 
@@ -53,13 +54,18 @@ export class CarService {
       .pipe(map(response => response.data.updateCar.timestamp));
   }
 
+  // TODO: Find a better way to implement delete cascading for fuels...
   deleteCar(carId: string) {
     return this.apollo
-      .mutate<{ deleteCar: { id: string } }>({
-        mutation: gql`
-          mutation deleteCar($id: ID!) {
-            deleteCar(id: $id) {
-              id: _id
+      .query<{ findCarByID }>({
+        query: gql`
+          query findCarById($id: ID!) {
+            findCarByID(id: $id) {
+              fuels {
+                data {
+                  id: _id
+                }
+              }
             }
           }
         `,
@@ -67,6 +73,38 @@ export class CarService {
           id: carId
         }
       })
-      .pipe(map(response => response.data.deleteCar.id));
+      .pipe(
+        switchMap(response => {
+          const fuels = response.data.findCarByID.fuels.data.map(f => f.id);
+          if (fuels.length > 0) {
+            let fuelsMutation = '';
+            fuels.forEach(fuelId => {
+              fuelsMutation = fuelsMutation + `fuel` + fuelId + `: deleteFuel(id: "` + fuelId + `") { _id }\n`;
+            });
+
+            return this.apollo.mutate({
+              mutation: gql('mutation deleteFuels {\n' + fuelsMutation + '}'),
+              errorPolicy: 'ignore'
+            });
+          }
+
+          return of(true);
+        }),
+        switchMap(_ => {
+          return this.apollo.mutate<{ deleteCar: { id: string } }>({
+            mutation: gql`
+              mutation deleteCar($id: ID!) {
+                deleteCar(id: $id) {
+                  id: _id
+                }
+              }
+            `,
+            variables: {
+              id: carId
+            }
+          });
+        }),
+        map(response => response.data.deleteCar.id)
+      );
   }
 }
