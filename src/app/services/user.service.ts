@@ -23,6 +23,8 @@ export class UserService {
                   id: _id
                   timestamp: _ts
                   name
+                  dateOfPurchase
+                  mileageAtPurchase
                   fuels {
                     data {
                       id: _id

@@ -6,6 +6,8 @@ type User {
 type Car {
     user: User!
     name: String!
+    dateOfPurchase: String!
+    mileageAtPurchase: Int!
     fuels: [Fuel] @relation
 }
 

@@ -171,7 +171,14 @@ export class UserState {
   }
 
   private toCar(data: any) {
-    return { id: data.id, timestamp: data.timestam, name: data.name, fuels: data.fuels.data.map(fuel => this.toFuel(fuel)) } as Car;
+    return {
+      id: data.id,
+      timestamp: data.timestam,
+      name: data.name,
+      dateOfPurchase: data.dateOfPurchase,
+      mileageAtPurchase: data.mileageAtPurchase,
+      fuels: data.fuels.data.map(fuel => this.toFuel(fuel))
+    } as Car;
   }
 
   private toFuel(data: any) {

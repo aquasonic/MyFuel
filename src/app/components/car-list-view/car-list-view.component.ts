@@ -31,7 +31,8 @@ export class CarListViewComponent implements OnInit {
   }
 
   createCar() {
-    this.carDialog.open({} as Car, car => this.store.dispatch(new CreateCar(this.userId, car)));
+    const car = { dateOfPurchase: new Date().toISOString().slice(0, 10) } as Car;
+    this.carDialog.open(car, c => this.store.dispatch(new CreateCar(this.userId, c)));
   }
 
   trackById(index: number, car: Car) {
