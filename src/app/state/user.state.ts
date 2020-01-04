@@ -12,6 +12,7 @@ import { CreateFuel, DeleteFuel, UpdateFuel } from './fuel.actions';
 import { FetchUser } from './user.actions';
 
 export interface UserStateModel {
+  isAuthorized: boolean;
   userId: string;
   userName: string;
   cars: Car[];
@@ -20,6 +21,7 @@ export interface UserStateModel {
 @State<UserStateModel>({
   name: 'user',
   defaults: {
+    isAuthorized: false,
     userId: undefined,
     userName: undefined,
     cars: []
@@ -27,6 +29,11 @@ export interface UserStateModel {
 })
 export class UserState {
   constructor(private userService: UserService, private carService: CarService, private fuelService: FuelService) {}
+
+  @Selector()
+  static isAuthorized(state: UserStateModel) {
+    return state.isAuthorized;
+  }
 
   @Selector()
   static getUserName(state: UserStateModel) {
@@ -64,12 +71,18 @@ export class UserState {
         tap(data => {
           if (data) {
             context.setState({
+              isAuthorized: true,
               userId: data.id,
               userName: data.name,
               cars: data.cars.data.map(c => this.toCar(c))
             });
           } else {
-            // TODO: Error handling when user was not found
+            context.setState({
+              isAuthorized: false,
+              userId: undefined,
+              userName: undefined,
+              cars: []
+            });
           }
         })
       );

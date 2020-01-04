@@ -29,6 +29,7 @@ export class CarDetailViewComponent implements OnInit {
   initialized = false;
   selectedFuel: Fuel;
 
+  readonly isAuthorized$ = this.store.select(UserState.isAuthorized);
   readonly car$ = this.store.select(UserState.getCarById).pipe(map(fn => fn(this.carId)));
   readonly fuels$ = this.store.select(UserState.getFuelsByCarId).pipe(map(fn => fn(this.carId)));
 

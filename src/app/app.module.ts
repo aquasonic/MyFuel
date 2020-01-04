@@ -17,6 +17,7 @@ import { CarDetailViewComponent } from './components/car-detail-view/car-detail-
 import { CarDialogComponent } from './components/car-dialog/car-dialog.component';
 import { CarListViewComponent } from './components/car-list-view/car-list-view.component';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
+import { ErrorMessageComponent } from './components/error-message/error-message.component';
 import { FuelDialogComponent } from './components/fuel-dialog/fuel-dialog.component';
 import { HomeViewComponent } from './components/home-view/home-view.component';
 import { LoadingComponent } from './components/loading/loading.component';
@@ -46,7 +47,8 @@ export function createApolloOptions(httpLink: HttpLink) {
     CarDialogComponent,
     ConfirmDialogComponent,
     FuelDialogComponent,
-    LoadingComponent
+    LoadingComponent,
+    ErrorMessageComponent
   ],
   imports: [
     BrowserModule,

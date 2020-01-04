@@ -20,6 +20,7 @@ export class CarListViewComponent implements OnInit {
 
   initialized = false;
 
+  readonly isAuthorized$ = this.store.select(UserState.isAuthorized);
   readonly userName$ = this.store.select(UserState.getUserName);
   readonly cars$ = this.store.select(UserState.getCars);
 

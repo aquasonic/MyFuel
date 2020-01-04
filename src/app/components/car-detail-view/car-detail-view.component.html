@@ -1,61 +1,73 @@
-<div *ngIf="initialized && car$ | async as car; else loading">
-  <div class="action-bar">
-    <a routerLink="../"><clr-icon shape="arrow left"></clr-icon> Back to my cars</a>
-    <clr-dropdown>
-      <button clrDropdownTrigger>
-        <clr-icon shape="ellipsis-vertical" size="24"></clr-icon>
-      </button>
-      <clr-dropdown-menu clrPosition="bottom-right" *clrIfOpen>
-        <div clrDropdownItem (click)="updateCar(car)"><clr-icon shape="pencil"></clr-icon> Update car</div>
-        <div clrDropdownItem (click)="deleteCar(car.id)"><clr-icon shape="trash" class="is-error"></clr-icon> Delete car</div>
-      </clr-dropdown-menu>
-    </clr-dropdown>
-  </div>
+<ng-container *ngIf="initialized; else loading">
+  <ng-container *ngIf="isAuthorized$ | async; else userNotFound">
+    <ng-container *ngIf="car$ | async as car; else carNotFound">
+      <div class="action-bar">
+        <a routerLink="../"><clr-icon shape="arrow left"></clr-icon> Back to my cars</a>
+        <clr-dropdown>
+          <button clrDropdownTrigger>
+            <clr-icon shape="ellipsis-vertical" size="24"></clr-icon>
+          </button>
+          <clr-dropdown-menu clrPosition="bottom-right" *clrIfOpen>
+            <div clrDropdownItem (click)="updateCar(car)"><clr-icon shape="pencil"></clr-icon> Update car</div>
+            <div clrDropdownItem (click)="deleteCar(car.id)"><clr-icon shape="trash" class="is-error"></clr-icon> Delete car</div>
+          </clr-dropdown-menu>
+        </clr-dropdown>
+      </div>
 
-  <h1>{{ car.name }}</h1>
+      <h1>{{ car.name }}</h1>
 
-  <p>
-    The list shows all tank fillings with the driven kilometers, costs as well as the consumption per 100 km. Always add a new entry when
-    you go to the gas station. Click on a table row to update or delete the fuel.
-  </p>
+      <p>
+        The list shows all tank fillings with the driven kilometers, costs as well as the consumption per 100 km. Always add a new entry
+        when you go to the gas station. Click on a table row to update or delete the fuel.
+      </p>
 
-  <div class="add">
-    <button class="btn btn-primary btn-block" (click)="createFuel(car.id)">Add new fuel</button>
-  </div>
+      <div class="add">
+        <button class="btn btn-primary btn-block" (click)="createFuel(car.id)">Add new fuel</button>
+      </div>
 
-  <ng-container *ngIf="fuels$ | async as fuels">
-    <table class="table" *ngIf="fuels.length > 0" [ngClass]="{ 'fuel-selected': selectedFuel }">
-      <thead>
-        <tr>
-          <th>Date</th>
-          <th>Km</th>
-          <th>Litres</th>
-          <th>Cons.</th>
-          <th>Cost</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let fuel of fuels; trackBy: trackById" (click)="selectFuel(fuel)" [ngClass]="{ active: selectedFuel?.id === fuel.id }">
-          <td>{{ fuel.date | date: 'dd.MM.yy' }}</td>
-          <td>{{ fuel.km | number: '1.0-0' }}</td>
-          <td>{{ fuel.litres | number: '1.2-2' }}</td>
-          <td>{{ (fuel.litres / fuel.km) * 100 | number: '1.2-2' }}</td>
-          <td>{{ fuel.cost | number: '1.2-2' }}</td>
-        </tr>
-      </tbody>
-    </table>
+      <ng-container *ngIf="fuels$ | async as fuels">
+        <table class="table" *ngIf="fuels.length > 0" [ngClass]="{ 'fuel-selected': selectedFuel }">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Km</th>
+              <th>Litres</th>
+              <th>Cons.</th>
+              <th>Cost</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="let fuel of fuels; trackBy: trackById"
+              (click)="selectFuel(fuel)"
+              [ngClass]="{ active: selectedFuel?.id === fuel.id }"
+            >
+              <td>{{ fuel.date | date: 'dd.MM.yy' }}</td>
+              <td>{{ fuel.km | number: '1.0-0' }}</td>
+              <td>{{ fuel.litres | number: '1.2-2' }}</td>
+              <td>{{ (fuel.litres / fuel.km) * 100 | number: '1.2-2' }}</td>
+              <td>{{ fuel.cost | number: '1.2-2' }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </ng-container>
+
+      <div class="footer-bar" *ngIf="selectedFuel">
+        <div>
+          <button class="btn btn-danger-outline" (click)="deleteFuel(selectedFuel.id)">
+            <clr-icon shape="trash"></clr-icon> Delete fuel
+          </button>
+          <button class="btn btn-outline" (click)="updateFuel(selectedFuel)"><clr-icon shape="pencil"></clr-icon> Update fuel</button>
+        </div>
+      </div>
+
+      <myf-car-dialog></myf-car-dialog>
+      <myf-fuel-dialog></myf-fuel-dialog>
+      <myf-confirm-dialog></myf-confirm-dialog>
+    </ng-container>
   </ng-container>
-
-  <div class="footer-bar" *ngIf="selectedFuel">
-    <div>
-      <button class="btn btn-danger-outline" (click)="deleteFuel(selectedFuel.id)"><clr-icon shape="trash"></clr-icon> Delete fuel</button>
-      <button class="btn btn-outline" (click)="updateFuel(selectedFuel)"><clr-icon shape="pencil"></clr-icon> Update fuel</button>
-    </div>
-  </div>
-
-  <myf-car-dialog></myf-car-dialog>
-  <myf-fuel-dialog></myf-fuel-dialog>
-  <myf-confirm-dialog></myf-confirm-dialog>
-</div>
+</ng-container>
 
 <ng-template #loading><myf-loading></myf-loading></ng-template>
+<ng-template #userNotFound><myf-error-message>User was not found</myf-error-message></ng-template>
+<ng-template #carNotFound><myf-error-message>Car was not found</myf-error-message></ng-template>
