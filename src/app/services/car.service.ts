@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { of } from 'rxjs';
-import { delay, map } from 'rxjs/operators';
+import { Apollo } from 'apollo-angular';
+import gql from 'graphql-tag';
+import { map } from 'rxjs/operators';
 
 import { Car } from '../models/car.model';
 
@@ -8,22 +9,64 @@ import { Car } from '../models/car.model';
   providedIn: 'root'
 })
 export class CarService {
-  // TODO: Attach to fauna db
+  constructor(private apollo: Apollo) {}
+
   createCar(userId: string, car: Car) {
-    return of(Math.floor(Math.random() * Math.floor(1000)).toString()).pipe(delay(1000));
+    return this.apollo
+      .mutate<{ createCar: { id: string } }>({
+        mutation: gql`
+          mutation createCar($userId: ID!, $name: String!, $dateOfPurchase: String!, $mileageAtPurchase: Int!) {
+            createCar(
+              data: { user: { connect: $userId }, name: $name, dateOfPurchase: $dateOfPurchase, mileageAtPurchase: $mileageAtPurchase }
+            ) {
+              id: _id
+            }
+          }
+        `,
+        variables: {
+          userId: userId,
+          name: car.name,
+          dateOfPurchase: car.dateOfPurchase,
+          mileageAtPurchase: car.mileageAtPurchase
+        }
+      })
+      .pipe(map(response => response.data.createCar.id));
   }
 
   updateCar(car: Car) {
-    return of(true).pipe(
-      delay(1000),
-      map(_ => car.timestamp)
-    );
+    return this.apollo
+      .mutate<{ updateCar: { timestamp: number } }>({
+        mutation: gql`
+          mutation updateCar($id: ID!, $name: String!, $dateOfPurchase: String!, $mileageAtPurchase: Int!) {
+            updateCar(id: $id, data: { name: $name, dateOfPurchase: $dateOfPurchase, mileageAtPurchase: $mileageAtPurchase }) {
+              timestamp: _ts
+            }
+          }
+        `,
+        variables: {
+          id: car.id,
+          name: car.name,
+          dateOfPurchase: car.dateOfPurchase,
+          mileageAtPurchase: car.mileageAtPurchase
+        }
+      })
+      .pipe(map(response => response.data.updateCar.timestamp));
   }
 
   deleteCar(carId: string) {
-    return of(true).pipe(
-      delay(1000),
-      map(_ => carId)
-    );
+    return this.apollo
+      .mutate<{ deleteCar: { id: string } }>({
+        mutation: gql`
+          mutation deleteCar($id: ID!) {
+            deleteCar(id: $id) {
+              id: _id
+            }
+          }
+        `,
+        variables: {
+          id: carId
+        }
+      })
+      .pipe(map(response => response.data.deleteCar.id));
   }
 }

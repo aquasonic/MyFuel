@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { of } from 'rxjs';
-import { delay, map } from 'rxjs/operators';
+import { Apollo } from 'apollo-angular';
+import gql from 'graphql-tag';
+import { map } from 'rxjs/operators';
 
 import { Fuel } from '../models/fuel.model';
 
@@ -8,22 +9,64 @@ import { Fuel } from '../models/fuel.model';
   providedIn: 'root'
 })
 export class FuelService {
-  // TODO: Attach to fauna db
+  constructor(private apollo: Apollo) {}
+
   createFuel(carId: string, fuel: Fuel) {
-    return of(Math.floor(Math.random() * Math.floor(1000)).toString()).pipe(delay(1000));
+    return this.apollo
+      .mutate<{ createFuel: { id: string } }>({
+        mutation: gql`
+          mutation createFuel($carId: ID!, $date: String!, $km: Int!, $litres: Float!, $cost: Float!) {
+            createFuel(data: { car: { connect: $carId }, date: $date, km: $km, litres: $litres, cost: $cost }) {
+              id: _id
+            }
+          }
+        `,
+        variables: {
+          carId: carId,
+          date: fuel.date,
+          km: fuel.km,
+          litres: fuel.litres,
+          cost: fuel.cost
+        }
+      })
+      .pipe(map(response => response.data.createFuel.id));
   }
 
   updateFuel(fuel: Fuel) {
-    return of(true).pipe(
-      delay(1000),
-      map(_ => fuel.timestamp)
-    );
+    return this.apollo
+      .mutate<{ updateFuel: { timestamp: number } }>({
+        mutation: gql`
+          mutation updateFuel($id: ID!, $date: String!, $km: Int!, $litres: Float!, $cost: Float!) {
+            updateFuel(id: $id, data: { date: $date, km: $km, litres: $litres, cost: $cost }) {
+              timestamp: _ts
+            }
+          }
+        `,
+        variables: {
+          id: fuel.id,
+          date: fuel.date,
+          km: fuel.km,
+          litres: fuel.litres,
+          cost: fuel.cost
+        }
+      })
+      .pipe(map(response => response.data.updateFuel.timestamp));
   }
 
   deleteFuel(fuelId: string) {
-    return of(true).pipe(
-      delay(1000),
-      map(_ => fuelId)
-    );
+    return this.apollo
+      .mutate<{ deleteFuel: { id: string } }>({
+        mutation: gql`
+          mutation deleteFuel($id: ID!) {
+            deleteFuel(id: $id) {
+              id: _id
+            }
+          }
+        `,
+        variables: {
+          id: fuelId
+        }
+      })
+      .pipe(map(response => response.data.deleteFuel.id));
   }
 }
