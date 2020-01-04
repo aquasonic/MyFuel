@@ -1,6 +1,4 @@
-import { User } from '../models/user.model';
-
-export class InitializeUser {
-  static readonly type = '[User] Initialize';
-  constructor(public user: User) {}
+export class FetchUser {
+  static readonly type = '[User] Fetch';
+  constructor(public userId: string) {}
 }

@@ -1,8 +1,8 @@
 import { Car } from '../models/car.model';
 
-export class AddCar {
-  static readonly type = '[Car] Add';
-  constructor(public car: Car) {}
+export class CreateCar {
+  static readonly type = '[Car] Create';
+  constructor(public userId: string, public car: Car) {}
 }
 
 export class UpdateCar {
@@ -12,5 +12,5 @@ export class UpdateCar {
 
 export class DeleteCar {
   static readonly type = '[Car] Delete';
-  constructor(public id: string) {}
+  constructor(public carId: string) {}
 }

@@ -20,7 +20,7 @@
   </p>
 
   <div class="add">
-    <button class="btn btn-primary btn-block" (click)="addFuel(car.id)">Add new fuel</button>
+    <button class="btn btn-primary btn-block" (click)="createFuel(car.id)">Add new fuel</button>
   </div>
 
   <ng-container *ngIf="fuels$ | async as fuels">
@@ -48,10 +48,8 @@
 
   <div class="footer-bar" *ngIf="selectedFuel">
     <div>
-      <button class="btn btn-outline" (click)="updateFuel(car.id, selectedFuel)"><clr-icon shape="pencil"></clr-icon> Update fuel</button>
-      <button class="btn btn-danger-outline" (click)="deleteFuel(car.id, selectedFuel.id)">
-        <clr-icon shape="trash"></clr-icon> Delete fuel
-      </button>
+      <button class="btn btn-danger-outline" (click)="deleteFuel(selectedFuel.id)"><clr-icon shape="trash"></clr-icon> Delete fuel</button>
+      <button class="btn btn-outline" (click)="updateFuel(selectedFuel)"><clr-icon shape="pencil"></clr-icon> Update fuel</button>
     </div>
   </div>
 

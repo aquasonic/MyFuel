@@ -21,7 +21,7 @@ import { FuelDialogComponent } from './components/fuel-dialog/fuel-dialog.compon
 import { HomeViewComponent } from './components/home-view/home-view.component';
 import { LoadingComponent } from './components/loading/loading.component';
 import { ShellComponent } from './components/shell/shell.component';
-import { AppState } from './state/app.state';
+import { UserState } from './state/user.state';
 
 export function createApolloOptions(httpLink: HttpLink) {
   return {
@@ -57,7 +57,7 @@ export function createApolloOptions(httpLink: HttpLink) {
     HttpClientModule,
     HttpLinkModule,
     ReactiveFormsModule,
-    NgxsModule.forRoot([AppState])
+    NgxsModule.forRoot([UserState])
   ],
   providers: [
     {

@@ -1,9 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Store } from '@ngxs/store';
 import { Car } from 'src/app/models/car.model';
-import { CarService } from 'src/app/services/car.service';
-import { UserService } from 'src/app/services/user.service';
+import { CreateCar } from 'src/app/state/car.actions';
+import { FetchUser } from 'src/app/state/user.actions';
+import { UserState } from 'src/app/state/user.state';
 
 import { CarDialogComponent } from '../car-dialog/car-dialog.component';
 
@@ -15,23 +16,21 @@ import { CarDialogComponent } from '../car-dialog/car-dialog.component';
 export class CarListViewComponent implements OnInit {
   @ViewChild(CarDialogComponent, { static: false }) private carDialog: CarDialogComponent;
 
+  private readonly userId = this.route.snapshot.params.user;
+
   initialized = false;
 
-  cars$: Observable<Car[]>;
-  userName$: Observable<string>;
+  readonly userName$ = this.store.select(UserState.getUserName);
+  readonly cars$ = this.store.select(UserState.getCars);
 
-  constructor(private userService: UserService, private carService: CarService, private route: ActivatedRoute) {}
+  constructor(private store: Store, private route: ActivatedRoute) {}
 
   ngOnInit() {
-    const userId = this.route.snapshot.params.user;
-
-    this.userService.fetchData(userId).subscribe(_ => (this.initialized = true));
-    this.userName$ = this.userService.getCurrentUserName();
-    this.cars$ = this.carService.getAllCars();
+    this.store.dispatch(new FetchUser(this.userId)).subscribe(_ => (this.initialized = true));
   }
 
-  addCar() {
-    this.carDialog.open({} as Car, car => this.carService.addCar(car));
+  createCar() {
+    this.carDialog.open({} as Car, car => this.store.dispatch(new CreateCar(this.userId, car)));
   }
 
   trackById(index: number, car: Car) {

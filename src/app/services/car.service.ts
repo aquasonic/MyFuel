@@ -1,48 +1,29 @@
 import { Injectable } from '@angular/core';
-import { Store } from '@ngxs/store';
 import { of } from 'rxjs';
-import { delay, switchMap } from 'rxjs/operators';
-import { Car } from 'src/app/models/car.model';
+import { delay, map } from 'rxjs/operators';
 
-import { AddCar, DeleteCar, UpdateCar } from '../state/car.actions';
+import { Car } from '../models/car.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CarService {
-  // TODO: Attach to function api to store information in fauna db
-  constructor(private store: Store) {}
-
-  getAllCars() {
-    return this.store.select<Car[]>(state => state.app.cars.sort((a: Car, b: Car) => a.name.localeCompare(b.name)));
-  }
-
-  getCarById(id: string) {
-    return this.store.select<Car>(state => state.app.cars.filter((c: Car) => c.id === id)[0]);
-  }
-
-  addCar(car: Car) {
-    return of(true).pipe(
-      delay(1000),
-      switchMap(_ => {
-        car.id = Math.floor(Math.random() * Math.floor(1000)).toString();
-        car.fuels = [];
-        return this.store.dispatch(new AddCar(car));
-      })
-    );
+  // TODO: Attach to fauna db
+  createCar(userId: string, car: Car) {
+    return of(Math.floor(Math.random() * Math.floor(1000)).toString()).pipe(delay(1000));
   }
 
   updateCar(car: Car) {
     return of(true).pipe(
       delay(1000),
-      switchMap(_ => this.store.dispatch(new UpdateCar(car)))
+      map(_ => car.timestamp)
     );
   }
 
-  deleteCar(id: string) {
+  deleteCar(carId: string) {
     return of(true).pipe(
       delay(1000),
-      switchMap(_ => this.store.dispatch(new DeleteCar(id)))
+      map(_ => carId)
     );
   }
 }
