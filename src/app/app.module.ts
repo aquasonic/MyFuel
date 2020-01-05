@@ -13,17 +13,19 @@ import { setContext } from 'apollo-link-context';
 import { environment } from 'src/environments/environment';
 
 import { AppRoutingModule } from './app.routing';
+import { CarDeleteComponent } from './components/car-delete/car-delete.component';
 import { CarDetailViewComponent } from './components/car-detail-view/car-detail-view.component';
 import { CarDialogComponent } from './components/car-dialog/car-dialog.component';
 import { CarListViewComponent } from './components/car-list-view/car-list-view.component';
+import { CarUpdateComponent } from './components/car-update/car-update.component';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 import { ErrorMessageComponent } from './components/error-message/error-message.component';
 import { FuelDialogComponent } from './components/fuel-dialog/fuel-dialog.component';
+import { HeaderComponent } from './components/header/header.component';
 import { HomeViewComponent } from './components/home-view/home-view.component';
 import { LoadingComponent } from './components/loading/loading.component';
 import { ShellComponent } from './components/shell/shell.component';
 import { UserState } from './state/user.state';
-import { HeaderComponent } from './components/header/header.component';
 
 export function createApolloOptions(httpLink: HttpLink) {
   return {
@@ -50,7 +52,9 @@ export function createApolloOptions(httpLink: HttpLink) {
     FuelDialogComponent,
     LoadingComponent,
     ErrorMessageComponent,
-    HeaderComponent
+    HeaderComponent,
+    CarUpdateComponent,
+    CarDeleteComponent
   ],
   imports: [
     BrowserModule,
