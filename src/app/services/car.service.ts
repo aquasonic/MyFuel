@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
 import { of } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { concatMap, map } from 'rxjs/operators';
 
 import { Car } from '../models/car.model';
 
@@ -74,7 +74,7 @@ export class CarService {
         }
       })
       .pipe(
-        switchMap(response => {
+        concatMap(response => {
           const fuels = response.data.findCarByID.fuels.data.map(f => f.id);
           if (fuels.length > 0) {
             let fuelsMutation = '';
@@ -90,7 +90,7 @@ export class CarService {
 
           return of(true);
         }),
-        switchMap(_ => {
+        concatMap(_ => {
           return this.apollo.mutate<{ deleteCar: { id: string } }>({
             mutation: gql`
               mutation deleteCar($id: ID!) {
