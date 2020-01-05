@@ -36,6 +36,11 @@ export class UserState {
   }
 
   @Selector()
+  static getUserId(state: UserStateModel) {
+    return state.userId;
+  }
+
+  @Selector()
   static getUserName(state: UserStateModel) {
     return state.userName;
   }

@@ -23,6 +23,7 @@ import { HomeViewComponent } from './components/home-view/home-view.component';
 import { LoadingComponent } from './components/loading/loading.component';
 import { ShellComponent } from './components/shell/shell.component';
 import { UserState } from './state/user.state';
+import { HeaderComponent } from './components/header/header.component';
 
 export function createApolloOptions(httpLink: HttpLink) {
   return {
@@ -48,7 +49,8 @@ export function createApolloOptions(httpLink: HttpLink) {
     ConfirmDialogComponent,
     FuelDialogComponent,
     LoadingComponent,
-    ErrorMessageComponent
+    ErrorMessageComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
