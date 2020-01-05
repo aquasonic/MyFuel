@@ -14,8 +14,8 @@ import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.compone
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
-  @ViewChild(CarDialogComponent, { static: false }) private carDialog: CarDialogComponent;
-  @ViewChild(ConfirmDialogComponent, { static: false }) private confirmDialog: ConfirmDialogComponent;
+  @ViewChild(CarDialogComponent, { static: false }) carDialog: CarDialogComponent;
+  @ViewChild(ConfirmDialogComponent, { static: false }) confirmDialog: ConfirmDialogComponent;
 
   private readonly isAuthorized$ = this.store.select(UserState.isAuthorized);
   private readonly carId$ = this.router.events.pipe(
