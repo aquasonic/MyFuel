@@ -1,32 +1,46 @@
 <clr-modal [(clrModalOpen)]="isOpen" [clrModalClosable]="false">
-  <h3 class="modal-title">{{ isNew ? 'Add new car' : 'Update car' }}</h3>
+  <h3 class="modal-title">{{ isNew ? ('Car.NewCar' | translate) : ('Car.UpdateCar' | translate) }}</h3>
   <div class="modal-body">
-    <p>Please provide the details of your car in the following form.</p>
     <form clrForm [formGroup]="form" clrLayout="vertical" class="full-width">
       <clr-input-container>
-        <label>Name</label>
-        <input clrInput formControlName="name" placeholder="e.g. Porsche 911" autocomplete="off" required />
-        <clr-control-error>Field is required</clr-control-error>
+        <label>{{ 'Car.NameLabel' | translate }}</label>
+        <input clrInput formControlName="name" placeholder="{{ 'Car.NamePlaceholder' | translate }}" autocomplete="off" required />
+        <clr-control-error>{{ 'Validation.Required' | translate }}</clr-control-error>
       </clr-input-container>
       <div class="clr-row">
         <clr-input-container class="clr-col-6">
-          <label>Date of Purchase</label>
-          <input clrInput type="date" formControlName="dateOfPurchase" placeholder="e.g. 24.11.2019" autocomplete="off" required />
-          <clr-control-error>Field is required</clr-control-error>
+          <label>{{ 'Car.DateOfPurchaseLabel' | translate }}</label>
+          <input
+            clrInput
+            type="date"
+            formControlName="dateOfPurchase"
+            placeholder="{{ 'Car.DateOfPurchasePlaceholder' | translate }}"
+            autocomplete="off"
+            required
+          />
+          <clr-control-error>{{ 'Validation.Required' | translate }}</clr-control-error>
         </clr-input-container>
         <clr-input-container class="clr-col-6">
-          <label>Mileage at Purchase</label>
-          <input clrInput type="number" step="1" formControlName="mileageAtPurchase" placeholder="e.g. 60000" autocomplete="off" required />
-          <clr-control-error *clrIfError="'required'">Field is required</clr-control-error>
-          <clr-control-error *clrIfError="'pattern'">Only integer values are allowed</clr-control-error>
+          <label>{{ 'Car.MileageAtPurchaseLabel' | translate }}</label>
+          <input
+            clrInput
+            type="number"
+            step="1"
+            formControlName="mileageAtPurchase"
+            placeholder="{{ 'Car.MileageAtPurchasePlaceholder' | translate }}"
+            autocomplete="off"
+            required
+          />
+          <clr-control-error *clrIfError="'required'">{{ 'Validation.Required' | translate }}</clr-control-error>
+          <clr-control-error *clrIfError="'pattern'">{{ 'Validation.OnlyInteger' | translate }}</clr-control-error>
         </clr-input-container>
       </div>
     </form>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline" (click)="close()">Cancel</button>
+    <button type="button" class="btn btn-outline" (click)="close()">{{ 'App.Cancel' | translate }}</button>
     <button type="button" class="btn btn-primary" (click)="submit()" [clrLoading]="submitButtonState">
-      {{ isNew ? 'Add' : 'Save' }}
+      {{ isNew ? ('App.Add' | translate) : ('App.Save' | translate) }}
     </button>
   </div>
 </clr-modal>

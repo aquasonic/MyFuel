@@ -1,10 +1,10 @@
-<h1>Hi, I'm your fuel tracker</h1>
+<h1>{{ 'Home.Title' | translate }}</h1>
 
 <form clrForm [formGroup]="form" clrLayout="vertical" class="full-width">
-  <p>Please fill in your user id into the following field and navigate to your car list.</p>
+  <p>{{ 'Home.Description' | translate }}</p>
   <clr-input-container>
-    <input clrInput formControlName="userId" placeholder="e.g. 123456" autocomplete="off" required />
-    <clr-control-error>Field is required</clr-control-error>
+    <input clrInput formControlName="userId" placeholder="{{ 'Home.UserIdPlaceholder' | translate }}" autocomplete="off" required />
+    <clr-control-error>{{ 'Validation.Required' | translate }}</clr-control-error>
   </clr-input-container>
-  <button class="btn btn-primary btn-block" type="button" (click)="submit()">Let me in</button>
+  <button class="btn btn-primary btn-block" type="button" (click)="submit()">{{ 'Home.LoginButton' | translate }}</button>
 </form>

@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { Store } from '@ngxs/store';
 import { map } from 'rxjs/operators';
 import { Fuel } from 'src/app/models/fuel.model';
@@ -29,7 +30,7 @@ export class CarDetailViewComponent implements OnInit {
   readonly car$ = this.store.select(UserState.getCarById).pipe(map(fn => fn(this.carId)));
   readonly fuels$ = this.store.select(UserState.getFuelsByCarId).pipe(map(fn => fn(this.carId)));
 
-  constructor(private store: Store, private route: ActivatedRoute) {}
+  constructor(private store: Store, private translateService: TranslateService, private route: ActivatedRoute) {}
 
   ngOnInit() {
     this.store.dispatch(new FetchUser(this.userId)).subscribe(_ => (this.initialized = true));
@@ -54,8 +55,8 @@ export class CarDetailViewComponent implements OnInit {
 
   deleteFuel(fuelId: string) {
     this.confirmDialog.open(
-      'Delete fuel?',
-      'Are you sure you want to delete this fuel? You could easily add it again later.',
+      this.translateService.instant('Fuel.DeleteFuelConfirmationTitle'),
+      this.translateService.instant('Fuel.DeleteFuelConfirmationDescription'),
       fuelId,
       id => this.store.dispatch(new DeleteFuel(id)),
       () => (this.selectedFuel = undefined)

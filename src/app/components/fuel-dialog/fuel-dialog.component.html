@@ -1,41 +1,75 @@
 <clr-modal [(clrModalOpen)]="isOpen" [clrModalClosable]="false">
-  <h3 class="modal-title">{{ isNew ? 'Add new fuel' : 'Update fuel' }}</h3>
+  <h3 class="modal-title">{{ isNew ? ('Fuel.NewFuel' | translate) : ('Fuel.UpdateFuel' | translate) }}</h3>
   <div class="modal-body">
-    <p>Please provide the details of your fuel in the following form.</p>
     <form clrForm [formGroup]="form" clrLayout="vertical" class="full-width">
       <div class="clr-row">
         <clr-input-container class="clr-col-6">
-          <label>Date</label>
-          <input clrInput type="date" formControlName="date" placeholder="e.g. 24.11.2019" autocomplete="off" required />
-          <clr-control-error>Field is required</clr-control-error>
+          <label>{{ 'Fuel.DateLabel' | translate }}</label>
+          <input
+            clrInput
+            type="date"
+            formControlName="date"
+            placeholder="{{ 'Fuel.DatePlaceholder' | translate }}"
+            autocomplete="off"
+            required
+          />
+          <clr-control-error>{{ 'Validation.Required' | translate }}</clr-control-error>
         </clr-input-container>
         <clr-input-container class="clr-col-6">
-          <label>Kilometers</label>
-          <input clrInput type="number" step="1" formControlName="km" placeholder="e.g. 634" autocomplete="off" required />
-          <clr-control-error *clrIfError="'required'">Field is required</clr-control-error>
-          <clr-control-error *clrIfError="'pattern'">Only integer values are allowed</clr-control-error>
+          <label>{{ 'Fuel.KmLabel' | translate }}</label>
+          <input
+            clrInput
+            type="number"
+            step="1"
+            formControlName="km"
+            placeholder="{{ 'Fuel.KmPlaceholder' | translate }}"
+            autocomplete="off"
+            required
+          />
+          <clr-control-error *clrIfError="'required'">{{ 'Validation.Required' | translate }}</clr-control-error>
+          <clr-control-error *clrIfError="'pattern'">{{ 'Validation.OnlyInteger' | translate }}</clr-control-error>
         </clr-input-container>
       </div>
       <div class="clr-row">
         <clr-input-container class="clr-col-6">
-          <label>Litres</label>
-          <input clrInput type="number" step="0.01" formControlName="litres" placeholder="e.g. 47.77" autocomplete="off" required />
-          <clr-control-error *clrIfError="'required'">Field is required</clr-control-error>
-          <clr-control-error *clrIfError="'pattern'">Only two decimal places are allowed</clr-control-error>
+          <label
+            ><label>{{ 'Fuel.LitresLabel' | translate }}</label></label
+          >
+          <input
+            clrInput
+            type="number"
+            step="0.01"
+            formControlName="litres"
+            placeholder="{{ 'Fuel.LitresPlaceholder' | translate }}"
+            autocomplete="off"
+            required
+          />
+          <clr-control-error *clrIfError="'required'">{{ 'Validation.Required' | translate }}</clr-control-error>
+          <clr-control-error *clrIfError="'pattern'">{{ 'Validation.OnlyTwoDecimalPlaces' | translate }}</clr-control-error>
         </clr-input-container>
         <clr-input-container class="clr-col-6">
-          <label>Costs</label>
-          <input clrInput type="number" step="0.01" formControlName="cost" placeholder="e.g. 74.05" autocomplete="off" required />
-          <clr-control-error *clrIfError="'required'">Field is required</clr-control-error>
-          <clr-control-error *clrIfError="'pattern'">Only two decimal places are allowed</clr-control-error>
+          <label
+            ><label>{{ 'Fuel.CostsLabel' | translate }}</label></label
+          >
+          <input
+            clrInput
+            type="number"
+            step="0.01"
+            formControlName="cost"
+            placeholder="{{ 'Fuel.CostsPlaceholder' | translate }}"
+            autocomplete="off"
+            required
+          />
+          <clr-control-error *clrIfError="'required'">{{ 'Validation.Required' | translate }}</clr-control-error>
+          <clr-control-error *clrIfError="'pattern'">{{ 'Validation.OnlyTwoDecimalPlaces' | translate }}</clr-control-error>
         </clr-input-container>
       </div>
     </form>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline" (click)="close()">Cancel</button>
+    <button type="button" class="btn btn-outline" (click)="close()">{{ 'App.Cancel' | translate }}</button>
     <button type="button" class="btn btn-primary" (click)="submit()" [clrLoading]="submitButtonState">
-      {{ isNew ? 'Add' : 'Save' }}
+      {{ isNew ? ('App.Add' | translate) : ('App.Save' | translate) }}
     </button>
   </div>
 </clr-modal>

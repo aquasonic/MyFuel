@@ -1,8 +1,8 @@
 <ng-container *ngIf="initialized && cars$ | async as cars; else loading">
   <ng-container *ngIf="isAuthorized$ | async; else userNotFound">
-    <h1>Hi, {{ userName$ | async }}</h1>
+    <h1>{{ 'Car.Title' | translate: { name: userName$ | async } }}</h1>
 
-    <p>Click on a car in the list to see the statistics and add tank fills. You can also add new cars at any time.</p>
+    <p>{{ 'Car.Description' | translate }}</p>
 
     <ul class="list-unstyled cars" *ngIf="cars.length > 0; else noItems">
       <li *ngFor="let car of cars; trackBy: trackById">
@@ -14,13 +14,17 @@
     </ul>
 
     <ng-template #noItems
-      ><p class="no-items"><i>No cars found, please add a new one first.</i></p></ng-template
+      ><p class="no-items">
+        <i>{{ 'Car.NoItemsFound' | translate }}</i>
+      </p></ng-template
     >
 
-    <button class="btn btn-primary btn-block" (click)="createCar()">Add new car</button>
+    <button class="btn btn-primary btn-block" (click)="createCar()">{{ 'Car.NewCar' | translate }}</button>
     <myf-car-dialog></myf-car-dialog>
   </ng-container>
 </ng-container>
 
 <ng-template #loading><myf-loading></myf-loading></ng-template>
-<ng-template #userNotFound><myf-error-message>User was not found</myf-error-message></ng-template>
+<ng-template #userNotFound
+  ><myf-error-message>{{ 'App.UserNotFound' | translate }}</myf-error-message></ng-template
+>

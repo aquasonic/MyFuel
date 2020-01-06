@@ -1,9 +1,11 @@
-import { HttpClientModule } from '@angular/common/http';
-import { NgModule } from '@angular/core';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ClarityModule } from '@clr/angular';
+import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { NgxsModule } from '@ngxs/store';
 import { APOLLO_OPTIONS, ApolloModule } from 'apollo-angular';
 import { HttpLink, HttpLinkModule } from 'apollo-angular-link-http';
@@ -26,6 +28,14 @@ import { HomeViewComponent } from './components/home-view/home-view.component';
 import { LoadingComponent } from './components/loading/loading.component';
 import { ShellComponent } from './components/shell/shell.component';
 import { UserState } from './state/user.state';
+
+export function InitializeAppFactory(translateService: TranslateService) {
+  return () => translateService.use('de').toPromise();
+}
+
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/translations/', '.json');
+}
 
 export function createApolloOptions(httpLink: HttpLink) {
   return {
@@ -65,13 +75,26 @@ export function createApolloOptions(httpLink: HttpLink) {
     HttpClientModule,
     HttpLinkModule,
     ReactiveFormsModule,
-    NgxsModule.forRoot([UserState])
+    NgxsModule.forRoot([UserState]),
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    })
   ],
   providers: [
     {
       provide: APOLLO_OPTIONS,
       useFactory: createApolloOptions,
       deps: [HttpLink]
+    },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: InitializeAppFactory,
+      deps: [TranslateService],
+      multi: true
     }
   ],
   bootstrap: [ShellComponent]

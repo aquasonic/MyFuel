@@ -1,0 +1,64 @@
+{
+  "App": {
+    "Title": "my Fuel",
+    "Loading": "Wird geladen ...",
+    "Add": "Hinzufügen",
+    "Save": "Speichern",
+    "Cancel": "Abbrechen",
+    "Confirm": "Bestätigen",
+    "UserNotFound": "Benutzer wurde nicht gefunden",
+    "CarNotFound": "Auto wurde nicht gefunden"
+  },
+  "Validation": {
+    "Required": "Pflichtfeld",
+    "OnlyInteger": "Nur Ganzzahlen erlaubt",
+    "OnlyTwoDecimalPlaces": "Nur 2 Dezimalstellen erlaubt"
+  },
+  "Home": {
+    "Title": "Hi, ich bin dein Treibstoff Tracker",
+    "Description": "Bitte gib deine Benutzernummer unten ein, um die Liste der Autos anzuzeigen.",
+    "UserIdPlaceholder": "z.B. 123456",
+    "LoginButton": "Lass mich rein"
+  },
+  "Car": {
+    "Title": "Hi, {{name}}",
+    "Description": "Klicke auf ein Auto um die Statistiken und Tankfüllungen zu sehen. Du kannst auch jederzeit neue Autos hinzufügen.",
+    "NoItemsFound": "Keine Autos gefunden.",
+    "NewCar": "Neues Auto hinzufügen",
+    "UpdateCar": "Auto bearbeiten",
+    "DeleteCar": "Auto löschen",
+    "NameLabel": "Name",
+    "NamePlaceholder": "z.B. Porsche 911",
+    "DateOfPurchaseLabel": "Kaufdatum",
+    "DateOfPurchasePlaceholder": "z.B. 25.01.2018",
+    "MileageAtPurchaseLabel": "Kilometerstand",
+    "MileageAtPurchasePlaceholder": "z.B. 93700",
+    "DeleteCarConfirmationTitle": "Auto löschen?",
+    "DeleteCarConfirmationDescription": "Bist du sicher dass du das Auto und alle Tankfüllungen löschen möchtest? Dies kann nicht rückgängig gemacht werden."
+  },
+  "Fuel": {
+    "Title": "{{name}}",
+    "Description": "Die Liste zeigt alle Tankfüllungen mit den gefahrenen Kilometern, den Kosten sowie den Verbrauch pro 100km. Füge nach dem Tanken deines Autos immer einen neuen Eintrag hinzu. Um eine Tankfüllung zu löschen oder zu bearbeiten, klicke auf die entsprechende Zeile.",
+    "AddNewFuel": "Neue Tankfüllung hinzufügen",
+    "NewFuel": "Neue Tankfüllung hinzufügen",
+    "UpdateFuel": "Tankfüllung bearbeiten",
+    "UpdateFuelButton": "Bearbeiten",
+    "DeleteFuel": "Tankfüllung löschen",
+    "DeleteFuelButton": "Löschen",
+    "DateHeader": "Datum",
+    "DateLabel": "Datum",
+    "DatePlaceholder": "z.B. 24.11.2019",
+    "KmHeader": "Km",
+    "KmLabel": "Kilometer",
+    "KmPlaceholder": "z.B. 634",
+    "LitresHeader": "Liter",
+    "LitresLabel": "Liter",
+    "LitresPlaceholder": "z.B. 47.77",
+    "ConsumationHeader": "Verb.",
+    "CostsHeader": "Kosten",
+    "CostsLabel": "Kosten",
+    "CostsPlaceholder": "z.B. 74.05",
+    "DeleteFuelConfirmationTitle": "Tankfüllung löschen?",
+    "DeleteFuelConfirmationDescription": "Bist du sicher dass du die Tankfüllung löschen möchtest? Du kannst sie jederzeit wieder hinzufügen."
+  }
+}
