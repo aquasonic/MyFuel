@@ -27,6 +27,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { HomeViewComponent } from './components/home-view/home-view.component';
 import { LoadingComponent } from './components/loading/loading.component';
 import { ShellComponent } from './components/shell/shell.component';
+import { CarState } from './state/car.state';
 import { UserState } from './state/user.state';
 
 export function InitializeAppFactory(translateService: TranslateService) {
@@ -75,7 +76,7 @@ export function createApolloOptions(httpLink: HttpLink) {
     HttpClientModule,
     HttpLinkModule,
     ReactiveFormsModule,
-    NgxsModule.forRoot([UserState]),
+    NgxsModule.forRoot([UserState, CarState]),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

@@ -27,12 +27,10 @@ export class FuelDialogComponent {
   });
 
   private submitHandler: (fuel: Fuel) => Observable<void>;
-  private callback: (fuel: Fuel) => void;
 
-  open(fuel: Fuel, submitHandler: (fuel: Fuel) => Observable<void>, callback: (fuel: Fuel) => void) {
+  open(fuel: Fuel, submitHandler: (fuel: Fuel) => Observable<void>) {
     this.isNew = fuel.id === undefined;
     this.submitHandler = submitHandler;
-    this.callback = callback;
 
     this.isOpen = true;
 
@@ -50,12 +48,10 @@ export class FuelDialogComponent {
       this.clrForm.markAsTouched();
     } else {
       this.submitButtonState = ClrLoadingState.LOADING;
-      const fuel = { ...this.form.value };
-      this.submitHandler(fuel)
+      this.submitHandler({ ...this.form.value })
         .pipe(finalize(() => (this.submitButtonState = ClrLoadingState.DEFAULT)))
         .subscribe(_ => {
           this.isOpen = false;
-          this.callback(fuel);
         });
     }
   }

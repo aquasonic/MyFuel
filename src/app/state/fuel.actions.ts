@@ -14,3 +14,8 @@ export class DeleteFuel {
   static readonly type = '[Fuel] Delete';
   constructor(public fuelId: string) {}
 }
+
+export class SelectFuel {
+  static readonly type = '[Fuel] Select';
+  constructor(public fuel: Fuel) {}
+}

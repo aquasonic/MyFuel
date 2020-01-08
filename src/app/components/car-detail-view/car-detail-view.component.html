@@ -1,54 +1,56 @@
 <ng-container *ngIf="initialized; else loading">
   <ng-container *ngIf="isAuthorized$ | async; else userNotFound">
     <ng-container *ngIf="car$ | async as car; else carNotFound">
-      <h1>{{ 'Fuel.Title' | translate: { name: car.name } }}</h1>
+      <ng-container *ngIf="{ selectedFuel: selectedFuel$ | async } as data">
+        <h1>{{ 'Fuel.Title' | translate: { name: car.name } }}</h1>
 
-      <p>{{ 'Fuel.Description' | translate }}</p>
+        <p>{{ 'Fuel.Description' | translate }}</p>
 
-      <div class="add">
-        <button class="btn btn-primary btn-block" (click)="createFuel(car.id)">{{ 'Fuel.AddNewFuel' | translate }}</button>
-      </div>
-
-      <ng-container *ngIf="fuels$ | async as fuels">
-        <table class="table" *ngIf="fuels.length > 0" [ngClass]="{ 'fuel-selected': selectedFuel }">
-          <thead>
-            <tr>
-              <th>{{ 'Fuel.DateHeader' | translate }}</th>
-              <th>{{ 'Fuel.KmHeader' | translate }}</th>
-              <th>{{ 'Fuel.LitresHeader' | translate }}</th>
-              <th>{{ 'Fuel.ConsumationHeader' | translate }}</th>
-              <th>{{ 'Fuel.CostsHeader' | translate }}</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr
-              *ngFor="let fuel of fuels; trackBy: trackById"
-              (click)="selectFuel(fuel)"
-              [ngClass]="{ active: selectedFuel?.id === fuel.id }"
-            >
-              <td>{{ fuel.date | date: 'dd.MM.yy' }}</td>
-              <td>{{ fuel.km | number: '1.0-0' }}</td>
-              <td>{{ fuel.litres | number: '1.2-2' }}</td>
-              <td>{{ (fuel.litres / fuel.km) * 100 | number: '1.2-2' }}</td>
-              <td>{{ fuel.cost | number: '1.2-2' }}</td>
-            </tr>
-          </tbody>
-        </table>
-      </ng-container>
-
-      <div class="footer-bar" *ngIf="selectedFuel">
-        <div>
-          <button class="btn btn-danger-outline" (click)="deleteFuel(selectedFuel.id)">
-            <clr-icon shape="trash"></clr-icon> {{ 'Fuel.DeleteFuelButton' | translate }}
-          </button>
-          <button class="btn btn-outline" (click)="updateFuel(selectedFuel)">
-            <clr-icon shape="pencil"></clr-icon> {{ 'Fuel.UpdateFuelButton' | translate }}
-          </button>
+        <div class="add">
+          <button class="btn btn-primary btn-block" (click)="createFuel(car.id)">{{ 'Fuel.AddNewFuel' | translate }}</button>
         </div>
-      </div>
 
-      <myf-fuel-dialog></myf-fuel-dialog>
-      <myf-confirm-dialog></myf-confirm-dialog>
+        <ng-container *ngIf="fuels$ | async as fuels">
+          <table class="table" *ngIf="fuels.length > 0" [ngClass]="{ 'fuel-selected': data.selectedFuel }">
+            <thead>
+              <tr>
+                <th>{{ 'Fuel.DateHeader' | translate }}</th>
+                <th>{{ 'Fuel.KmHeader' | translate }}</th>
+                <th>{{ 'Fuel.LitresHeader' | translate }}</th>
+                <th>{{ 'Fuel.ConsumationHeader' | translate }}</th>
+                <th>{{ 'Fuel.CostsHeader' | translate }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="let fuel of fuels; trackBy: trackById"
+                (click)="selectFuel(fuel)"
+                [ngClass]="{ active: data.selectedFuel?.id === fuel.id }"
+              >
+                <td>{{ fuel.date | date: 'dd.MM.yy' }}</td>
+                <td>{{ fuel.km | number: '1.0-0' }}</td>
+                <td>{{ fuel.litres | number: '1.2-2' }}</td>
+                <td>{{ (fuel.litres / fuel.km) * 100 | number: '1.2-2' }}</td>
+                <td>{{ fuel.cost | number: '1.2-2' }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </ng-container>
+
+        <div class="footer-bar" *ngIf="data.selectedFuel">
+          <div>
+            <button class="btn btn-danger-outline" (click)="deleteFuel(data.selectedFuel.id)">
+              <clr-icon shape="trash"></clr-icon> {{ 'Fuel.DeleteFuelButton' | translate }}
+            </button>
+            <button class="btn btn-outline" (click)="updateFuel(data.selectedFuel)">
+              <clr-icon shape="pencil"></clr-icon> {{ 'Fuel.UpdateFuelButton' | translate }}
+            </button>
+          </div>
+        </div>
+
+        <myf-fuel-dialog></myf-fuel-dialog>
+        <myf-confirm-dialog></myf-confirm-dialog>
+      </ng-container>
     </ng-container>
   </ng-container>
 </ng-container>
