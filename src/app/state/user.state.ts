@@ -1,6 +1,6 @@
 import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { append, patch, removeItem, updateItem } from '@ngxs/store/operators';
-import { tap } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 
 import { Car } from '../models/car.model';
 import { Fuel } from '../models/fuel.model';
@@ -8,7 +8,7 @@ import { CarService } from '../services/car.service';
 import { FuelService } from '../services/fuel.service';
 import { UserService } from '../services/user.service';
 import { CreateCar, DeleteCar, UpdateCar } from './car.actions';
-import { CreateFuel, DeleteFuel, UpdateFuel } from './fuel.actions';
+import { CreateFuel, DeleteFuel, SelectFuel, UpdateFuel } from './fuel.actions';
 import { FetchUser } from './user.actions';
 
 export interface UserStateModel {
@@ -97,10 +97,11 @@ export class UserState {
   @Action(CreateCar)
   private createCar(context: StateContext<UserStateModel>, { userId, car }: CreateCar) {
     return this.carService.createCar(userId, car).pipe(
-      tap(id => {
+      map(id => Object.assign({}, car, { id }) as Car),
+      tap(newCar => {
         context.setState(
           patch({
-            cars: append([Object.assign({}, car, { id })])
+            cars: append([newCar])
           })
         );
       })
@@ -110,10 +111,11 @@ export class UserState {
   @Action(UpdateCar)
   private updateCar(context: StateContext<UserStateModel>, { car }: UpdateCar) {
     return this.carService.updateCar(car).pipe(
-      tap(timestamp => {
+      map(timestamp => Object.assign({}, car, { timestamp }) as Car),
+      tap(newCar => {
         context.setState(
           patch({
-            cars: updateItem(c => c.id === car.id, patch(Object.assign({}, car, { timestamp })))
+            cars: updateItem(c => c.id === car.id, patch(newCar))
           })
         );
       })
@@ -136,29 +138,33 @@ export class UserState {
   @Action(CreateFuel)
   private createFuel(context: StateContext<UserStateModel>, { carId, fuel }: CreateFuel) {
     return this.fuelService.createFuel(carId, fuel).pipe(
-      tap(id => {
+      map(id => Object.assign({}, fuel, { id }) as Fuel),
+      tap(newFuel => {
         context.setState(
           patch({
-            cars: updateItem(c => c.id === carId, patch({ fuels: append([Object.assign({}, fuel, { id })]) }))
+            cars: updateItem(c => c.id === carId, patch({ fuels: append([newFuel]) }))
           })
         );
-      })
+      }),
+      tap(newFuel => context.dispatch(new SelectFuel(newFuel)))
     );
   }
 
   @Action(UpdateFuel)
   private updateFuel(context: StateContext<UserStateModel>, { fuel }: UpdateFuel) {
     return this.fuelService.updateFuel(fuel).pipe(
-      tap(timestamp => {
+      map(timestamp => Object.assign({}, fuel, { timestamp }) as Fuel),
+      tap(newFuel => {
         context.setState(
           patch({
             cars: updateItem(
               c => c.fuels && c.fuels.some(f => f.id === fuel.id),
-              patch({ fuels: updateItem(f => f.id === fuel.id, Object.assign({}, fuel, { timestamp })) })
+              patch({ fuels: updateItem(f => f.id === fuel.id, newFuel) })
             )
           })
         );
-      })
+      }),
+      tap(newFuel => context.dispatch(new SelectFuel(newFuel)))
     );
   }
 
@@ -171,14 +177,15 @@ export class UserState {
             cars: updateItem(c => c.fuels && c.fuels.some(f => f.id === id), patch({ fuels: removeItem<Fuel>(f => f.id === id) }))
           })
         );
-      })
+      }),
+      tap(_ => context.dispatch(new SelectFuel(undefined)))
     );
   }
 
   private toCar(data: any) {
     return {
       id: data.id,
-      timestamp: data.timestam,
+      timestamp: data.timestamp,
       name: data.name,
       dateOfPurchase: data.dateOfPurchase,
       mileageAtPurchase: data.mileageAtPurchase,
@@ -187,6 +194,13 @@ export class UserState {
   }
 
   private toFuel(data: any) {
-    return { id: data.id, timestamp: data.timestam, date: data.date, km: data.km, litres: data.litres, cost: data.cost } as Fuel;
+    return {
+      id: data.id,
+      timestamp: data.timestamp,
+      date: data.date,
+      km: data.km,
+      litres: data.litres,
+      cost: data.cost
+    } as Fuel;
   }
 }

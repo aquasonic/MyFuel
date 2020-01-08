@@ -2,9 +2,11 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Store } from '@ngxs/store';
+import { concat } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Fuel } from 'src/app/models/fuel.model';
-import { CreateFuel, DeleteFuel, UpdateFuel } from 'src/app/state/fuel.actions';
+import { CarState } from 'src/app/state/car.state';
+import { CreateFuel, DeleteFuel, SelectFuel, UpdateFuel } from 'src/app/state/fuel.actions';
 import { FetchUser } from 'src/app/state/user.actions';
 import { UserState } from 'src/app/state/user.state';
 
@@ -24,33 +26,27 @@ export class CarDetailViewComponent implements OnInit {
   private readonly carId = this.route.snapshot.params.car;
 
   initialized = false;
-  selectedFuel: Fuel;
 
   readonly isAuthorized$ = this.store.select(UserState.isAuthorized);
   readonly car$ = this.store.select(UserState.getCarById).pipe(map(fn => fn(this.carId)));
   readonly fuels$ = this.store.select(UserState.getFuelsByCarId).pipe(map(fn => fn(this.carId)));
+  readonly selectedFuel$ = this.store.select(CarState.getSelectedFuel);
 
   constructor(private store: Store, private translateService: TranslateService, private route: ActivatedRoute) {}
 
   ngOnInit() {
-    this.store.dispatch(new FetchUser(this.userId)).subscribe(_ => (this.initialized = true));
+    concat(this.store.dispatch(new FetchUser(this.userId)), this.store.dispatch(new SelectFuel(undefined))).subscribe(_ => {
+      this.initialized = true;
+    });
   }
 
   createFuel(carId: string) {
     const fuel = { date: new Date().toISOString().slice(0, 10) } as Fuel;
-    this.fuelDialog.open(
-      fuel,
-      f => this.store.dispatch(new CreateFuel(carId, f)),
-      f => (this.selectedFuel = f)
-    );
+    this.fuelDialog.open(fuel, f => this.store.dispatch(new CreateFuel(carId, f)));
   }
 
   updateFuel(fuel: Fuel) {
-    this.fuelDialog.open(
-      fuel,
-      f => this.store.dispatch(new UpdateFuel(f)),
-      f => (this.selectedFuel = f)
-    );
+    this.fuelDialog.open(fuel, f => this.store.dispatch(new UpdateFuel(f)));
   }
 
   deleteFuel(fuelId: string) {
@@ -59,16 +55,12 @@ export class CarDetailViewComponent implements OnInit {
       this.translateService.instant('Fuel.DeleteFuelConfirmationDescription'),
       fuelId,
       id => this.store.dispatch(new DeleteFuel(id)),
-      () => (this.selectedFuel = undefined)
+      () => {}
     );
   }
 
   selectFuel(fuel: Fuel) {
-    if (this.selectedFuel !== undefined && this.selectedFuel.id === fuel.id) {
-      this.selectedFuel = undefined;
-    } else {
-      this.selectedFuel = fuel;
-    }
+    this.store.dispatch(new SelectFuel(fuel)).subscribe();
   }
 
   trackById(index: number, fuel: Fuel) {
