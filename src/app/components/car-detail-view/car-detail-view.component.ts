@@ -5,6 +5,7 @@ import { Store } from '@ngxs/store';
 import { concat } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Fuel } from 'src/app/models/fuel.model';
+import { FuelService } from 'src/app/services/fuel.service';
 import { CarState } from 'src/app/state/car.state';
 import { CreateFuel, DeleteFuel, SelectFuel, UpdateFuel } from 'src/app/state/fuel.actions';
 import { FetchUser } from 'src/app/state/user.actions';
@@ -32,7 +33,12 @@ export class CarDetailViewComponent implements OnInit {
   readonly fuels$ = this.store.select(UserState.getFuelsByCarId).pipe(map(fn => fn(this.carId)));
   readonly selectedFuel$ = this.store.select(CarState.getSelectedFuel);
 
-  constructor(private store: Store, private translateService: TranslateService, private route: ActivatedRoute) {}
+  constructor(
+    private store: Store,
+    private fuelService: FuelService,
+    private translateService: TranslateService,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit() {
     concat(this.store.dispatch(new FetchUser(this.userId)), this.store.dispatch(new SelectFuel(undefined))).subscribe(_ => {
@@ -61,6 +67,10 @@ export class CarDetailViewComponent implements OnInit {
 
   selectFuel(fuel: Fuel) {
     this.store.dispatch(new SelectFuel(fuel)).subscribe();
+  }
+
+  getConsumation(fuel: Fuel) {
+    return this.fuelService.getConsumation(fuel);
   }
 
   trackById(index: number, fuel: Fuel) {

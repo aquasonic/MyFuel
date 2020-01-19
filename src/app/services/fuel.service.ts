@@ -69,4 +69,8 @@ export class FuelService {
       })
       .pipe(map(response => response.data.deleteFuel.id));
   }
+
+  getConsumation(fuel: Fuel) {
+    return (fuel.litres / fuel.km) * 100;
+  }
 }
