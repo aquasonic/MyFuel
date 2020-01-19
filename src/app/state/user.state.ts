@@ -6,6 +6,7 @@ import { Car } from '../models/car.model';
 import { Fuel } from '../models/fuel.model';
 import { CarService } from '../services/car.service';
 import { FuelService } from '../services/fuel.service';
+import { MappingService } from '../services/mapping.service';
 import { UserService } from '../services/user.service';
 import { CreateCar, DeleteCar, UpdateCar } from './car.actions';
 import { CreateFuel, DeleteFuel, SelectFuel, UpdateFuel } from './fuel.actions';
@@ -28,7 +29,12 @@ export interface UserStateModel {
   }
 })
 export class UserState {
-  constructor(private userService: UserService, private carService: CarService, private fuelService: FuelService) {}
+  constructor(
+    private userService: UserService,
+    private carService: CarService,
+    private fuelService: FuelService,
+    private mappingService: MappingService
+  ) {}
 
   @Selector()
   static isAuthorized(state: UserStateModel) {
@@ -79,7 +85,7 @@ export class UserState {
               isAuthorized: true,
               userId: data.id,
               userName: data.name,
-              cars: data.cars.data.map(c => this.toCar(c))
+              cars: data.cars.data.map(c => this.mappingService.toCar(c))
             });
           } else {
             context.setState({
@@ -180,27 +186,5 @@ export class UserState {
       }),
       tap(_ => context.dispatch(new SelectFuel(undefined)))
     );
-  }
-
-  private toCar(data: any) {
-    return {
-      id: data.id,
-      timestamp: data.timestamp,
-      name: data.name,
-      dateOfPurchase: data.dateOfPurchase,
-      mileageAtPurchase: data.mileageAtPurchase,
-      fuels: data.fuels.data.map(fuel => this.toFuel(fuel))
-    } as Car;
-  }
-
-  private toFuel(data: any) {
-    return {
-      id: data.id,
-      timestamp: data.timestamp,
-      date: data.date,
-      km: data.km,
-      litres: data.litres,
-      cost: data.cost
-    } as Fuel;
   }
 }
