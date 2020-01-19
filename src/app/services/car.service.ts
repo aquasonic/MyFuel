@@ -5,12 +5,13 @@ import { of } from 'rxjs';
 import { concatMap, map } from 'rxjs/operators';
 
 import { Car } from '../models/car.model';
+import { FuelService } from './fuel.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CarService {
-  constructor(private apollo: Apollo) {}
+  constructor(private apollo: Apollo, private fuelService: FuelService) {}
 
   createCar(userId: string, car: Car) {
     return this.apollo
@@ -106,5 +107,21 @@ export class CarService {
         }),
         map(response => response.data.deleteCar.id)
       );
+  }
+
+  getTotalKm(car: Car) {
+    if (!car.fuels.length) {
+      return 0;
+    }
+
+    return car.fuels.reduce((a, b) => a + b.km, 0);
+  }
+
+  getAverageConsumation(car: Car) {
+    if (!car.fuels.length) {
+      return 0;
+    }
+
+    return car.fuels.reduce((a, b) => a + this.fuelService.getConsumation(b), 0) / car.fuels.length;
   }
 }

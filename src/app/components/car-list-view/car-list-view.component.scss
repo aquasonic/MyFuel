@@ -21,6 +21,15 @@
     &:hover {
       text-decoration: none;
     }
+
+    .statistics {
+      font-size: smaller;
+      font-weight: normal;
+
+      span {
+        margin-right: 0.5rem;
+      }
+    }
   }
 }
 
