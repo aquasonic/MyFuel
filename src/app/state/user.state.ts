@@ -1,3 +1,4 @@
+import { Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { append, patch, removeItem, updateItem } from '@ngxs/store/operators';
 import { map, tap } from 'rxjs/operators';
@@ -28,6 +29,7 @@ export interface UserStateModel {
     cars: []
   }
 })
+@Injectable()
 export class UserState {
   constructor(
     private userService: UserService,
