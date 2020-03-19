@@ -26,7 +26,7 @@ export class CarService {
           }
         `,
         variables: {
-          userId: userId,
+          userId,
           name: car.name,
           dateOfPurchase: car.dateOfPurchase,
           mileageAtPurchase: car.mileageAtPurchase

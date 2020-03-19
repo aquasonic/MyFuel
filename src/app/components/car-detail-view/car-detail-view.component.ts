@@ -20,8 +20,8 @@ import { FuelDialogComponent } from '../fuel-dialog/fuel-dialog.component';
   styleUrls: ['./car-detail-view.component.scss']
 })
 export class CarDetailViewComponent implements OnInit {
-  @ViewChild(FuelDialogComponent, { static: false }) private fuelDialog: FuelDialogComponent;
-  @ViewChild(ConfirmDialogComponent, { static: false }) private confirmDialog: ConfirmDialogComponent;
+  @ViewChild(FuelDialogComponent) private fuelDialog: FuelDialogComponent;
+  @ViewChild(ConfirmDialogComponent) private confirmDialog: ConfirmDialogComponent;
 
   private readonly userId = this.route.snapshot.params.user;
   private readonly carId = this.route.snapshot.params.car;
