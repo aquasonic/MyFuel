@@ -1,3 +1,4 @@
+import { Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { patch } from '@ngxs/store/operators';
 
@@ -14,6 +15,7 @@ export interface CarStateModel {
     selectedFuel: undefined
   }
 })
+@Injectable()
 export class CarState {
   @Selector()
   static getSelectedFuel(state: CarStateModel) {

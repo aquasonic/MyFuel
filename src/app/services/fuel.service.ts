@@ -22,7 +22,7 @@ export class FuelService {
           }
         `,
         variables: {
-          carId: carId,
+          carId,
           date: fuel.date,
           km: fuel.km,
           litres: fuel.litres,

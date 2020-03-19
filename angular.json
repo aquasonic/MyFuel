@@ -22,10 +22,14 @@
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
-            "aot": false,
+            "aot": true,
             "assets": ["src/assets", "src/_redirects"],
             "styles": ["node_modules/@clr/icons/clr-icons.min.css", "node_modules/@clr/ui/clr-ui.min.css", "src/styles.scss"],
-            "scripts": ["node_modules/@webcomponents/custom-elements/custom-elements.min.js", "node_modules/@clr/icons/clr-icons.min.js"]
+            "scripts": [
+              "node_modules/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js",
+              "node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js",
+              "node_modules/@clr/icons/clr-icons.min.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -40,7 +44,6 @@
               "sourceMap": false,
               "extractCss": true,
               "namedChunks": false,
-              "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,

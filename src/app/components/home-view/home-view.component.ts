@@ -12,7 +12,7 @@ export class HomeViewComponent {
   @ViewChild(ClrForm, { static: true }) clrForm;
 
   form = new FormGroup({
-    userId: new FormControl('', Validators.required)
+    userId: new FormControl('', [Validators.required, Validators.pattern(/^\d*$/)])
   });
 
   constructor(private router: Router) {}

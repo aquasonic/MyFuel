@@ -14,20 +14,20 @@ import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.compone
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
-  @ViewChild(CarDialogComponent, { static: false }) carDialog: CarDialogComponent;
-  @ViewChild(ConfirmDialogComponent, { static: false }) confirmDialog: ConfirmDialogComponent;
+  @ViewChild(CarDialogComponent) carDialog: CarDialogComponent;
+  @ViewChild(ConfirmDialogComponent) confirmDialog: ConfirmDialogComponent;
 
   private readonly isAuthorized$ = this.store.select(UserState.isAuthorized);
   private readonly carId$ = this.router.events.pipe(
     filter(e => e instanceof RoutesRecognized),
-    map(e => (<RoutesRecognized>e).state.root.firstChild.params.car)
+    map(e => (e as RoutesRecognized).state.root.firstChild.params.car)
   );
 
   readonly userId$ = this.store.select(UserState.getUserId);
 
-  readonly car$ = combineLatest(this.carId$, this.store.select(UserState.getCarById)).pipe(map(([carId, carByIdFn]) => carByIdFn(carId)));
+  readonly car$ = combineLatest([this.carId$, this.store.select(UserState.getCarById)]).pipe(map(([carId, carByIdFn]) => carByIdFn(carId)));
 
-  readonly logoLink$ = combineLatest(this.isAuthorized$, this.userId$).pipe(
+  readonly logoLink$ = combineLatest([this.isAuthorized$, this.userId$]).pipe(
     map(([isAuthorized, userId]) => (isAuthorized === true ? '/' + userId : '/'))
   );
 

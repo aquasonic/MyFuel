@@ -15,7 +15,7 @@ import { CarDialogComponent } from '../car-dialog/car-dialog.component';
   styleUrls: ['./car-list-view.component.scss']
 })
 export class CarListViewComponent implements OnInit {
-  @ViewChild(CarDialogComponent, { static: false }) private carDialog: CarDialogComponent;
+  @ViewChild(CarDialogComponent) private carDialog: CarDialogComponent;
 
   private readonly userId = this.route.snapshot.params.user;
 
