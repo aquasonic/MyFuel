@@ -110,7 +110,7 @@ export class CarService {
   }
 
   getTotalKm(car: Car) {
-    if (!car.fuels.length) {
+    if (!car.fuels || !car.fuels.length) {
       return 0;
     }
 
@@ -118,7 +118,7 @@ export class CarService {
   }
 
   getAverageConsumation(car: Car) {
-    if (!car.fuels.length) {
+    if (!car.fuels || !car.fuels.length) {
       return 0;
     }
 
