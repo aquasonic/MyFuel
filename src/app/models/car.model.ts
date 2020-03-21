@@ -6,5 +6,6 @@ export interface Car {
   name: string;
   dateOfPurchase: string;
   mileageAtPurchase: number;
+  archived: boolean;
   fuels: Fuel[];
 }

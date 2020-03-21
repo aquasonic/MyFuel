@@ -8,6 +8,7 @@ type Car {
     name: String!
     dateOfPurchase: String!
     mileageAtPurchase: Int!
+    archived: Boolean
     fuels: [Fuel] @relation
 }
 

@@ -36,7 +36,8 @@
     "DeleteCarConfirmationTitle": "Auto löschen?",
     "DeleteCarConfirmationDescription": "Bist du sicher dass du das Auto und alle Tankfüllungen löschen möchtest? Dies kann nicht rückgängig gemacht werden.",
     "TotalKm": "Total Km",
-    "AverageConsumation": "&Oslash;-Verbrauch"
+    "AverageConsumation": "&Oslash;-Verbrauch",
+    "Archived": "Archiviert"
   },
   "Fuel": {
     "Title": "{{name}}",
