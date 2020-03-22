@@ -23,7 +23,7 @@
   "Car": {
     "Title": "Hi, {{name}}",
     "Description": "Klicke auf ein Auto um die Statistiken und Tankfüllungen zu sehen. Du kannst auch jederzeit neue Autos hinzufügen.",
-    "NoItemsFound": "Keine Autos gefunden.",
+    "NoItemsFound": "Keine aktiven Autos gefunden.",
     "NewCar": "Neues Auto hinzufügen",
     "UpdateCar": "Auto bearbeiten",
     "DeleteCar": "Auto löschen",
@@ -36,7 +36,10 @@
     "DeleteCarConfirmationTitle": "Auto löschen?",
     "DeleteCarConfirmationDescription": "Bist du sicher dass du das Auto und alle Tankfüllungen löschen möchtest? Dies kann nicht rückgängig gemacht werden.",
     "TotalKm": "Total Km",
-    "AverageConsumation": "&Oslash;-Verbrauch"
+    "AverageConsumation": "&Oslash;-Verbrauch",
+    "Archived": "Archiviert",
+    "ArchivedMessage": "Das Auto ist archiviert. Es können keine Tankfüllungen hinzugefügt, editiert oder gelöscht werden.",
+    "ArchivedCars": "Archivierte Autos"
   },
   "Fuel": {
     "Title": "{{name}}",

@@ -1,28 +1,10 @@
-<ng-container *ngIf="initialized && cars$ | async as cars; else loading">
+<ng-container *ngIf="initialized && activeCars$ | async as activeCars; else loading">
   <ng-container *ngIf="isAuthorized$ | async; else userNotFound">
     <h1>{{ 'Car.Title' | translate: { name: userName$ | async } }}</h1>
 
     <p>{{ 'Car.Description' | translate }}</p>
 
-    <ul class="list-unstyled cars" *ngIf="cars.length > 0; else noItems">
-      <li *ngFor="let car of cars; trackBy: trackById">
-        <a [routerLink]="['./' + car.id]">
-          <div>
-            <div>{{ car.name }}</div>
-            <div class="statistics">
-              <span
-                ><strong>{{ 'Car.TotalKm' | translate }}:</strong> {{ getTotalKm(car) | number: '1.0-0' }}</span
-              >
-              <span
-                ><strong [innerHTML]="('Car.AverageConsumation' | translate) + ':'"></strong>
-                {{ getAverageConsumation(car) | number: '1.2-2' }}</span
-              >
-            </div>
-          </div>
-          <clr-icon shape="caret right"></clr-icon>
-        </a>
-      </li>
-    </ul>
+    <myf-car-list *ngIf="activeCars.length > 0; else noItems" [cars]="activeCars"></myf-car-list>
 
     <ng-template #noItems
       ><p class="no-items">
@@ -32,6 +14,17 @@
 
     <button class="btn btn-primary btn-block" (click)="createCar()">{{ 'Car.NewCar' | translate }}</button>
     <myf-car-dialog></myf-car-dialog>
+
+    <ng-container *ngIf="archivedCars$ | async as archivedCars">
+      <clr-accordion *ngIf="archivedCars.length > 0" class="inline-accordion">
+        <clr-accordion-panel>
+          <clr-accordion-title>{{ 'Car.ArchivedCars' | translate }}</clr-accordion-title>
+          <clr-accordion-content *clrIfExpanded>
+            <myf-car-list [cars]="archivedCars"></myf-car-list>
+          </clr-accordion-content>
+        </clr-accordion-panel>
+      </clr-accordion>
+    </ng-container>
   </ng-container>
 </ng-container>
 

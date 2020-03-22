@@ -17,9 +17,15 @@ export class CarService {
     return this.apollo
       .mutate<{ createCar: { id: string } }>({
         mutation: gql`
-          mutation createCar($userId: ID!, $name: String!, $dateOfPurchase: String!, $mileageAtPurchase: Int!) {
+          mutation createCar($userId: ID!, $name: String!, $dateOfPurchase: String!, $mileageAtPurchase: Int!, $archived: Boolean) {
             createCar(
-              data: { user: { connect: $userId }, name: $name, dateOfPurchase: $dateOfPurchase, mileageAtPurchase: $mileageAtPurchase }
+              data: {
+                user: { connect: $userId }
+                name: $name
+                dateOfPurchase: $dateOfPurchase
+                mileageAtPurchase: $mileageAtPurchase
+                archived: $archived
+              }
             ) {
               id: _id
             }
@@ -29,7 +35,8 @@ export class CarService {
           userId,
           name: car.name,
           dateOfPurchase: car.dateOfPurchase,
-          mileageAtPurchase: car.mileageAtPurchase
+          mileageAtPurchase: car.mileageAtPurchase,
+          archived: car.archived ? true : null
         }
       })
       .pipe(map(response => response.data.createCar.id));
@@ -39,8 +46,11 @@ export class CarService {
     return this.apollo
       .mutate<{ updateCar: { timestamp: number } }>({
         mutation: gql`
-          mutation updateCar($id: ID!, $name: String!, $dateOfPurchase: String!, $mileageAtPurchase: Int!) {
-            updateCar(id: $id, data: { name: $name, dateOfPurchase: $dateOfPurchase, mileageAtPurchase: $mileageAtPurchase }) {
+          mutation updateCar($id: ID!, $name: String!, $dateOfPurchase: String!, $mileageAtPurchase: Int!, $archived: Boolean) {
+            updateCar(
+              id: $id
+              data: { name: $name, dateOfPurchase: $dateOfPurchase, mileageAtPurchase: $mileageAtPurchase, archived: $archived }
+            ) {
               timestamp: _ts
             }
           }
@@ -49,7 +59,8 @@ export class CarService {
           id: car.id,
           name: car.name,
           dateOfPurchase: car.dateOfPurchase,
-          mileageAtPurchase: car.mileageAtPurchase
+          mileageAtPurchase: car.mileageAtPurchase,
+          archived: car.archived ? true : null
         }
       })
       .pipe(map(response => response.data.updateCar.timestamp));

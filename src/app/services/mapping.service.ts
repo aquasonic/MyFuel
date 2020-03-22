@@ -14,6 +14,7 @@ export class MappingService {
       name: data.name,
       dateOfPurchase: data.dateOfPurchase,
       mileageAtPurchase: data.mileageAtPurchase,
+      archived: data.archived,
       fuels: data.fuels.data.map(fuel => this.toFuel(fuel))
     } as Car;
   }

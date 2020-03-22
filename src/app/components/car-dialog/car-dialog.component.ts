@@ -22,7 +22,8 @@ export class CarDialogComponent {
     id: new FormControl(),
     name: new FormControl(null, Validators.required),
     dateOfPurchase: new FormControl(null, Validators.required),
-    mileageAtPurchase: new FormControl(null, [Validators.required, Validators.pattern(/^\d*$/)])
+    mileageAtPurchase: new FormControl(null, [Validators.required, Validators.pattern(/^\d*$/)]),
+    archived: new FormControl()
   });
 
   private submitHandler: (car: Car) => Observable<void>;

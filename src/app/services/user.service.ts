@@ -25,6 +25,7 @@ export class UserService {
                   name
                   dateOfPurchase
                   mileageAtPurchase
+                  archived
                   fuels(_size: 10000) {
                     data {
                       id: _id

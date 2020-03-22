@@ -4,14 +4,22 @@
       <ng-container *ngIf="{ selectedFuel: selectedFuel$ | async } as data">
         <h1>{{ 'Fuel.Title' | translate: { name: car.name } }}</h1>
 
+        <clr-alert *ngIf="car.archived" [clrAlertType]="'warning'" [clrAlertClosable]="false">
+          <clr-alert-item>
+            <span class="alert-text">
+              {{ 'Car.ArchivedMessage' | translate }}
+            </span>
+          </clr-alert-item>
+        </clr-alert>
+
         <p>{{ 'Fuel.Description' | translate }}</p>
 
-        <div class="add">
+        <div class="add" *ngIf="!car.archived">
           <button class="btn btn-primary btn-block" (click)="createFuel(car.id)">{{ 'Fuel.AddNewFuel' | translate }}</button>
         </div>
 
         <ng-container *ngIf="fuels$ | async as fuels">
-          <table class="table" *ngIf="fuels.length > 0" [ngClass]="{ 'fuel-selected': data.selectedFuel }">
+          <table class="table" *ngIf="fuels.length > 0" [ngClass]="{ 'fuel-selected': data.selectedFuel && !car.archived }">
             <thead>
               <tr>
                 <th>{{ 'Fuel.DateHeader' | translate }}</th>
@@ -25,7 +33,7 @@
               <tr
                 *ngFor="let fuel of fuels; trackBy: trackById"
                 (click)="selectFuel(fuel)"
-                [ngClass]="{ active: data.selectedFuel?.id === fuel.id }"
+                [ngClass]="{ active: data.selectedFuel?.id === fuel.id && !car.archived }"
               >
                 <td>{{ fuel.date | date: 'dd.MM.yy' }}</td>
                 <td>{{ fuel.km | number: '1.0-0' }}</td>
@@ -37,7 +45,7 @@
           </table>
         </ng-container>
 
-        <div class="footer-bar" *ngIf="data.selectedFuel">
+        <div class="footer-bar" *ngIf="data.selectedFuel && !car.archived">
           <div>
             <button class="btn btn-danger-outline" (click)="deleteFuel(data.selectedFuel.id)">
               <clr-icon shape="trash"></clr-icon> {{ 'Fuel.DeleteFuelButton' | translate }}
