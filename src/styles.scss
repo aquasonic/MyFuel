@@ -19,3 +19,16 @@
     }
   }
 }
+
+.inline-accordion {
+  .clr-accordion-header,
+  .clr-accordion-content {
+    border: 0 !important;
+    background: inherit;
+  }
+
+  .clr-accordion-header-button,
+  .clr-accordion-inner-content {
+    padding: 0 !important;
+  }
+}

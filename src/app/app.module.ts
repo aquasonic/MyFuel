@@ -19,6 +19,7 @@ import { CarDeleteComponent } from './components/car-delete/car-delete.component
 import { CarDetailViewComponent } from './components/car-detail-view/car-detail-view.component';
 import { CarDialogComponent } from './components/car-dialog/car-dialog.component';
 import { CarListViewComponent } from './components/car-list-view/car-list-view.component';
+import { CarListComponent } from './components/car-list/car-list.component';
 import { CarUpdateComponent } from './components/car-update/car-update.component';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 import { ErrorMessageComponent } from './components/error-message/error-message.component';
@@ -65,7 +66,8 @@ export function createApolloOptions(httpLink: HttpLink) {
     ErrorMessageComponent,
     HeaderComponent,
     CarUpdateComponent,
-    CarDeleteComponent
+    CarDeleteComponent,
+    CarListComponent
   ],
   imports: [
     BrowserModule,

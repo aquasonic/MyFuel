@@ -1,41 +1,10 @@
-.cars {
-  margin: 1rem 0;
-
-  li {
-    border-bottom: 1px solid #ccc;
-
-    &:first-child {
-      border-top: 1px solid #ccc;
-    }
-  }
-
-  a {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    padding: 0.5rem;
-    color: #575757;
-    font-weight: bold;
-
-    &:hover {
-      text-decoration: none;
-    }
-
-    .statistics {
-      font-size: smaller;
-      font-weight: normal;
-
-      span {
-        margin-right: 0.5rem;
-      }
-    }
-  }
-}
-
 .no-items {
   border-top: 1px solid #ccc;
   border-bottom: 1px solid #ccc;
   margin: 1rem 0;
   padding: 0.5rem;
+}
+
+.inline-accordion {
+  margin-top: 2rem;
 }

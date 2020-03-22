@@ -1,0 +1,19 @@
+<ul class="list-unstyled">
+  <li *ngFor="let car of cars; trackBy: trackById">
+    <a [routerLink]="['./' + car.id]">
+      <div>
+        <div>{{ car.name }}</div>
+        <div class="statistics">
+          <span
+            ><strong>{{ 'Car.TotalKm' | translate }}:</strong> {{ getTotalKm(car) | number: '1.0-0' }}</span
+          >
+          <span
+            ><strong [innerHTML]="('Car.AverageConsumation' | translate) + ':'"></strong>
+            {{ getAverageConsumation(car) | number: '1.2-2' }}</span
+          >
+        </div>
+      </div>
+      <clr-icon shape="caret right"></clr-icon>
+    </a>
+  </li>
+</ul>
