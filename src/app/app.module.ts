@@ -14,6 +14,7 @@ import { ApolloLink } from 'apollo-link';
 import { setContext } from 'apollo-link-context';
 import { environment } from 'src/environments/environment';
 
+import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app.routing';
 import { CarDeleteComponent } from './components/car-delete/car-delete.component';
 import { CarDetailViewComponent } from './components/car-detail-view/car-detail-view.component';
@@ -55,6 +56,7 @@ export function createApolloOptions(httpLink: HttpLink) {
 
 @NgModule({
   declarations: [
+    AppComponent,
     ShellComponent,
     HomeViewComponent,
     CarListViewComponent,
@@ -100,6 +102,6 @@ export function createApolloOptions(httpLink: HttpLink) {
       multi: true
     }
   ],
-  bootstrap: [ShellComponent]
+  bootstrap: [AppComponent]
 })
 export class AppModule {}
