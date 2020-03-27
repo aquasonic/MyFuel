@@ -26,11 +26,12 @@ import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dial
 import { ErrorMessageComponent } from './components/error-message/error-message.component';
 import { FuelDialogComponent } from './components/fuel-dialog/fuel-dialog.component';
 import { HeaderComponent } from './components/header/header.component';
-import { HomeViewComponent } from './components/home-view/home-view.component';
 import { LoadingComponent } from './components/loading/loading.component';
+import { LoginComponent } from './components/login/login.component';
 import { ShellComponent } from './components/shell/shell.component';
 import { CarState } from './state/car.state';
 import { UserState } from './state/user.state';
+import { HomeViewComponent } from './views/home-view/home-view.component';
 
 export function InitializeAppFactory(translateService: TranslateService) {
   return () => translateService.use('de').toPromise();
@@ -69,7 +70,8 @@ export function createApolloOptions(httpLink: HttpLink) {
     HeaderComponent,
     CarUpdateComponent,
     CarDeleteComponent,
-    CarListComponent
+    CarListComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

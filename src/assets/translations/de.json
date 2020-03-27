@@ -15,10 +15,12 @@
     "OnlyTwoDecimalPlaces": "Nur 2 Dezimalstellen erlaubt"
   },
   "Home": {
-    "Title": "Hi, ich bin dein Treibstoff Tracker",
-    "Description": "Bitte gib deine Benutzernummer unten ein, um die Liste der Autos anzuzeigen.",
+    "Title": "Hi, ich bin dein Treibstoff Tracker"
+  },
+  "Login": {
+    "Description": "Bitte gib deine Benutzernummer ein, um die Liste der Autos anzuzeigen.",
     "UserIdPlaceholder": "z.B. 123456",
-    "LoginButton": "Lass mich rein"
+    "SubmitButtonText": "Lass mich rein"
   },
   "Car": {
     "Title": "Hi, {{name}}",

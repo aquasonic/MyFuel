@@ -4,11 +4,10 @@ import { Router } from '@angular/router';
 import { ClrForm } from '@clr/angular';
 
 @Component({
-  selector: 'myf-home-view',
-  templateUrl: './home-view.component.html',
-  styleUrls: ['./home-view.component.scss']
+  selector: 'myf-login',
+  templateUrl: './login.component.html'
 })
-export class HomeViewComponent {
+export class LoginComponent {
   @ViewChild(ClrForm, { static: true }) clrForm;
 
   form = new FormGroup({
