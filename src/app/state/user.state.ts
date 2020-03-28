@@ -62,7 +62,7 @@ export class UserState {
 
   @Selector()
   static getCars(state: UserStateModel) {
-    return state.cars.sort((a: Car, b: Car) => a.name.localeCompare(b.name));
+    return [...state.cars].sort((a: Car, b: Car) => a.name.localeCompare(b.name));
   }
 
   @Selector()

@@ -88,7 +88,13 @@ export function createApolloOptions(httpLink: HttpLink) {
     HttpClientModule,
     HttpLinkModule,
     ReactiveFormsModule,
-    NgxsModule.forRoot([UserState, CarState]),
+    NgxsModule.forRoot([UserState, CarState], {
+      developmentMode: !environment.production,
+      selectorOptions: {
+        suppressErrors: false,
+        injectContainerState: false
+      }
+    }),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
