@@ -65,8 +65,8 @@
 
 <ng-template #loading><myf-loading></myf-loading></ng-template>
 <ng-template #userNotFound
-  ><myf-error-message>{{ 'App.UserNotFound' | translate }}</myf-error-message></ng-template
+  ><myf-alert-message [alertType]="'danger'">{{ 'App.UserNotFound' | translate }}</myf-alert-message></ng-template
 >
 <ng-template #carNotFound
-  ><myf-error-message>{{ 'App.CarNotFound' | translate }}</myf-error-message></ng-template
+  ><myf-alert-message [alertType]="'danger'">{{ 'App.CarNotFound' | translate }}</myf-alert-message></ng-template
 >

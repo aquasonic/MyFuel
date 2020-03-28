@@ -14,6 +14,7 @@ import { CreateFuel, DeleteFuel, SelectFuel, UpdateFuel } from './fuel.actions';
 import { FetchUser } from './user.actions';
 
 export interface UserStateModel {
+  isLoading: boolean;
   isAuthorized: boolean;
   userId: string;
   userName: string;
@@ -23,6 +24,7 @@ export interface UserStateModel {
 @State<UserStateModel>({
   name: 'user',
   defaults: {
+    isLoading: false,
     isAuthorized: false,
     userId: undefined,
     userName: undefined,
@@ -37,6 +39,11 @@ export class UserState {
     private fuelService: FuelService,
     private mappingService: MappingService
   ) {}
+
+  @Selector()
+  static isLoading(state: UserStateModel) {
+    return state.isLoading;
+  }
 
   @Selector()
   static isAuthorized(state: UserStateModel) {
@@ -80,10 +87,13 @@ export class UserState {
   @Action(FetchUser)
   private fetchUser(context: StateContext<UserStateModel>, { userId }: FetchUser) {
     if (userId !== context.getState().userId) {
+      context.patchState({ isLoading: true });
+
       return this.userService.findUserById(userId).pipe(
         tap(data => {
           if (data) {
             context.setState({
+              isLoading: false,
               isAuthorized: true,
               userId: data.id,
               userName: data.name,
@@ -91,6 +101,7 @@ export class UserState {
             });
           } else {
             context.setState({
+              isLoading: false,
               isAuthorized: false,
               userId: undefined,
               userName: undefined,
