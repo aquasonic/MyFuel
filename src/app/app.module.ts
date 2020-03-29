@@ -27,9 +27,9 @@ import { CarListComponent } from './components/car-list/car-list.component';
 import { CarUpdateComponent } from './components/car-update/car-update.component';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 import { FuelDialogComponent } from './components/fuel-dialog/fuel-dialog.component';
-import { HeaderComponent } from './components/header/header.component';
 import { LoadingComponent } from './components/loading/loading.component';
 import { LoginComponent } from './components/login/login.component';
+import { MainContainerComponent } from './components/main-container/main-container.component';
 import { ShellComponent } from './components/shell/shell.component';
 import { CarState } from './state/car.state';
 import { UserState } from './state/user.state';
@@ -70,14 +70,14 @@ export function createApolloOptions(httpLink: HttpLink) {
     FuelDialogComponent,
     LoadingComponent,
     AlertMessageComponent,
-    HeaderComponent,
     CarUpdateComponent,
     CarDeleteComponent,
     CarListComponent,
     LoginComponent,
     ActiveCarsComponent,
     ArchivedCarsComponent,
-    CarCreateComponent
+    CarCreateComponent,
+    MainContainerComponent
   ],
   imports: [
     BrowserModule,
