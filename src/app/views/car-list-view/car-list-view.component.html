@@ -10,7 +10,7 @@
     <p>{{ 'ListOfCars.Description' | translate }}</p>
 
     <myf-active-cars [cars]="activeCars$ | async"></myf-active-cars>
-    <myf-car-create [userId]="userId"></myf-car-create>
+    <myf-create-car-button [userId]="userId" [dialog]="carDialog"></myf-create-car-button>
     <myf-archived-cars [cars]="archivedCars$ | async"></myf-archived-cars>
   </ng-template>
 
@@ -18,3 +18,5 @@
     <myf-alert-message [alertType]="'danger'">{{ 'App.UserNotFound' | translate }}</myf-alert-message>
   </ng-template>
 </myf-main-container>
+
+<myf-car-dialog></myf-car-dialog>

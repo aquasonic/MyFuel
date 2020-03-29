@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { map } from 'rxjs/operators';
+import { CarDialogComponent } from 'src/app/dialogs/car-dialog/car-dialog.component';
 import { FetchUser } from 'src/app/state/user.actions';
 import { UserState } from 'src/app/state/user.state';
 
@@ -10,6 +11,8 @@ import { UserState } from 'src/app/state/user.state';
   templateUrl: './car-list-view.component.html'
 })
 export class CarListViewComponent implements OnInit {
+  @ViewChild(CarDialogComponent) carDialog: CarDialogComponent;
+
   private readonly cars$ = this.store.select(UserState.getCars);
 
   readonly userId = this.route.snapshot.params.user;

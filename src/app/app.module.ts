@@ -19,11 +19,11 @@ import { AppRoutingModule } from './app.routing';
 import { ActiveCarsComponent } from './components/active-cars/active-cars.component';
 import { AlertMessageComponent } from './components/alert-message/alert-message.component';
 import { ArchivedCarsComponent } from './components/archived-cars/archived-cars.component';
-import { CarCreateComponent } from './components/car-create/car-create.component';
 import { CarDeleteComponent } from './components/car-delete/car-delete.component';
 import { CarDetailViewComponent } from './components/car-detail-view/car-detail-view.component';
 import { CarListComponent } from './components/car-list/car-list.component';
 import { CarUpdateComponent } from './components/car-update/car-update.component';
+import { CreateCarButtonComponent } from './components/create-car-button/create-car-button.component';
 import { LoadingComponent } from './components/loading/loading.component';
 import { LoginComponent } from './components/login/login.component';
 import { MainContainerComponent } from './components/main-container/main-container.component';
@@ -76,7 +76,7 @@ export function createApolloOptions(httpLink: HttpLink) {
     LoginComponent,
     ActiveCarsComponent,
     ArchivedCarsComponent,
-    CarCreateComponent,
+    CreateCarButtonComponent,
     MainContainerComponent
   ],
   imports: [
