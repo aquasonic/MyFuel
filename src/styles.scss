@@ -20,6 +20,16 @@
   }
 }
 
+.dropdown-menu {
+  .dropdown-item {
+    padding-left: 0.5rem;
+
+    clr-icon {
+      margin-right: 5px;
+    }
+  }
+}
+
 .accordion {
   .clr-accordion-header,
   .clr-accordion-content {

@@ -6,8 +6,8 @@
       </button>
       <clr-dropdown-menu *clrIfOpen clrPosition="bottom-right">
         <h4 class="dropdown-header">{{ car.name }}</h4>
-        <myf-car-update [car]="car" [carDialog]="carDialog"></myf-car-update>
-        <myf-car-delete [userId]="userId$ | async" [car]="car" [confirmDialog]="confirmDialog"></myf-car-delete>
+        <myf-update-car-button [car]="car" [dialog]="carDialog"></myf-update-car-button>
+        <myf-delete-car-button [userId]="userId$ | async" [carId]="car.id" [dialog]="confirmDialog"></myf-delete-car-button>
       </clr-dropdown-menu>
     </clr-dropdown>
   </div>
@@ -70,9 +70,7 @@
             </div>
           </div>
 
-          <myf-car-dialog></myf-car-dialog>
           <myf-fuel-dialog></myf-fuel-dialog>
-          <myf-confirm-dialog></myf-confirm-dialog>
         </ng-container>
       </ng-container>
     </ng-container>
@@ -86,3 +84,6 @@
     ><myf-alert-message [alertType]="'danger'">{{ 'App.CarNotFound' | translate }}</myf-alert-message></ng-template
   >
 </myf-main-container>
+
+<myf-car-dialog></myf-car-dialog>
+<myf-confirm-dialog></myf-confirm-dialog>

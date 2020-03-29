@@ -19,15 +19,15 @@ import { AppRoutingModule } from './app.routing';
 import { ActiveCarsComponent } from './components/active-cars/active-cars.component';
 import { AlertMessageComponent } from './components/alert-message/alert-message.component';
 import { ArchivedCarsComponent } from './components/archived-cars/archived-cars.component';
-import { CarDeleteComponent } from './components/car-delete/car-delete.component';
 import { CarDetailViewComponent } from './components/car-detail-view/car-detail-view.component';
 import { CarListComponent } from './components/car-list/car-list.component';
-import { CarUpdateComponent } from './components/car-update/car-update.component';
 import { CreateCarButtonComponent } from './components/create-car-button/create-car-button.component';
+import { DeleteCarButtonComponent } from './components/delete-car-button/delete-car-button.component';
 import { LoadingComponent } from './components/loading/loading.component';
 import { LoginComponent } from './components/login/login.component';
 import { MainContainerComponent } from './components/main-container/main-container.component';
 import { ShellComponent } from './components/shell/shell.component';
+import { UpdateCarButtonComponent } from './components/update-car-button/update-car-button.component';
 import { CarDialogComponent } from './dialogs/car-dialog/car-dialog.component';
 import { ConfirmDialogComponent } from './dialogs/confirm-dialog/confirm-dialog.component';
 import { FuelDialogComponent } from './dialogs/fuel-dialog/fuel-dialog.component';
@@ -70,8 +70,8 @@ export function createApolloOptions(httpLink: HttpLink) {
     FuelDialogComponent,
     LoadingComponent,
     AlertMessageComponent,
-    CarUpdateComponent,
-    CarDeleteComponent,
+    UpdateCarButtonComponent,
+    DeleteCarButtonComponent,
     CarListComponent,
     LoginComponent,
     ActiveCarsComponent,
