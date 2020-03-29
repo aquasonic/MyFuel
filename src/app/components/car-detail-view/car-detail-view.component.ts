@@ -11,9 +11,9 @@ import { CreateFuel, DeleteFuel, SelectFuel, UpdateFuel } from 'src/app/state/fu
 import { FetchUser } from 'src/app/state/user.actions';
 import { UserState } from 'src/app/state/user.state';
 
-import { CarDialogComponent } from '../car-dialog/car-dialog.component';
-import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
-import { FuelDialogComponent } from '../fuel-dialog/fuel-dialog.component';
+import { CarDialogComponent } from '../../dialogs/car-dialog/car-dialog.component';
+import { ConfirmDialogComponent } from '../../dialogs/confirm-dialog/confirm-dialog.component';
+import { FuelDialogComponent } from '../../dialogs/fuel-dialog/fuel-dialog.component';
 
 @Component({
   selector: 'myf-car-detail-view',
@@ -60,8 +60,8 @@ export class CarDetailViewComponent implements OnInit {
 
   deleteFuel(fuelId: string) {
     this.confirmDialog.open(
-      this.translateService.instant('Fuel.DeleteFuelConfirmationTitle'),
-      this.translateService.instant('Fuel.DeleteFuelConfirmationDescription'),
+      this.translateService.instant('Fuel.DeleteConfirmationTitle'),
+      this.translateService.instant('Fuel.DeleteConfirmationDescription'),
       fuelId,
       id => this.store.dispatch(new DeleteFuel(id)),
       () => {}

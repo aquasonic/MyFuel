@@ -5,10 +5,10 @@
         <div>{{ car.name }}</div>
         <div class="statistics">
           <span
-            ><strong>{{ 'Car.TotalKm' | translate }}:</strong> {{ getTotalKm(car) | number: '1.0-0' }}</span
+            ><strong>{{ 'ListOfCars.TotalKm' | translate }}:</strong> {{ getTotalKm(car) | number: '1.0-0' }}</span
           >
           <span
-            ><strong [innerHTML]="('Car.AverageConsumation' | translate) + ':'"></strong>
+            ><strong [innerHTML]="('ListOfCars.AverageConsumation' | translate) + ':'"></strong>
             {{ getAverageConsumation(car) | number: '1.2-2' }}</span
           >
         </div>

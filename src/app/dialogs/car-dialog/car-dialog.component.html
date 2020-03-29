@@ -1,5 +1,5 @@
 <clr-modal [(clrModalOpen)]="isOpen" [clrModalClosable]="false">
-  <h3 class="modal-title">{{ isNew ? ('Car.NewCar' | translate) : ('Car.UpdateCar' | translate) }}</h3>
+  <h3 class="modal-title">{{ isNew ? ('Car.Create' | translate) : ('Car.Update' | translate) }}</h3>
   <div class="modal-body">
     <form clrForm [formGroup]="form" clrLayout="vertical" class="full-width">
       <clr-input-container>

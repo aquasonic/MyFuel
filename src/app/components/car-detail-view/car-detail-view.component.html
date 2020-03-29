@@ -16,20 +16,20 @@
     <ng-container *ngIf="isAuthorized$ | async; else userNotFound">
       <ng-container *ngIf="car$ | async as car; else carNotFound">
         <ng-container *ngIf="{ selectedFuel: selectedFuel$ | async } as data">
-          <h1>{{ 'Fuel.Title' | translate: { name: car.name } }}</h1>
+          <h1>{{ 'CarDetail.Title' | translate: { name: car.name } }}</h1>
 
           <clr-alert *ngIf="car.archived" [clrAlertType]="'warning'" [clrAlertClosable]="false">
             <clr-alert-item>
               <span class="alert-text">
-                {{ 'Car.ArchivedMessage' | translate }}
+                {{ 'CarDetail.ArchivedMessage' | translate }}
               </span>
             </clr-alert-item>
           </clr-alert>
 
-          <p>{{ 'Fuel.Description' | translate }}</p>
+          <p>{{ 'CarDetail.Description' | translate }}</p>
 
           <div class="add" *ngIf="!car.archived">
-            <button class="btn btn-primary btn-block" (click)="createFuel(car.id)">{{ 'Fuel.AddNewFuel' | translate }}</button>
+            <button class="btn btn-primary btn-block" (click)="createFuel(car.id)">{{ 'Fuel.Create' | translate }}</button>
           </div>
 
           <ng-container *ngIf="fuels$ | async as fuels">
@@ -62,10 +62,10 @@
           <div class="footer-bar" *ngIf="data.selectedFuel && !car.archived">
             <div>
               <button class="btn btn-danger-outline" (click)="deleteFuel(data.selectedFuel.id)">
-                <clr-icon shape="trash"></clr-icon> {{ 'Fuel.DeleteFuelButton' | translate }}
+                <clr-icon shape="trash"></clr-icon> {{ 'Fuel.DeleteButtonText' | translate }}
               </button>
               <button class="btn btn-outline" (click)="updateFuel(data.selectedFuel)">
-                <clr-icon shape="pencil"></clr-icon> {{ 'Fuel.UpdateFuelButton' | translate }}
+                <clr-icon shape="pencil"></clr-icon> {{ 'Fuel.UpdateButtonText' | translate }}
               </button>
             </div>
           </div>

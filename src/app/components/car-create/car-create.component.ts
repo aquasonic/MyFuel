@@ -3,7 +3,7 @@ import { Store } from '@ngxs/store';
 import { Car } from 'src/app/models/car.model';
 import { CreateCar } from 'src/app/state/car.actions';
 
-import { CarDialogComponent } from '../car-dialog/car-dialog.component';
+import { CarDialogComponent } from '../../dialogs/car-dialog/car-dialog.component';
 
 @Component({
   selector: 'myf-car-create',

@@ -5,7 +5,7 @@ import { Store } from '@ngxs/store';
 import { Car } from 'src/app/models/car.model';
 import { DeleteCar } from 'src/app/state/car.actions';
 
-import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
+import { ConfirmDialogComponent } from '../../dialogs/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'myf-car-delete',
@@ -21,8 +21,8 @@ export class CarDeleteComponent {
 
   deleteCar(carId: string) {
     this.confirmDialog.open(
-      this.translateService.instant('Car.DeleteCarConfirmationTitle'),
-      this.translateService.instant('Car.DeleteCarConfirmationDescription'),
+      this.translateService.instant('Car.DeleteConfirmationTitle'),
+      this.translateService.instant('Car.DeleteConfirmationDescription'),
       carId,
       id => this.store.dispatch(new DeleteCar(id)),
       () => this.router.navigate(['/', this.userId])

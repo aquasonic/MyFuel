@@ -3,14 +3,13 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ClrForm, ClrLoadingState } from '@clr/angular';
 import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
-import { Car } from 'src/app/models/car.model';
+import { Fuel } from 'src/app/models/fuel.model';
 
 @Component({
-  selector: 'myf-car-dialog',
-  templateUrl: './car-dialog.component.html',
-  styleUrls: ['./car-dialog.component.scss']
+  selector: 'myf-fuel-dialog',
+  templateUrl: './fuel-dialog.component.html'
 })
-export class CarDialogComponent {
+export class FuelDialogComponent {
   @ViewChild(ClrForm, { static: true }) clrForm;
 
   isOpen = false;
@@ -20,22 +19,22 @@ export class CarDialogComponent {
 
   form = new FormGroup({
     id: new FormControl(),
-    name: new FormControl(null, Validators.required),
-    dateOfPurchase: new FormControl(null, Validators.required),
-    mileageAtPurchase: new FormControl(null, [Validators.required, Validators.pattern(/^\d*$/)]),
-    archived: new FormControl()
+    date: new FormControl(null, Validators.required),
+    km: new FormControl(null, [Validators.required, Validators.pattern(/^\d*$/)]),
+    litres: new FormControl(null, [Validators.required, Validators.pattern(/^\d*\.?\d{0,2}$/)]),
+    cost: new FormControl(null, [Validators.required, Validators.pattern(/^\d*\.?\d{0,2}$/)])
   });
 
-  private submitHandler: (car: Car) => Observable<void>;
+  private submitHandler: (fuel: Fuel) => Observable<void>;
 
-  open(car: Car, submitHandler: (car: Car) => Observable<void>) {
-    this.isNew = car.id === undefined;
+  open(fuel: Fuel, submitHandler: (fuel: Fuel) => Observable<void>) {
+    this.isNew = fuel.id === undefined;
     this.submitHandler = submitHandler;
 
     this.isOpen = true;
 
     this.form.reset();
-    this.form.patchValue(car);
+    this.form.patchValue(fuel);
   }
 
   close() {
