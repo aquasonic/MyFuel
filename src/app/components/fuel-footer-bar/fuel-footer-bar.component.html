@@ -1,0 +1,6 @@
+<div class="footer-bar" *ngIf="selectedFuel$ | async as selectedFuel">
+  <div>
+    <myf-delete-fuel-button [fuelId]="selectedFuel.id" [dialog]="confirmDialog"></myf-delete-fuel-button>
+    <myf-update-fuel-button [fuel]="selectedFuel" [dialog]="fuelDialog"></myf-update-fuel-button>
+  </div>
+</div>

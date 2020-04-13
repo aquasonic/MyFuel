@@ -80,7 +80,7 @@ export class UserState {
         return [];
       }
 
-      return car.fuels.sort((a: Fuel, b: Fuel) => new Date(b.date).getTime() - new Date(a.date).getTime());
+      return [...car.fuels].sort((a: Fuel, b: Fuel) => new Date(b.date).getTime() - new Date(a.date).getTime());
     };
   }
 

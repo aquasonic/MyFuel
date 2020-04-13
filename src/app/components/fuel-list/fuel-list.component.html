@@ -1,0 +1,26 @@
+<ng-container *ngIf="{ selectedFuel: selectedFuel$ | async } as data">
+  <table class="table" *ngIf="fuels?.length > 0" [ngClass]="{ 'fuel-selected': data.selectedFuel && canSelectFuel }">
+    <thead>
+      <tr>
+        <th>{{ 'Fuel.DateHeader' | translate }}</th>
+        <th>{{ 'Fuel.KmHeader' | translate }}</th>
+        <th>{{ 'Fuel.LitresHeader' | translate }}</th>
+        <th>{{ 'Fuel.ConsumationHeader' | translate }}</th>
+        <th>{{ 'Fuel.CostsHeader' | translate }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="let fuel of fuels; trackBy: trackById"
+        (click)="selectFuel(fuel)"
+        [ngClass]="{ active: data.selectedFuel?.id === fuel.id && canSelectFuel }"
+      >
+        <td>{{ fuel.date | date: 'dd.MM.yy' }}</td>
+        <td>{{ fuel.km | number: '1.0-0' }}</td>
+        <td>{{ fuel.litres | number: '1.2-2' }}</td>
+        <td>{{ getConsumation(fuel) | number: '1.2-2' }}</td>
+        <td>{{ fuel.cost | number: '1.2-2' }}</td>
+      </tr>
+    </tbody>
+  </table>
+</ng-container>

@@ -4,6 +4,10 @@
   outline: none !important;
 }
 
+.mt-1 {
+  margin-top: 1rem;
+}
+
 .clr-input {
   font-size: 16px; // used for no-zoom on mobile devices
 }
@@ -40,5 +44,15 @@
   .clr-accordion-header-button,
   .clr-accordion-inner-content {
     padding: 0 !important;
+  }
+}
+
+.btn.full-width {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+
+  clr-icon {
+    margin-right: 5px;
   }
 }

@@ -1,0 +1,11 @@
+.table {
+  &.fuel-selected {
+    margin-bottom: 2.5rem;
+  }
+
+  tbody tr {
+    &.active {
+      background-color: #d8e3e9;
+    }
+  }
+}
