@@ -11,7 +11,7 @@ import { UserState } from 'src/app/state/user.state';
   templateUrl: './car-list-view.component.html'
 })
 export class CarListViewComponent implements OnInit {
-  @ViewChild(CarDialogComponent) carDialog: CarDialogComponent;
+  @ViewChild(CarDialogComponent, { static: true }) carDialog: CarDialogComponent;
 
   private readonly cars$ = this.store.select(UserState.getCars);
 

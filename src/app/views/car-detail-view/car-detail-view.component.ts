@@ -15,9 +15,9 @@ import { FuelDialogComponent } from '../../dialogs/fuel-dialog/fuel-dialog.compo
   templateUrl: './car-detail-view.component.html'
 })
 export class CarDetailViewComponent implements OnInit {
-  @ViewChild(CarDialogComponent) carDialog: CarDialogComponent;
-  @ViewChild(FuelDialogComponent) fuelDialog: FuelDialogComponent;
-  @ViewChild(ConfirmDialogComponent) confirmDialog: ConfirmDialogComponent;
+  @ViewChild(CarDialogComponent, { static: true }) carDialog: CarDialogComponent;
+  @ViewChild(FuelDialogComponent, { static: true }) fuelDialog: FuelDialogComponent;
+  @ViewChild(ConfirmDialogComponent, { static: true }) confirmDialog: ConfirmDialogComponent;
 
   private readonly userId = this.route.snapshot.params.user;
   private readonly carId = this.route.snapshot.params.car;
