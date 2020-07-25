@@ -4,6 +4,10 @@
   outline: none !important;
 }
 
+.mt-1 {
+  margin-top: 1rem;
+}
+
 .clr-input {
   font-size: 16px; // used for no-zoom on mobile devices
 }
@@ -20,7 +24,17 @@
   }
 }
 
-.inline-accordion {
+.dropdown-menu {
+  .dropdown-item {
+    padding-left: 0.5rem;
+
+    clr-icon {
+      margin-right: 5px;
+    }
+  }
+}
+
+.accordion {
   .clr-accordion-header,
   .clr-accordion-content {
     border: 0 !important;
@@ -30,5 +44,15 @@
   .clr-accordion-header-button,
   .clr-accordion-inner-content {
     padding: 0 !important;
+  }
+}
+
+.btn.full-width {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+
+  clr-icon {
+    margin-right: 5px;
   }
 }

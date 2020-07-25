@@ -1,0 +1,9 @@
+<form clrForm [formGroup]="form" clrLayout="vertical" class="full-width">
+  <p>{{ 'Login.Description' | translate }}</p>
+  <clr-input-container>
+    <input clrInput formControlName="userId" placeholder="{{ 'Login.UserIdPlaceholder' | translate }}" autocomplete="off" required />
+    <clr-control-error *clrIfError="'required'">{{ 'Validation.Required' | translate }}</clr-control-error>
+    <clr-control-error *clrIfError="'pattern'">{{ 'Validation.OnlyInteger' | translate }}</clr-control-error>
+  </clr-input-container>
+  <button class="btn btn-primary btn-block" type="button" (click)="submit()">{{ 'Login.SubmitButtonText' | translate }}</button>
+</form>

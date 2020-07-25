@@ -1,0 +1,8 @@
+<clr-accordion *ngIf="cars?.length > 0" class="accordion">
+  <clr-accordion-panel>
+    <clr-accordion-title>{{ 'ListOfCars.ArchivedCars' | translate }}</clr-accordion-title>
+    <clr-accordion-content *clrIfExpanded>
+      <myf-car-list [cars]="cars"></myf-car-list>
+    </clr-accordion-content>
+  </clr-accordion-panel>
+</clr-accordion>

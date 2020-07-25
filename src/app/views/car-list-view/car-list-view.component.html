@@ -1,0 +1,22 @@
+<myf-main-container>
+  <myf-loading *ngIf="isLoading$ | async; else container"></myf-loading>
+
+  <ng-template #container>
+    <ng-container *ngIf="isAuthorized$ | async; then content; else userNotFound"></ng-container>
+  </ng-template>
+
+  <ng-template #content>
+    <h1>{{ 'ListOfCars.Title' | translate: { name: userName$ | async } }}</h1>
+    <p>{{ 'ListOfCars.Description' | translate }}</p>
+
+    <myf-active-cars [cars]="activeCars$ | async"></myf-active-cars>
+    <myf-create-car-button [userId]="userId" [dialog]="carDialog"></myf-create-car-button>
+    <myf-archived-cars [cars]="archivedCars$ | async"></myf-archived-cars>
+  </ng-template>
+
+  <ng-template #userNotFound>
+    <myf-alert-message [alertType]="'danger'">{{ 'App.UserNotFound' | translate }}</myf-alert-message>
+  </ng-template>
+</myf-main-container>
+
+<myf-car-dialog></myf-car-dialog>

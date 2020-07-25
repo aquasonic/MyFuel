@@ -1,0 +1,5 @@
+<myf-car-list *ngIf="cars?.length > 0" [cars]="cars"></myf-car-list>
+
+<p *ngIf="!cars?.length" class="no-items">
+  <i>{{ 'ListOfCars.NoActiveCarsFound' | translate }}</i>
+</p>

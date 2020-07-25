@@ -15,41 +15,46 @@
     "OnlyTwoDecimalPlaces": "Nur 2 Dezimalstellen erlaubt"
   },
   "Home": {
-    "Title": "Hi, ich bin dein Treibstoff Tracker",
-    "Description": "Bitte gib deine Benutzernummer unten ein, um die Liste der Autos anzuzeigen.",
-    "UserIdPlaceholder": "z.B. 123456",
-    "LoginButton": "Lass mich rein"
+    "Title": "Hi, ich bin dein Treibstoff Tracker"
   },
-  "Car": {
+  "Login": {
+    "Description": "Bitte gib deine Benutzernummer ein, um die Liste der Autos anzuzeigen.",
+    "UserIdPlaceholder": "z.B. 123456",
+    "SubmitButtonText": "Lass mich rein"
+  },
+  "ListOfCars": {
     "Title": "Hi, {{name}}",
     "Description": "Klicke auf ein Auto um die Statistiken und Tankfüllungen zu sehen. Du kannst auch jederzeit neue Autos hinzufügen.",
-    "NoItemsFound": "Keine aktiven Autos gefunden.",
-    "NewCar": "Neues Auto hinzufügen",
-    "UpdateCar": "Auto bearbeiten",
-    "DeleteCar": "Auto löschen",
+    "TotalKm": "Total Km",
+    "AverageConsumation": "&Oslash;-Verbrauch",
+    "NoActiveCarsFound": "Keine aktiven Autos gefunden.",
+    "ArchivedCars": "Archivierte Autos"
+  },
+  "CarDetail": {
+    "Title": "{{name}}",
+    "Description": "Die Liste zeigt alle Tankfüllungen mit den gefahrenen Kilometern, den Kosten sowie den Verbrauch pro 100km. Füge nach dem Tanken deines Autos immer einen neuen Eintrag hinzu. Um eine Tankfüllung zu löschen oder zu bearbeiten, klicke auf die entsprechende Zeile.",
+    "ArchivedMessage": "Das Auto ist archiviert. Es können keine Tankfüllungen hinzugefügt, editiert oder gelöscht werden."
+  },
+  "Car": {
+    "Create": "Neues Auto hinzufügen",
+    "Update": "Auto bearbeiten",
+    "Delete": "Auto löschen",
+    "Archived": "Archiviert",
     "NameLabel": "Name",
     "NamePlaceholder": "z.B. Porsche 911",
     "DateOfPurchaseLabel": "Kaufdatum",
     "DateOfPurchasePlaceholder": "z.B. 25.01.2018",
     "MileageAtPurchaseLabel": "Kilometerstand",
     "MileageAtPurchasePlaceholder": "z.B. 93700",
-    "DeleteCarConfirmationTitle": "Auto löschen?",
-    "DeleteCarConfirmationDescription": "Bist du sicher dass du das Auto und alle Tankfüllungen löschen möchtest? Dies kann nicht rückgängig gemacht werden.",
-    "TotalKm": "Total Km",
-    "AverageConsumation": "&Oslash;-Verbrauch",
-    "Archived": "Archiviert",
-    "ArchivedMessage": "Das Auto ist archiviert. Es können keine Tankfüllungen hinzugefügt, editiert oder gelöscht werden.",
-    "ArchivedCars": "Archivierte Autos"
+    "DeleteConfirmationTitle": "Auto löschen?",
+    "DeleteConfirmationDescription": "Bist du sicher dass du das Auto und alle Tankfüllungen löschen möchtest? Dies kann nicht rückgängig gemacht werden."
   },
   "Fuel": {
-    "Title": "{{name}}",
-    "Description": "Die Liste zeigt alle Tankfüllungen mit den gefahrenen Kilometern, den Kosten sowie den Verbrauch pro 100km. Füge nach dem Tanken deines Autos immer einen neuen Eintrag hinzu. Um eine Tankfüllung zu löschen oder zu bearbeiten, klicke auf die entsprechende Zeile.",
-    "AddNewFuel": "Neue Tankfüllung hinzufügen",
-    "NewFuel": "Neue Tankfüllung hinzufügen",
-    "UpdateFuel": "Tankfüllung bearbeiten",
-    "UpdateFuelButton": "Bearbeiten",
-    "DeleteFuel": "Tankfüllung löschen",
-    "DeleteFuelButton": "Löschen",
+    "Create": "Neue Tankfüllung hinzufügen",
+    "Update": "Tankfüllung bearbeiten",
+    "UpdateButtonText": "Bearbeiten",
+    "Delete": "Tankfüllung löschen",
+    "DeleteButtonText": "Löschen",
     "DateHeader": "Datum",
     "DateLabel": "Datum",
     "DatePlaceholder": "z.B. 24.11.2019",
@@ -63,7 +68,7 @@
     "CostsHeader": "Kosten",
     "CostsLabel": "Kosten",
     "CostsPlaceholder": "z.B. 74.05",
-    "DeleteFuelConfirmationTitle": "Tankfüllung löschen?",
-    "DeleteFuelConfirmationDescription": "Bist du sicher dass du die Tankfüllung löschen möchtest? Du kannst sie jederzeit wieder hinzufügen."
+    "DeleteConfirmationTitle": "Tankfüllung löschen?",
+    "DeleteConfirmationDescription": "Bist du sicher dass du die Tankfüllung löschen möchtest? Du kannst sie jederzeit wieder hinzufügen."
   }
 }

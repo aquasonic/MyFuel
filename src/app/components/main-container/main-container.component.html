@@ -1,0 +1,16 @@
+<clr-header class="header-6">
+  <div class="branding">
+    <a class="nav-link" [routerLink]="logoLink$ | async">
+      <span class="clr-icon"><clr-icon shape="car"></clr-icon></span>
+      <span class="title">{{ 'App.Title' | translate }}</span>
+    </a>
+  </div>
+
+  <ng-content select=".header-actions"></ng-content>
+</clr-header>
+
+<div class="content-container">
+  <div class="content-area">
+    <ng-content></ng-content>
+  </div>
+</div>

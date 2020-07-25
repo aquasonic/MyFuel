@@ -1,0 +1,44 @@
+<myf-main-container>
+  <div class="header-actions" *ngIf="car$ | async as car">
+    <clr-dropdown>
+      <button class="nav-icon" clrDropdownTrigger>
+        <clr-icon shape="ellipsis-vertical"></clr-icon>
+      </button>
+      <clr-dropdown-menu *clrIfOpen clrPosition="bottom-right">
+        <h4 class="dropdown-header">{{ car.name }}</h4>
+        <myf-update-car-button [car]="car" [dialog]="carDialog"></myf-update-car-button>
+        <myf-delete-car-button [userId]="userId$ | async" [carId]="car.id" [dialog]="confirmDialog"></myf-delete-car-button>
+      </clr-dropdown-menu>
+    </clr-dropdown>
+  </div>
+
+  <myf-loading *ngIf="isLoading$ | async; else container"></myf-loading>
+
+  <ng-template #container>
+    <ng-container *ngIf="isAuthorized$ | async; then content; else userNotFound"></ng-container>
+  </ng-template>
+
+  <ng-template #content>
+    <ng-container *ngIf="car$ | async as car; else carNotFound">
+      <h1>{{ 'CarDetail.Title' | translate: { name: car.name } }}</h1>
+      <myf-alert-message *ngIf="car.archived" [alertType]="'warning'">{{ 'CarDetail.ArchivedMessage' | translate }}</myf-alert-message>
+      <p>{{ 'CarDetail.Description' | translate }}</p>
+
+      <myf-create-fuel-button *ngIf="!car.archived" [carId]="car.id" [dialog]="fuelDialog"></myf-create-fuel-button>
+      <myf-fuel-list [fuels]="fuels$ | async" [canSelectFuel]="!car.archived"></myf-fuel-list>
+      <myf-fuel-footer-bar *ngIf="!car.archived" [confirmDialog]="confirmDialog" [fuelDialog]="fuelDialog"></myf-fuel-footer-bar>
+    </ng-container>
+  </ng-template>
+
+  <ng-template #userNotFound>
+    <myf-alert-message [alertType]="'danger'">{{ 'App.UserNotFound' | translate }}</myf-alert-message>
+  </ng-template>
+
+  <ng-template #carNotFound>
+    <myf-alert-message [alertType]="'danger'">{{ 'App.CarNotFound' | translate }}</myf-alert-message>
+  </ng-template>
+</myf-main-container>
+
+<myf-car-dialog></myf-car-dialog>
+<myf-fuel-dialog></myf-fuel-dialog>
+<myf-confirm-dialog></myf-confirm-dialog>

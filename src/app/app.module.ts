@@ -14,22 +14,32 @@ import { ApolloLink } from 'apollo-link';
 import { setContext } from 'apollo-link-context';
 import { environment } from 'src/environments/environment';
 
+import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app.routing';
-import { CarDeleteComponent } from './components/car-delete/car-delete.component';
-import { CarDetailViewComponent } from './components/car-detail-view/car-detail-view.component';
-import { CarDialogComponent } from './components/car-dialog/car-dialog.component';
-import { CarListViewComponent } from './components/car-list-view/car-list-view.component';
+import { ActiveCarsComponent } from './components/active-cars/active-cars.component';
+import { AlertMessageComponent } from './components/alert-message/alert-message.component';
+import { ArchivedCarsComponent } from './components/archived-cars/archived-cars.component';
 import { CarListComponent } from './components/car-list/car-list.component';
-import { CarUpdateComponent } from './components/car-update/car-update.component';
-import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
-import { ErrorMessageComponent } from './components/error-message/error-message.component';
-import { FuelDialogComponent } from './components/fuel-dialog/fuel-dialog.component';
-import { HeaderComponent } from './components/header/header.component';
-import { HomeViewComponent } from './components/home-view/home-view.component';
+import { CreateCarButtonComponent } from './components/create-car-button/create-car-button.component';
+import { CreateFuelButtonComponent } from './components/create-fuel-button/create-fuel-button.component';
+import { DeleteCarButtonComponent } from './components/delete-car-button/delete-car-button.component';
+import { DeleteFuelButtonComponent } from './components/delete-fuel-button/delete-fuel-button.component';
+import { FuelFooterBarComponent } from './components/fuel-footer-bar/fuel-footer-bar.component';
+import { FuelListComponent } from './components/fuel-list/fuel-list.component';
 import { LoadingComponent } from './components/loading/loading.component';
+import { LoginComponent } from './components/login/login.component';
+import { MainContainerComponent } from './components/main-container/main-container.component';
 import { ShellComponent } from './components/shell/shell.component';
+import { UpdateCarButtonComponent } from './components/update-car-button/update-car-button.component';
+import { UpdateFuelButtonComponent } from './components/update-fuel-button/update-fuel-button.component';
+import { CarDialogComponent } from './dialogs/car-dialog/car-dialog.component';
+import { ConfirmDialogComponent } from './dialogs/confirm-dialog/confirm-dialog.component';
+import { FuelDialogComponent } from './dialogs/fuel-dialog/fuel-dialog.component';
 import { CarState } from './state/car.state';
 import { UserState } from './state/user.state';
+import { CarDetailViewComponent } from './views/car-detail-view/car-detail-view.component';
+import { CarListViewComponent } from './views/car-list-view/car-list-view.component';
+import { HomeViewComponent } from './views/home-view/home-view.component';
 
 export function InitializeAppFactory(translateService: TranslateService) {
   return () => translateService.use('de').toPromise();
@@ -55,6 +65,7 @@ export function createApolloOptions(httpLink: HttpLink) {
 
 @NgModule({
   declarations: [
+    AppComponent,
     ShellComponent,
     HomeViewComponent,
     CarListViewComponent,
@@ -63,11 +74,20 @@ export function createApolloOptions(httpLink: HttpLink) {
     ConfirmDialogComponent,
     FuelDialogComponent,
     LoadingComponent,
-    ErrorMessageComponent,
-    HeaderComponent,
-    CarUpdateComponent,
-    CarDeleteComponent,
-    CarListComponent
+    AlertMessageComponent,
+    UpdateCarButtonComponent,
+    DeleteCarButtonComponent,
+    CarListComponent,
+    LoginComponent,
+    ActiveCarsComponent,
+    ArchivedCarsComponent,
+    CreateCarButtonComponent,
+    MainContainerComponent,
+    CreateFuelButtonComponent,
+    FuelListComponent,
+    FuelFooterBarComponent,
+    DeleteFuelButtonComponent,
+    UpdateFuelButtonComponent
   ],
   imports: [
     BrowserModule,
@@ -78,7 +98,13 @@ export function createApolloOptions(httpLink: HttpLink) {
     HttpClientModule,
     HttpLinkModule,
     ReactiveFormsModule,
-    NgxsModule.forRoot([UserState, CarState]),
+    NgxsModule.forRoot([UserState, CarState], {
+      developmentMode: !environment.production,
+      selectorOptions: {
+        suppressErrors: false,
+        injectContainerState: false
+      }
+    }),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -100,6 +126,6 @@ export function createApolloOptions(httpLink: HttpLink) {
       multi: true
     }
   ],
-  bootstrap: [ShellComponent]
+  bootstrap: [AppComponent]
 })
 export class AppModule {}
