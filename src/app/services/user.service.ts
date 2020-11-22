@@ -1,10 +1,10 @@
+import { Apollo, gql } from 'apollo-angular';
 import { Injectable } from '@angular/core';
-import { Apollo } from 'apollo-angular';
-import gql from 'graphql-tag';
+
 import { map } from 'rxjs/operators';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UserService {
   constructor(private apollo: Apollo) {}
@@ -42,9 +42,9 @@ export class UserService {
           }
         `,
         variables: {
-          id: userId
-        }
+          id: userId,
+        },
       })
-      .pipe(map(response => response.data.findUserByID));
+      .pipe(map((response) => response.data.findUserByID));
   }
 }

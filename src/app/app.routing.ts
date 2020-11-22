@@ -9,11 +9,11 @@ const routes: Routes = [
   { path: ':user/:car', component: CarDetailViewComponent, pathMatch: 'full' },
   { path: ':user', component: CarListViewComponent, pathMatch: 'full' },
   { path: '', component: HomeViewComponent, pathMatch: 'full' },
-  { path: '**', redirectTo: '/' }
+  { path: '**', redirectTo: '/' },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class AppRoutingModule {}

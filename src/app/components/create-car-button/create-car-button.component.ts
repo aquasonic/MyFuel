@@ -7,7 +7,7 @@ import { CarDialogComponent } from '../../dialogs/car-dialog/car-dialog.componen
 
 @Component({
   selector: 'myf-create-car-button',
-  templateUrl: './create-car-button.component.html'
+  templateUrl: './create-car-button.component.html',
 })
 export class CreateCarButtonComponent {
   @Input() private userId: string;
@@ -17,6 +17,6 @@ export class CreateCarButtonComponent {
 
   createCar() {
     const car = { dateOfPurchase: new Date().toISOString().slice(0, 10) } as Car;
-    this.dialog.open(car, c => this.store.dispatch(new CreateCar(this.userId, c)));
+    this.dialog.open(car, (c) => this.store.dispatch(new CreateCar(this.userId, c)));
   }
 }

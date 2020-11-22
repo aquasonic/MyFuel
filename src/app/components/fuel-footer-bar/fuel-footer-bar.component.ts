@@ -7,7 +7,7 @@ import { CarState } from 'src/app/state/car.state';
 @Component({
   selector: 'myf-fuel-footer-bar',
   templateUrl: './fuel-footer-bar.component.html',
-  styleUrls: ['./fuel-footer-bar.component.scss']
+  styleUrls: ['./fuel-footer-bar.component.scss'],
 })
 export class FuelFooterBarComponent {
   @Input() confirmDialog: ConfirmDialogComponent;

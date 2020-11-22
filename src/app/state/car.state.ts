@@ -12,8 +12,8 @@ export interface CarStateModel {
 @State<CarStateModel>({
   name: 'car',
   defaults: {
-    selectedFuel: undefined
-  }
+    selectedFuel: undefined,
+  },
 })
 @Injectable()
 export class CarState {
@@ -26,7 +26,7 @@ export class CarState {
   private selectFuel(context: StateContext<CarStateModel>, { fuel }: SelectFuel) {
     return context.setState(
       patch({
-        selectedFuel: fuel
+        selectedFuel: fuel,
       })
     );
   }

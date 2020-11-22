@@ -8,7 +8,7 @@ import { UserState } from 'src/app/state/user.state';
 
 @Component({
   selector: 'myf-car-list-view',
-  templateUrl: './car-list-view.component.html'
+  templateUrl: './car-list-view.component.html',
 })
 export class CarListViewComponent implements OnInit {
   @ViewChild(CarDialogComponent, { static: true }) carDialog: CarDialogComponent;
@@ -20,8 +20,8 @@ export class CarListViewComponent implements OnInit {
   readonly isLoading$ = this.store.select(UserState.isLoading);
   readonly isAuthorized$ = this.store.select(UserState.isAuthorized);
   readonly userName$ = this.store.select(UserState.getUserName);
-  readonly activeCars$ = this.cars$.pipe(map(cars => cars.filter(c => !c.archived)));
-  readonly archivedCars$ = this.cars$.pipe(map(cars => cars.filter(c => c.archived)));
+  readonly activeCars$ = this.cars$.pipe(map((cars) => cars.filter((c) => !c.archived)));
+  readonly archivedCars$ = this.cars$.pipe(map((cars) => cars.filter((c) => c.archived)));
 
   constructor(private store: Store, private route: ActivatedRoute) {}
 
