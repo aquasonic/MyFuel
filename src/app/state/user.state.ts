@@ -134,7 +134,7 @@ export class UserState {
       tap(newCar => {
         context.setState(
           patch({
-            cars: updateItem(c => c.id === car.id, patch(newCar))
+            cars: updateItem((c: Car) => c.id === car.id, patch(newCar))
           })
         );
       })
@@ -161,7 +161,7 @@ export class UserState {
       tap(newFuel => {
         context.setState(
           patch({
-            cars: updateItem(c => c.id === carId, patch({ fuels: append([newFuel]) }))
+            cars: updateItem((c: Car) => c.id === carId, patch({ fuels: append([newFuel]) }))
           })
         );
       }),
@@ -177,7 +177,7 @@ export class UserState {
         context.setState(
           patch({
             cars: updateItem(
-              c => c.fuels && c.fuels.some(f => f.id === fuel.id),
+              (c: Car) => c.fuels && c.fuels.some(f => f.id === fuel.id),
               patch({ fuels: updateItem(f => f.id === fuel.id, newFuel) })
             )
           })
@@ -193,7 +193,7 @@ export class UserState {
       tap(id => {
         context.setState(
           patch({
-            cars: updateItem(c => c.fuels && c.fuels.some(f => f.id === id), patch({ fuels: removeItem<Fuel>(f => f.id === id) }))
+            cars: updateItem((c: Car) => c.fuels && c.fuels.some(f => f.id === id), patch({ fuels: removeItem<Fuel>(f => f.id === id) }))
           })
         );
       }),
