@@ -5,13 +5,13 @@ import { ClrForm } from '@clr/angular';
 
 @Component({
   selector: 'myf-login',
-  templateUrl: './login.component.html'
+  templateUrl: './login.component.html',
 })
 export class LoginComponent {
   @ViewChild(ClrForm, { static: true }) clrForm;
 
   form = new FormGroup({
-    userId: new FormControl('', [Validators.required, Validators.pattern(/^\d*$/)])
+    userId: new FormControl('', [Validators.required, Validators.pattern(/^\d*$/)]),
   });
 
   constructor(private router: Router) {}

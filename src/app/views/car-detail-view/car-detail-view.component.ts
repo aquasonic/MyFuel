@@ -12,7 +12,7 @@ import { FuelDialogComponent } from '../../dialogs/fuel-dialog/fuel-dialog.compo
 
 @Component({
   selector: 'myf-car-detail-view',
-  templateUrl: './car-detail-view.component.html'
+  templateUrl: './car-detail-view.component.html',
 })
 export class CarDetailViewComponent implements OnInit {
   @ViewChild(CarDialogComponent, { static: true }) carDialog: CarDialogComponent;
@@ -26,8 +26,8 @@ export class CarDetailViewComponent implements OnInit {
 
   readonly isAuthorized$ = this.store.select(UserState.isAuthorized);
   readonly userId$ = this.store.select(UserState.getUserId);
-  readonly car$ = this.store.select(UserState.getCarById).pipe(map(fn => fn(this.carId)));
-  readonly fuels$ = this.store.select(UserState.getFuelsByCarId).pipe(map(fn => fn(this.carId)));
+  readonly car$ = this.store.select(UserState.getCarById).pipe(map((fn) => fn(this.carId)));
+  readonly fuels$ = this.store.select(UserState.getFuelsByCarId).pipe(map((fn) => fn(this.carId)));
 
   constructor(private store: Store, private route: ActivatedRoute) {}
 

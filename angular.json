@@ -30,10 +30,7 @@
               "node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js",
               "node_modules/@clr/icons/clr-icons.min.js"
             ],
-            "allowedCommonJsDependencies": [
-              "graphql-tag",
-              "zen-observable"
-            ]
+            "allowedCommonJsDependencies": ["graphql-tag", "zen-observable"]
           },
           "configurations": {
             "production": {

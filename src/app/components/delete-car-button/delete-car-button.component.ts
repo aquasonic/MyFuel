@@ -8,7 +8,7 @@ import { ConfirmDialogComponent } from '../../dialogs/confirm-dialog/confirm-dia
 
 @Component({
   selector: 'myf-delete-car-button',
-  templateUrl: './delete-car-button.component.html'
+  templateUrl: './delete-car-button.component.html',
 })
 export class DeleteCarButtonComponent {
   @Input() private userId: string;
@@ -22,7 +22,7 @@ export class DeleteCarButtonComponent {
       this.translateService.instant('Car.DeleteConfirmationTitle'),
       this.translateService.instant('Car.DeleteConfirmationDescription'),
       this.carId,
-      id => this.store.dispatch(new DeleteCar(id)),
+      (id) => this.store.dispatch(new DeleteCar(id)),
       () => this.router.navigate(['/', this.userId])
     );
   }

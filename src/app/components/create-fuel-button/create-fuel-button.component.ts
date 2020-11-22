@@ -6,7 +6,7 @@ import { CreateFuel } from 'src/app/state/fuel.actions';
 
 @Component({
   selector: 'myf-create-fuel-button',
-  templateUrl: './create-fuel-button.component.html'
+  templateUrl: './create-fuel-button.component.html',
 })
 export class CreateFuelButtonComponent {
   @Input() private carId: string;
@@ -16,6 +16,6 @@ export class CreateFuelButtonComponent {
 
   createFuel() {
     const fuel = { date: new Date().toISOString().slice(0, 10) } as Fuel;
-    this.dialog.open(fuel, f => this.store.dispatch(new CreateFuel(this.carId, f)));
+    this.dialog.open(fuel, (f) => this.store.dispatch(new CreateFuel(this.carId, f)));
   }
 }

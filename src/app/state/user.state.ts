@@ -28,8 +28,8 @@ export interface UserStateModel {
     isAuthorized: false,
     userId: undefined,
     userName: undefined,
-    cars: []
-  }
+    cars: [],
+  },
 })
 @Injectable()
 export class UserState {
@@ -68,14 +68,14 @@ export class UserState {
   @Selector()
   static getCarById(state: UserStateModel) {
     return (carId: string) => {
-      return state.cars.find(c => c.id === carId);
+      return state.cars.find((c) => c.id === carId);
     };
   }
 
   @Selector()
   static getFuelsByCarId(state: UserStateModel) {
     return (carId: string) => {
-      const car = state.cars.find(c => c.id === carId);
+      const car = state.cars.find((c) => c.id === carId);
       if (!car || !car.fuels) {
         return [];
       }
@@ -90,14 +90,14 @@ export class UserState {
       context.patchState({ isLoading: true });
 
       return this.userService.findUserById(userId).pipe(
-        tap(data => {
+        tap((data) => {
           if (data) {
             context.setState({
               isLoading: false,
               isAuthorized: true,
               userId: data.id,
               userName: data.name,
-              cars: data.cars.data.map(c => this.mappingService.toCar(c))
+              cars: data.cars.data.map((c) => this.mappingService.toCar(c)),
             });
           } else {
             context.setState({
@@ -105,7 +105,7 @@ export class UserState {
               isAuthorized: false,
               userId: undefined,
               userName: undefined,
-              cars: []
+              cars: [],
             });
           }
         })
@@ -116,11 +116,11 @@ export class UserState {
   @Action(CreateCar)
   private createCar(context: StateContext<UserStateModel>, { userId, car }: CreateCar) {
     return this.carService.createCar(userId, car).pipe(
-      map(id => Object.assign({}, car, { id }) as Car),
-      tap(newCar => {
+      map((id) => Object.assign({}, car, { id }) as Car),
+      tap((newCar) => {
         context.setState(
           patch({
-            cars: append([newCar])
+            cars: append([newCar]),
           })
         );
       })
@@ -130,11 +130,11 @@ export class UserState {
   @Action(UpdateCar)
   private updateCar(context: StateContext<UserStateModel>, { car }: UpdateCar) {
     return this.carService.updateCar(car).pipe(
-      map(timestamp => Object.assign({}, car, { timestamp }) as Car),
-      tap(newCar => {
+      map((timestamp) => Object.assign({}, car, { timestamp }) as Car),
+      tap((newCar) => {
         context.setState(
           patch({
-            cars: updateItem((c: Car) => c.id === car.id, patch(newCar))
+            cars: updateItem((c: Car) => c.id === car.id, patch(newCar)),
           })
         );
       })
@@ -144,10 +144,10 @@ export class UserState {
   @Action(DeleteCar)
   private deleteCar(context: StateContext<UserStateModel>, { carId }: DeleteCar) {
     return this.carService.deleteCar(carId).pipe(
-      tap(id => {
+      tap((id) => {
         context.setState(
           patch({
-            cars: removeItem<Car>(c => c.id === id)
+            cars: removeItem<Car>((c) => c.id === id),
           })
         );
       })
@@ -157,47 +157,50 @@ export class UserState {
   @Action(CreateFuel)
   private createFuel(context: StateContext<UserStateModel>, { carId, fuel }: CreateFuel) {
     return this.fuelService.createFuel(carId, fuel).pipe(
-      map(id => Object.assign({}, fuel, { id }) as Fuel),
-      tap(newFuel => {
+      map((id) => Object.assign({}, fuel, { id }) as Fuel),
+      tap((newFuel) => {
         context.setState(
           patch({
-            cars: updateItem((c: Car) => c.id === carId, patch({ fuels: append([newFuel]) }))
+            cars: updateItem((c: Car) => c.id === carId, patch({ fuels: append([newFuel]) })),
           })
         );
       }),
-      tap(newFuel => context.dispatch(new SelectFuel(newFuel)))
+      tap((newFuel) => context.dispatch(new SelectFuel(newFuel)))
     );
   }
 
   @Action(UpdateFuel)
   private updateFuel(context: StateContext<UserStateModel>, { fuel }: UpdateFuel) {
     return this.fuelService.updateFuel(fuel).pipe(
-      map(timestamp => Object.assign({}, fuel, { timestamp }) as Fuel),
-      tap(newFuel => {
+      map((timestamp) => Object.assign({}, fuel, { timestamp }) as Fuel),
+      tap((newFuel) => {
         context.setState(
           patch({
             cars: updateItem(
-              (c: Car) => c.fuels && c.fuels.some(f => f.id === fuel.id),
-              patch({ fuels: updateItem(f => f.id === fuel.id, newFuel) })
-            )
+              (c: Car) => c.fuels && c.fuels.some((f) => f.id === fuel.id),
+              patch({ fuels: updateItem((f) => f.id === fuel.id, newFuel) })
+            ),
           })
         );
       }),
-      tap(newFuel => context.dispatch(new SelectFuel(newFuel)))
+      tap((newFuel) => context.dispatch(new SelectFuel(newFuel)))
     );
   }
 
   @Action(DeleteFuel)
   private deleteFuel(context: StateContext<UserStateModel>, { fuelId }: DeleteFuel) {
     return this.fuelService.deleteFuel(fuelId).pipe(
-      tap(id => {
+      tap((id) => {
         context.setState(
           patch({
-            cars: updateItem((c: Car) => c.fuels && c.fuels.some(f => f.id === id), patch({ fuels: removeItem<Fuel>(f => f.id === id) }))
+            cars: updateItem(
+              (c: Car) => c.fuels && c.fuels.some((f) => f.id === id),
+              patch({ fuels: removeItem<Fuel>((f) => f.id === id) })
+            ),
           })
         );
       }),
-      tap(_ => context.dispatch(new SelectFuel(undefined)))
+      tap((_) => context.dispatch(new SelectFuel(undefined)))
     );
   }
 }

@@ -4,7 +4,7 @@ import { Car } from '../models/car.model';
 import { Fuel } from '../models/fuel.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class MappingService {
   toCar(data: any) {
@@ -15,7 +15,7 @@ export class MappingService {
       dateOfPurchase: data.dateOfPurchase,
       mileageAtPurchase: data.mileageAtPurchase,
       archived: data.archived,
-      fuels: data.fuels.data.map(fuel => this.toFuel(fuel))
+      fuels: data.fuels.data.map((fuel) => this.toFuel(fuel)),
     } as Car;
   }
 
@@ -26,7 +26,7 @@ export class MappingService {
       date: data.date,
       km: data.km,
       litres: data.litres,
-      cost: data.cost
+      cost: data.cost,
     } as Fuel;
   }
 }

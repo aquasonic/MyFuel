@@ -4,18 +4,18 @@ import { ClarityModule } from '@clr/angular';
 
 import { ShellComponent } from './shell.component';
 
-
 describe('ShellComponent', () => {
   let component: ShellComponent;
   let fixture: ComponentFixture<ShellComponent>;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      declarations: [ ShellComponent ],
-      imports: [ RouterTestingModule, ClarityModule ]
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [ShellComponent],
+        imports: [RouterTestingModule, ClarityModule],
+      }).compileComponents();
     })
-    .compileComponents();
-  }));
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ShellComponent);

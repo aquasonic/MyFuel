@@ -6,7 +6,7 @@ import { finalize } from 'rxjs/operators';
 @Component({
   selector: 'myf-confirm-dialog',
   templateUrl: './confirm-dialog.component.html',
-  styleUrls: ['./confirm-dialog.component.scss']
+  styleUrls: ['./confirm-dialog.component.scss'],
 })
 export class ConfirmDialogComponent {
   isOpen = false;
@@ -37,7 +37,7 @@ export class ConfirmDialogComponent {
     this.confirmButtonState = ClrLoadingState.LOADING;
     this.confirmHandler(this.params)
       .pipe(finalize(() => (this.confirmButtonState = ClrLoadingState.DEFAULT)))
-      .subscribe(_ => {
+      .subscribe((_) => {
         this.isOpen = false;
         this.callback();
       });

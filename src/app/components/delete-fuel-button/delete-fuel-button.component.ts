@@ -6,7 +6,7 @@ import { DeleteFuel } from 'src/app/state/fuel.actions';
 
 @Component({
   selector: 'myf-delete-fuel-button',
-  templateUrl: './delete-fuel-button.component.html'
+  templateUrl: './delete-fuel-button.component.html',
 })
 export class DeleteFuelButtonComponent {
   @Input() private fuelId: string;
@@ -19,7 +19,7 @@ export class DeleteFuelButtonComponent {
       this.translateService.instant('Fuel.DeleteConfirmationTitle'),
       this.translateService.instant('Fuel.DeleteConfirmationDescription'),
       this.fuelId,
-      id => this.store.dispatch(new DeleteFuel(id)),
+      (id) => this.store.dispatch(new DeleteFuel(id)),
       () => {}
     );
   }

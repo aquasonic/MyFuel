@@ -6,7 +6,7 @@ import { UpdateFuel } from 'src/app/state/fuel.actions';
 
 @Component({
   selector: 'myf-update-fuel-button',
-  templateUrl: './update-fuel-button.component.html'
+  templateUrl: './update-fuel-button.component.html',
 })
 export class UpdateFuelButtonComponent {
   @Input() private fuel: Fuel;
@@ -15,6 +15,6 @@ export class UpdateFuelButtonComponent {
   constructor(private store: Store) {}
 
   updateFuel() {
-    this.dialog.open(this.fuel, c => this.store.dispatch(new UpdateFuel(c)));
+    this.dialog.open(this.fuel, (c) => this.store.dispatch(new UpdateFuel(c)));
   }
 }

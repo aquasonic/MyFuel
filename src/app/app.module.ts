@@ -52,13 +52,13 @@ export function createApolloOptions(httpLink: HttpLink) {
   return {
     cache: new InMemoryCache(),
     link: ApolloLink.from([
-      setContext(_ => ({
+      setContext((_) => ({
         headers: {
-          Authorization: `Bearer ${environment.dbSecret}`
-        }
+          Authorization: `Bearer ${environment.dbSecret}`,
+        },
       })),
-      httpLink.create({ uri: environment.dbServer })
-    ])
+      httpLink.create({ uri: environment.dbServer }),
+    ]),
   };
 }
 
@@ -86,7 +86,7 @@ export function createApolloOptions(httpLink: HttpLink) {
     FuelListComponent,
     FuelFooterBarComponent,
     DeleteFuelButtonComponent,
-    UpdateFuelButtonComponent
+    UpdateFuelButtonComponent,
   ],
   imports: [
     BrowserModule,
@@ -99,30 +99,30 @@ export function createApolloOptions(httpLink: HttpLink) {
       developmentMode: !environment.production,
       selectorOptions: {
         suppressErrors: false,
-        injectContainerState: false
-      }
+        injectContainerState: false,
+      },
     }),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
         useFactory: HttpLoaderFactory,
-        deps: [HttpClient]
-      }
-    })
+        deps: [HttpClient],
+      },
+    }),
   ],
   providers: [
     {
       provide: APOLLO_OPTIONS,
       useFactory: createApolloOptions,
-      deps: [HttpLink]
+      deps: [HttpLink],
     },
     {
       provide: APP_INITIALIZER,
       useFactory: InitializeAppFactory,
       deps: [TranslateService],
-      multi: true
-    }
+      multi: true,
+    },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}

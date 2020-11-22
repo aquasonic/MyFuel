@@ -1,6 +1,5 @@
-import {Apollo, gql} from 'apollo-angular';
+import { Apollo, gql } from 'apollo-angular';
 import { Injectable } from '@angular/core';
-
 
 import { of } from 'rxjs';
 import { concatMap, map } from 'rxjs/operators';
@@ -9,7 +8,7 @@ import { Car } from '../models/car.model';
 import { FuelService } from './fuel.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CarService {
   constructor(private apollo: Apollo, private fuelService: FuelService) {}
@@ -37,10 +36,10 @@ export class CarService {
           name: car.name,
           dateOfPurchase: car.dateOfPurchase,
           mileageAtPurchase: car.mileageAtPurchase,
-          archived: car.archived ? true : null
-        }
+          archived: car.archived ? true : null,
+        },
       })
-      .pipe(map(response => response.data.createCar.id));
+      .pipe(map((response) => response.data.createCar.id));
   }
 
   updateCar(car: Car) {
@@ -61,10 +60,10 @@ export class CarService {
           name: car.name,
           dateOfPurchase: car.dateOfPurchase,
           mileageAtPurchase: car.mileageAtPurchase,
-          archived: car.archived ? true : null
-        }
+          archived: car.archived ? true : null,
+        },
       })
-      .pipe(map(response => response.data.updateCar.timestamp));
+      .pipe(map((response) => response.data.updateCar.timestamp));
   }
 
   // TODO: Find a better way to implement delete cascading for fuels...
@@ -83,27 +82,27 @@ export class CarService {
           }
         `,
         variables: {
-          id: carId
-        }
+          id: carId,
+        },
       })
       .pipe(
-        concatMap(response => {
-          const fuels = response.data.findCarByID.fuels.data.map(f => f.id);
+        concatMap((response) => {
+          const fuels = response.data.findCarByID.fuels.data.map((f) => f.id);
           if (fuels.length > 0) {
             let fuelsMutation = '';
-            fuels.forEach(fuelId => {
+            fuels.forEach((fuelId) => {
               fuelsMutation = fuelsMutation + `fuel` + fuelId + `: deleteFuel(id: "` + fuelId + `") { _id }\n`;
             });
 
             return this.apollo.mutate({
               mutation: gql('mutation deleteFuels {\n' + fuelsMutation + '}'),
-              errorPolicy: 'ignore'
+              errorPolicy: 'ignore',
             });
           }
 
           return of(true);
         }),
-        concatMap(_ => {
+        concatMap((_) => {
           return this.apollo.mutate<{ deleteCar: { id: string } }>({
             mutation: gql`
               mutation deleteCar($id: ID!) {
@@ -113,11 +112,11 @@ export class CarService {
               }
             `,
             variables: {
-              id: carId
-            }
+              id: carId,
+            },
           });
         }),
-        map(response => response.data.deleteCar.id)
+        map((response) => response.data.deleteCar.id)
       );
   }
 

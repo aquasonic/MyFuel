@@ -7,7 +7,7 @@ import { Fuel } from 'src/app/models/fuel.model';
 
 @Component({
   selector: 'myf-fuel-dialog',
-  templateUrl: './fuel-dialog.component.html'
+  templateUrl: './fuel-dialog.component.html',
 })
 export class FuelDialogComponent {
   @ViewChild(ClrForm, { static: true }) clrForm;
@@ -22,7 +22,7 @@ export class FuelDialogComponent {
     date: new FormControl(null, Validators.required),
     km: new FormControl(null, [Validators.required, Validators.pattern(/^\d*$/)]),
     litres: new FormControl(null, [Validators.required, Validators.pattern(/^\d*\.?\d{0,2}$/)]),
-    cost: new FormControl(null, [Validators.required, Validators.pattern(/^\d*\.?\d{0,2}$/)])
+    cost: new FormControl(null, [Validators.required, Validators.pattern(/^\d*\.?\d{0,2}$/)]),
   });
 
   private submitHandler: (fuel: Fuel) => Observable<void>;
@@ -49,7 +49,7 @@ export class FuelDialogComponent {
       this.submitButtonState = ClrLoadingState.LOADING;
       this.submitHandler({ ...this.form.value })
         .pipe(finalize(() => (this.submitButtonState = ClrLoadingState.DEFAULT)))
-        .subscribe(_ => {
+        .subscribe((_) => {
           this.isOpen = false;
         });
     }

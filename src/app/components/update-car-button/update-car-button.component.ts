@@ -7,7 +7,7 @@ import { CarDialogComponent } from '../../dialogs/car-dialog/car-dialog.componen
 
 @Component({
   selector: 'myf-update-car-button',
-  templateUrl: './update-car-button.component.html'
+  templateUrl: './update-car-button.component.html',
 })
 export class UpdateCarButtonComponent {
   @Input() private car: Car;
@@ -16,6 +16,6 @@ export class UpdateCarButtonComponent {
   constructor(private store: Store) {}
 
   updateCar() {
-    this.dialog.open(this.car, c => this.store.dispatch(new UpdateCar(c)));
+    this.dialog.open(this.car, (c) => this.store.dispatch(new UpdateCar(c)));
   }
 }

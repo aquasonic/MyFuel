@@ -8,7 +8,7 @@ import { SelectFuel } from 'src/app/state/fuel.actions';
 @Component({
   selector: 'myf-fuel-list',
   templateUrl: './fuel-list.component.html',
-  styleUrls: ['./fuel-list.component.scss']
+  styleUrls: ['./fuel-list.component.scss'],
 })
 export class FuelListComponent {
   @Input() fuels: Fuel[];

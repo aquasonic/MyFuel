@@ -1,13 +1,12 @@
-import {Apollo, gql} from 'apollo-angular';
+import { Apollo, gql } from 'apollo-angular';
 import { Injectable } from '@angular/core';
-
 
 import { map } from 'rxjs/operators';
 
 import { Fuel } from '../models/fuel.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class FuelService {
   constructor(private apollo: Apollo) {}
@@ -27,10 +26,10 @@ export class FuelService {
           date: fuel.date,
           km: fuel.km,
           litres: fuel.litres,
-          cost: fuel.cost
-        }
+          cost: fuel.cost,
+        },
       })
-      .pipe(map(response => response.data.createFuel.id));
+      .pipe(map((response) => response.data.createFuel.id));
   }
 
   updateFuel(fuel: Fuel) {
@@ -48,10 +47,10 @@ export class FuelService {
           date: fuel.date,
           km: fuel.km,
           litres: fuel.litres,
-          cost: fuel.cost
-        }
+          cost: fuel.cost,
+        },
       })
-      .pipe(map(response => response.data.updateFuel.timestamp));
+      .pipe(map((response) => response.data.updateFuel.timestamp));
   }
 
   deleteFuel(fuelId: string) {
@@ -65,10 +64,10 @@ export class FuelService {
           }
         `,
         variables: {
-          id: fuelId
-        }
+          id: fuelId,
+        },
       })
-      .pipe(map(response => response.data.deleteFuel.id));
+      .pipe(map((response) => response.data.deleteFuel.id));
   }
 
   getConsumation(fuel: Fuel) {

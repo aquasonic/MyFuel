@@ -7,7 +7,7 @@ import { Car } from 'src/app/models/car.model';
 
 @Component({
   selector: 'myf-car-dialog',
-  templateUrl: './car-dialog.component.html'
+  templateUrl: './car-dialog.component.html',
 })
 export class CarDialogComponent {
   @ViewChild(ClrForm, { static: true }) clrForm;
@@ -22,7 +22,7 @@ export class CarDialogComponent {
     name: new FormControl(null, Validators.required),
     dateOfPurchase: new FormControl(null, Validators.required),
     mileageAtPurchase: new FormControl(null, [Validators.required, Validators.pattern(/^\d*$/)]),
-    archived: new FormControl()
+    archived: new FormControl(),
   });
 
   private submitHandler: (car: Car) => Observable<void>;
@@ -49,7 +49,7 @@ export class CarDialogComponent {
       this.submitButtonState = ClrLoadingState.LOADING;
       this.submitHandler({ ...this.form.value })
         .pipe(finalize(() => (this.submitButtonState = ClrLoadingState.DEFAULT)))
-        .subscribe(_ => {
+        .subscribe((_) => {
           this.isOpen = false;
         });
     }
